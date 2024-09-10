@@ -9,7 +9,7 @@ export default function Page() {
       await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/`,
+          redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback`,
           //localhost:3000/auth/callback
           queryParams: {
             access_type: "offline",
