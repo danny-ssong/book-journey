@@ -2,13 +2,18 @@ import { createClient } from "@/utils/supabase/server";
 import "./globals.css";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import LoginStatus from "./_componenets/LoginStatus";
+import LoginSection from "./_componenets/LoginStatus";
+import LogoutButton from "./_componenets/LogoutButton";
 
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const supabase = createClient();
+  const { data: user, error } = await supabase.auth.getUser();
+  console.log("RootLayout render");
+
   return (
     <html lang="en">
       <body>
@@ -28,7 +33,7 @@ export default async function RootLayout({
               </nav>
               <div>search bar</div>
             </div>
-            <LoginStatus />
+            {!!user.user ? <LogoutButton /> : <Link href="/login">로그인</Link>}
           </header>
           <div className="px-10 pt-10 bg-red-50 flex flex-grow">
             <aside className="w-[200px] bg-blue-200 px-5 py-4">
