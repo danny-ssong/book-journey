@@ -8,8 +8,6 @@ export default async function Home() {
   //사이드 오른쪽 추천??
 
   const supabase = createClient();
-  const { data, error } = await supabase.auth.getUser();
-  // console.log("error", error);
-  console.log("data", data);
+
   return <main> 새로운 글을 작성해보세요 !</main>;
 }
