@@ -1,5 +1,4 @@
 import { createClient } from "@/utils/supabase/server";
-import Link from "next/link";
 
 export default async function Home() {
   //nav? 로그인, 로그아웃, 홈, 피드?(팔로워)

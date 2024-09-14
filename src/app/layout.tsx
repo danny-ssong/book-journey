@@ -2,8 +2,8 @@ import { createClient } from "@/utils/supabase/server";
 import "./globals.css";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import LoginSection from "./_componenets/LoginStatus";
-import LogoutButton from "./_componenets/LogoutButton";
+import LoginSection from "./_components/LoginStatus";
+import LogoutButton from "./_components/LogoutButton";
 
 export default async function RootLayout({
   children,
@@ -46,7 +46,7 @@ export default async function RootLayout({
                 </li>
               </ul>
             </aside>
-            {children}
+            <main className="w-full flex justify-center">{children}</main>
             <aside></aside>
           </div>
         </div>
