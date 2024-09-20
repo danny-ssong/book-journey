@@ -7,7 +7,11 @@ export default function Page() {
   const [selectedBook, setSelectedBook] = useState();
   return (
     <main className="w-[800px] px-4 flex flex-col gap-5">
-      <BookSearchInput onSelectBook={setSelectedBook} />
+      <BookSearchInput
+        selectedBook={selectedBook}
+        onSelectBook={setSelectedBook}
+        onSearchBook={undefined}
+      />
       <PostForm book={selectedBook} />
     </main>
   );

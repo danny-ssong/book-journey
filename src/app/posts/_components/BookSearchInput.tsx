@@ -33,7 +33,9 @@ export default function BookSearchInput({
 
   const handleSearchBook = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!!onSearchBook) onSearchBook(searchQuery);
+    if (!!onSearchBook) {
+      onSearchBook(searchQuery);
+    }
   };
 
   return (

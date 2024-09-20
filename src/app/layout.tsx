@@ -4,6 +4,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import LoginSection from "./_components/LoginStatus";
 import LogoutButton from "./_components/LogoutButton";
+import BookSearchInput from "./posts/_components/BookSearchInput";
+import BookSearchArea from "./_components/BookSearchArea";
 
 export default async function RootLayout({
   children,
@@ -19,7 +21,7 @@ export default async function RootLayout({
       <body>
         <div className="w-full h-screen flex flex-col">
           <header className="w-full h-20 flex bg-slate-500 justify-between items-center">
-            <div className="flex justify-between items-center w-[500px] pl-10">
+            <div className="flex justify-between items-center w-[800px] pl-10">
               <div>Book-Journey Logo</div>
               <nav className="flex">
                 <ul className="flex gap-10">
@@ -31,7 +33,7 @@ export default async function RootLayout({
                   </li>
                 </ul>
               </nav>
-              <div>search bar</div>
+              <BookSearchArea />
             </div>
             {!!user.user ? <LogoutButton /> : <Link href="/login">로그인</Link>}
           </header>
