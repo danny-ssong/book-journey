@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import getBookList from "@/app/actions/getBookList";
 
 const searchedBooks = [
   {
@@ -18,17 +19,26 @@ type Props = {
   onSearchBook?: (query: string) => void;
 };
 
-export default function BookSearchInput({
-  selectedBook,
-  onSelectBook,
-  onSearchBook = undefined,
-}: Props) {
+export default function BookSearchInput({ selectedBook, onSelectBook, onSearchBook = undefined }: Props) {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
 
-  const searchBookList = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
-    setSearchQuery(e.target.value);
+  useEffect(() => {
+    if (searchQuery.length < 2) return;
+
+    const searchBookListHandler = setTimeout(async () => {
+      const books = await getBookList(searchQuery);
+      console.log(books);
+    }, 1000);
+
+    return () => {
+      clearTimeout(searchBookListHandler);
+    };
+  }, [searchQuery]);
+
+  const searchBookList = (query: string) => {
+    //kakao api 호출
+    //1초 마다 호출
   };
 
   const handleSearchBook = (e: React.FormEvent) => {
@@ -44,11 +54,7 @@ export default function BookSearchInput({
         onSubmit={handleSearchBook}
         className="w-[400px] h-10 flex justify-between items-center bg-slate-200 pl-4 pr-2 rounded-full"
       >
-        <input
-          className="w-[360px] h-full"
-          type="text"
-          onChange={searchBookList}
-        />
+        <input className="w-[360px] h-full" type="text" onChange={(e) => setSearchQuery(e.target.value)} />
         <svg
           width="24"
           height="24"
