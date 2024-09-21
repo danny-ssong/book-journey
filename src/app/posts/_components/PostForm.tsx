@@ -1,17 +1,13 @@
 import { createClient } from "@/utils/supabase/client";
-import { FormEventHandler, useState } from "react";
+import { useState } from "react";
 import dayjs from "dayjs";
 
 export default function PostForm({ book, initPost }: any) {
   const supabase = createClient();
   const [title, setTitle] = useState(initPost?.title ?? "");
   const [content, setContent] = useState(initPost?.content ?? "");
-  const [startDate, setStartDate] = useState<string>(
-    dayjs(initPost?.startDate ?? new Date()).format("YYYY-MM-DD")
-  );
-  const [endDate, setEndDate] = useState<string>(
-    dayjs(initPost?.endDate ?? new Date()).format("YYYY-MM-DD")
-  );
+  const [startDate, setStartDate] = useState<string>(dayjs(initPost?.startDate ?? new Date()).format("YYYY-MM-DD"));
+  const [endDate, setEndDate] = useState<string>(dayjs(initPost?.endDate ?? new Date()).format("YYYY-MM-DD"));
   const [rating, setRating] = useState<number>(initPost?.rating ?? 2);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,9 +34,7 @@ export default function PostForm({ book, initPost }: any) {
             const starValue = index + 1;
             return (
               <span
-                className={`${
-                  starValue > rating ? "text-gray-300" : "text-yellow-400"
-                } cursor-pointer text-3xl`}
+                className={`${starValue > rating ? "text-gray-300" : "text-yellow-400"} cursor-pointer text-3xl`}
                 key={index}
                 onClick={() => setRating(starValue)}
               >
@@ -50,17 +44,9 @@ export default function PostForm({ book, initPost }: any) {
           })}
         </div>
         <div className="flex gap-4">
-          <input
-            type="date"
-            value={startDate}
-            onChange={(e) => console.log(e.target.value)}
-          />
+          <input type="date" value={startDate} onChange={(e) => console.log(e.target.value)} />
           {/* yyyy-mm-dd로 나옴 */}
-          <input
-            type="date"
-            value={endDate}
-            onChange={(e) => console.log(e.target.value)}
-          />
+          <input type="date" value={endDate} onChange={(e) => console.log(e.target.value)} />
         </div>
       </div>
 
@@ -76,10 +62,7 @@ export default function PostForm({ book, initPost }: any) {
         onChange={(e) => setContent(e.target.value)}
       />
       <div className="w-full flex justify-end items-center">
-        <button
-          className="px-4 py-2 border border-black rounded-full"
-          type="submit"
-        >
+        <button className="px-4 py-2 border border-black rounded-full" type="submit">
           저장
         </button>
       </div>

@@ -41,9 +41,11 @@ export type Database = {
           book_id: number
           content: string | null
           created_at: string | null
+          endDate: string | null
           id: number
           isbn: string
           rating: number | null
+          startDate: string | null
           title: string | null
           user_id: string
         }
@@ -51,9 +53,11 @@ export type Database = {
           book_id: number
           content?: string | null
           created_at?: string | null
+          endDate?: string | null
           id?: number
           isbn: string
           rating?: number | null
+          startDate?: string | null
           title?: string | null
           user_id?: string
         }
@@ -61,9 +65,11 @@ export type Database = {
           book_id?: number
           content?: string | null
           created_at?: string | null
+          endDate?: string | null
           id?: number
           isbn?: string
           rating?: number | null
+          startDate?: string | null
           title?: string | null
           user_id?: string
         }

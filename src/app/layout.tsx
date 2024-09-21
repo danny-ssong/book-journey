@@ -1,10 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import "./globals.css";
 import Link from "next/link";
-import { redirect } from "next/navigation";
-import LoginSection from "./_components/LoginStatus";
 import LogoutButton from "./_components/LogoutButton";
-import BookSearchInput from "./posts/_components/BookSearchInput";
 import BookSearchArea from "./_components/BookSearchArea";
 
 export default async function RootLayout({
@@ -14,7 +11,6 @@ export default async function RootLayout({
 }>) {
   const supabase = createClient();
   const { data: user, error } = await supabase.auth.getUser();
-  console.log("RootLayout render");
 
   return (
     <html lang="en">
@@ -44,11 +40,14 @@ export default async function RootLayout({
                   <Link href="/posts/new">글쓰기</Link>
                 </li>
                 <li>
-                  <Link href="/settings/profile">프로필</Link>
+                  <Link href="/manage/posts">글 관리</Link>
+                </li>
+                <li>
+                  <Link href="/manage/settings/profile">프로필 관리</Link>
                 </li>
               </ul>
             </aside>
-            <main className="w-full flex justify-center">{children}</main>
+            <main className="w-full flex justify-center py-4">{children}</main>
             <aside></aside>
           </div>
         </div>
