@@ -38,7 +38,6 @@ export type Database = {
       }
       posts: {
         Row: {
-          book_id: number
           content: string | null
           created_at: string | null
           endDate: string | null
@@ -50,7 +49,6 @@ export type Database = {
           user_id: string
         }
         Insert: {
-          book_id: number
           content?: string | null
           created_at?: string | null
           endDate?: string | null
@@ -62,7 +60,6 @@ export type Database = {
           user_id?: string
         }
         Update: {
-          book_id?: number
           content?: string | null
           created_at?: string | null
           endDate?: string | null
@@ -74,13 +71,6 @@ export type Database = {
           user_id?: string
         }
         Relationships: [
-          {
-            foreignKeyName: "post_book_id_fkey"
-            columns: ["book_id"]
-            isOneToOne: false
-            referencedRelation: "books"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "post_isbn_fkey"
             columns: ["isbn"]

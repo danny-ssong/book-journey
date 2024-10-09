@@ -1,9 +1,19 @@
+"use client";
 import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
 import dayjs from "dayjs";
+import Rating from "./Rating";
+import { Tables } from "@/types/database.types";
+import { useRouter } from "next/navigation";
 
-export default function PostForm({ book, initPost }: any) {
+type Props = {
+  book: SearchedBook | null;
+  initPost?: Tables<"posts">;
+};
+
+export default function PostForm({ book, initPost = undefined }: Props) {
   const supabase = createClient();
+  const router = useRouter();
   const [title, setTitle] = useState(initPost?.title ?? "");
   const [content, setContent] = useState(initPost?.content ?? "");
   const [startDate, setStartDate] = useState<string>(dayjs(initPost?.startDate ?? new Date()).format("YYYY-MM-DD"));
@@ -14,39 +24,30 @@ export default function PostForm({ book, initPost }: any) {
     e.preventDefault();
     if (!book) {
       alert("책을 선택해주세요");
+      return;
     }
-    // const { data, error } = await supabase.from("posts").insert({
-    //   title,
-    //   content,
-    //   book,
-    // });
-    //insert posts
+    const post = { content, startDate, endDate, isbn: book.isbn, rating, title };
 
-    //에러가 아니면
-    //router.push('')로 해당 책 아이디나 내가 쓴 글
+    const { data, error } = await supabase.from("posts").insert([post]).select();
+
+    if (error) {
+      alert(`${error.details} \n${error.message}`);
+      return;
+    }
+
+    if (data?.length > 0) {
+      const postId = data[0].id;
+      router.push(`/posts/${postId}`);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <div className="flex justify-between">
-        <div>
-          {[...Array(5)].map((_, index) => {
-            const starValue = index + 1;
-            return (
-              <span
-                className={`${starValue > rating ? "text-gray-300" : "text-yellow-400"} cursor-pointer text-3xl`}
-                key={index}
-                onClick={() => setRating(starValue)}
-              >
-                &#9733;
-              </span>
-            );
-          })}
-        </div>
+        <Rating rating={rating} onClickStar={setRating} />
         <div className="flex gap-4">
-          <input type="date" value={startDate} onChange={(e) => console.log(e.target.value)} />
-          {/* yyyy-mm-dd로 나옴 */}
-          <input type="date" value={endDate} onChange={(e) => console.log(e.target.value)} />
+          <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+          <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
         </div>
       </div>
 
