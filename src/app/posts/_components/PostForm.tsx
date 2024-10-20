@@ -18,7 +18,7 @@ export default function PostForm({ book, initPost = undefined }: Props) {
   const [content, setContent] = useState(initPost?.content ?? "");
   const [startDate, setStartDate] = useState<string>(dayjs(initPost?.startDate ?? new Date()).format("YYYY-MM-DD"));
   const [endDate, setEndDate] = useState<string>(dayjs(initPost?.endDate ?? new Date()).format("YYYY-MM-DD"));
-  const [rating, setRating] = useState<number>(initPost?.rating ?? 2);
+  const [rating, setRating] = useState<number>(initPost?.rating ?? 5);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
