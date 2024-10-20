@@ -1,10 +1,11 @@
 "use server";
 
-export default async function searchBooks(query, size) {
+export default async function searchBooks(query: string | null, size: number = 10, page: number = 1) {
+  if (!query) return;
   //   const url = `${process.env.KAKAO_BASE_URL}/v3/search/book?target=title&query=${encodeURIComponent(query)}&size=10`;
   const url = `${process.env.KAKAO_BASE_URL}/v3/search/book?target=title&query=${encodeURIComponent(
     query
-  )}&size=${size}`;
+  )}&size=${size}&page=${page}`;
 
   try {
     const response = await fetch(url, {
