@@ -11,7 +11,6 @@ import Link from "next/link";
 
 export default function Page() {
   const [page, setPage] = useState(1);
-  const router = useRouter();
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
   const query = searchParams.get("query");
@@ -56,15 +55,16 @@ export default function Page() {
                 </div>
               </Link>
               <div className="flex-1 flex flex-col gap-2">
-                <Link href={`/books/${book.isbn}`} className="cursor-pointer hover:underline w-20 text-nowrap">
-                  <h3>{book.title}</h3>
-                </Link>
-                <Link
-                  href={`/search?query=${book.authors[0]}`}
-                  className="text-sm cursor-pointer hover:underline w-20 text-nowrap"
-                >
-                  {book.authors[0]}
-                </Link>
+                <h3>
+                  <Link href={`/books/${book.isbn}`} className="cursor-pointer hover:underline">
+                    {book.title}
+                  </Link>
+                </h3>
+                <p>
+                  <Link href={`/search?query=${book.authors[0]}`} className="text-sm cursor-pointer hover:underline ">
+                    {book.authors[0]}
+                  </Link>
+                </p>
                 <p className="text-sm">
                   {book.publisher} {dayjs(book.datetime).format("YYYY-MM-DD")}
                 </p>
