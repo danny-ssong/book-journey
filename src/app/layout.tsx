@@ -35,7 +35,7 @@ export default async function RootLayout({
             {!!user.user ? <LogoutButton /> : <Link href="/login">로그인</Link>}
           </header>
           <div className="px-10 mt-[64px] pt-10 bg-red-50 flex flex-1 ">
-            <aside className="w-[200px] bg-blue-200 px-5 py-4">
+            <aside className="min-w-[200px] bg-blue-200 px-5 py-4">
               <ul>
                 <li className="mb-5 border bg-slate-800 text-white px-4 py-2 w-full text-center">
                   <Link href="/posts/new">글쓰기</Link>

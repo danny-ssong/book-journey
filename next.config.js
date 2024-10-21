@@ -1,5 +1,5 @@
 module.exports = {
   images: {
-    domains: ["search.daum.net"],
+    domains: ["search1.kakaocdn.net"],
   },
 };
