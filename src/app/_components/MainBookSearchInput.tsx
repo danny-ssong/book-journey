@@ -63,7 +63,7 @@ export default function MainBookSearchInput() {
   };
 
   const handleSelectBook = (book: SearchedBook) => {
-    router.push(`books/${book.isbn}`);
+    router.push(`/books/${book.isbn}`);
   };
 
   const handleInputFocus = () => {
