@@ -41,10 +41,10 @@ export default async function RootLayout({
                   <Link href="/posts/new">글쓰기</Link>
                 </li>
                 <li>
-                  <Link href="/manage/posts">글 관리</Link>
+                  <Link href={`/manage/${user.user?.id}/posts`}>글 관리</Link>
                 </li>
                 <li>
-                  <Link href="/manage/settings/profile">프로필 관리</Link>
+                  <Link href={`/manage/${user.user?.id}/settings/profile`}>프로필 관리</Link>
                 </li>
               </ul>
             </aside>
