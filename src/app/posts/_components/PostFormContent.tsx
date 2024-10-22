@@ -6,6 +6,7 @@ import Rating from "./Rating";
 import { Tables } from "@/types/database.types";
 import { useRouter } from "next/navigation";
 import { createPost } from "@/app/actions/createPost";
+import { updatePost } from "@/app/actions/updatePost";
 
 type Props = {
   book: SearchedBook | undefined;
@@ -27,10 +28,13 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
       return;
     }
 
-    //진행중 initpost면 업데이트 아니면 생성으로
-    // if(initPost)
+    let postId = undefined;
 
-    const postId = await createPost(book, content, startDate, endDate, rating, title);
+    if (initPost) {
+      postId = await updatePost(initPost.id, book, content, startDate, endDate, rating, title);
+    } else {
+      postId = await createPost(book, content, startDate, endDate, rating, title);
+    }
 
     if (postId) {
       router.push(`/posts/${postId}`);
@@ -53,7 +57,11 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
           onChange={(e) => setTitle(e.target.value)}
           value={title}
         />
-        <textarea className="w-full h-[800px] resize-none text-black" value={content} onChange={(e) => setContent(e.target.value)} />
+        <textarea
+          className="w-full h-[800px] resize-none text-black"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+        />
         <div className="w-full flex justify-end items-center">
           <button className="px-4 py-2 border border-black rounded-full" type="submit">
             저장

@@ -16,13 +16,15 @@ export default async function page({ searchParams }: Props) {
   const { posts, isLastPage } = await getUserPosts(size, page);
 
   return (
-    <div className="px-10">
-      <h2 className="mb-5 text-xl ">글 관리</h2>
-      <div className="">
-        {posts.map((post) => (
-          <PostPreview key={post.id} post={post} />
-        ))}
-        <PaginationButtons baseURL={"/manage/posts"} currentPage={page} isLastPage={isLastPage} />
+    <div className="flex justify-center">
+      <div className="px-4">
+        <h2 className="mb-5 text-xl px-4">글 관리</h2>
+        <div className="">
+          {posts.map((post) => (
+            <PostPreview key={post.id} post={post} />
+          ))}
+          <PaginationButtons baseURL={"/manage/posts"} currentPage={page} isLastPage={isLastPage} />
+        </div>
       </div>
     </div>
   );
