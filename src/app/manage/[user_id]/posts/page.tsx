@@ -5,11 +5,13 @@ import getUserPosts from "./_lib/getPosts";
 import PaginationButtons from "./_components/PaginationButtons";
 
 type Props = {
-  searchParams: { [key: string]: string | undefined };
+  params: {
+    page: string;
+  };
 };
 
-export default async function page({ searchParams }: Props) {
-  let page = parseInt(searchParams.page || "1");
+export default async function page({ params }: Props) {
+  let page = parseInt(params.page || "1");
   if (!page) page = 1;
 
   const size = 10;

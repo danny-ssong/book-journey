@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import getPostWithBook from "../../[postId]/_lib/getPostWithBook";
 import searchBooks from "@/app/actions/searchBooks";
 
-export default async function Page({ params }: { params: { [key: string]: string | undefined } }) {
+export default async function Page({ params }: { params: { postId: string } }) {
   const supabase = createClient();
   const { data: userData, error: userError } = await supabase.auth.getUser();
   const postId = params?.postId;
