@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
+import Profile from "../_components/Profile";
 import { notFound } from "next/navigation";
-import ProfileViewer from "./_components/ProfileViewer";
 
 export default async function Page() {
   const supabase = createClient();
@@ -10,5 +10,5 @@ export default async function Page() {
 
   const { data: profile, error: profileError } = await supabase.from("profiles").select("*").eq("user_id", data.user?.id).single();
 
-  return <ProfileViewer profile={profile} />;
+  return <Profile profile={profile} />;
 }

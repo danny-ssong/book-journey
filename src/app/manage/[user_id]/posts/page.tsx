@@ -21,10 +21,14 @@ export default async function page({ params }: Props) {
     <div className="flex justify-center">
       <div className="px-4">
         <h2 className="mb-5 text-xl px-4">글 관리</h2>
-        <div className="">
-          {[...posts.reverse()].map((post) => (
-            <PostPreview key={post.id} post={post} />
-          ))}
+        <div>
+          <ul className="min-h-[500px]">
+            {[...posts.reverse()].map((post) => (
+              <li key={post.id}>
+                <PostPreview post={post} />
+              </li>
+            ))}
+          </ul>
           <PaginationButtons baseURL={"/manage/posts"} currentPage={page} isLastPage={isLastPage} />
         </div>
       </div>
