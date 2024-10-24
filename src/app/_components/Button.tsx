@@ -8,8 +8,6 @@ type Props = {
 };
 
 export default function Button({ children, onClick = () => {}, type = "submit" }: Props) {
-  console.log(children);
-
   return (
     <button
       type={type}

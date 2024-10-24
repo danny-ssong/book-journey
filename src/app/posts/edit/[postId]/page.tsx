@@ -15,12 +15,9 @@ export default async function Page({ params }: { params: { postId: string } }) {
 
   if (postWithBook.user_id !== userData.user?.id) notFound();
 
-  const isbnForSearch = postWithBook.isbn.includes(" ") ? postWithBook.isbn.split(" ")[0] : postWithBook.isbn;
-
-  const response = await searchBooks(isbnForSearch, 5, 1);
+  const response = await searchBooks(postWithBook.isbn, 5, 1);
   const book = response.documents[0];
 
-  console.log(book);
   return (
     <div className="w-[800px] px-4 flex flex-col gap-5">
       <PostForm initBook={book} initPost={postWithBook} />

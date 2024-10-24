@@ -30,8 +30,6 @@ function LoginStatus() {
     router.refresh();
   };
 
-  console.log("user", user);
-  console.log(!!user);
   return (
     <div className="flex gap-x-11 pr-10">
       {!!user ? (

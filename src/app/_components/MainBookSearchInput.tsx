@@ -72,10 +72,7 @@ export default function MainBookSearchInput() {
 
   return (
     <div>
-      <form
-        onSubmit={handleSearchBook}
-        className="w-[400px] h-10 flex justify-between items-center bg-slate-200 pl-4 pr-2 rounded-full"
-      >
+      <form onSubmit={handleSearchBook} className="w-[400px] h-10 flex justify-between items-center bg-slate-200 pl-4 pr-2 rounded-full">
         <input
           ref={inputRef}
           className="w-[360px] h-full"
@@ -99,11 +96,7 @@ export default function MainBookSearchInput() {
       <ul className="absolute bg-white min-w-[400px] max-w-[600px]">
         {showDropDown &&
           searchedBooks?.map((book: SearchedBook) => (
-            <li
-              key={book.isbn}
-              className="px-4 py-2 cursor-pointer flex justify-between gap-4"
-              onClick={() => handleSelectBook(book)}
-            >
+            <li key={book.isbn} className="px-4 py-2 cursor-pointer flex justify-between gap-4" onClick={() => handleSelectBook(book)}>
               <span className="w-16 h-16 truncate">
                 <img src={book.thumbnail} alt={book.title} />
               </span>
