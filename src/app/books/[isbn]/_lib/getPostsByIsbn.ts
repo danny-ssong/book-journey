@@ -1,7 +1,5 @@
-import { Tables } from "@/types/database.types";
+import { Post } from "@/app/_types/supabaseTypes";
 import { createClient } from "@/utils/supabase/server";
-
-type Post = Tables<"posts">;
 
 export default async function getPostsByIsbn(isbn: string): Promise<Post[] | undefined> {
   const supabase = createClient();

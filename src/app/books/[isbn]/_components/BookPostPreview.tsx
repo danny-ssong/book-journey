@@ -1,9 +1,6 @@
 import RatingViewer from "@/app/_components/RatingViewer";
-import PostPreviewButtons from "@/app/manage/[user_id]/posts/_components/PostPreviewButtons";
-import { Tables } from "@/types/database.types";
+import { Post } from "@/app/_types/supabaseTypes";
 import dayjs from "dayjs";
-
-type Post = Tables<"posts">;
 
 type Props = {
   post: Post;

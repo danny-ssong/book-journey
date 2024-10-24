@@ -1,16 +1,15 @@
 "use client";
-import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
 import dayjs from "dayjs";
 import Rating from "./Rating";
-import { Tables } from "@/types/database.types";
 import { useRouter } from "next/navigation";
 import { createPost } from "@/app/actions/createPost";
 import { updatePost } from "@/app/actions/updatePost";
+import { Post } from "@/app/_types/supabaseTypes";
 
 type Props = {
   book: SearchedBook | undefined;
-  initPost?: Tables<"posts">;
+  initPost?: Post;
 };
 
 export default function PostFormContent({ book, initPost = undefined }: Props) {

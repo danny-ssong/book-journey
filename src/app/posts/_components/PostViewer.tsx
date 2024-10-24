@@ -1,15 +1,8 @@
 import { createClient } from "@/utils/supabase/server";
 import dayjs from "dayjs";
-import { Database, Tables, Enums } from "@/types/database.types";
 import RatingViewer from "../../_components/RatingViewer";
 import Link from "next/link";
-
-type PostWithBook = Tables<"posts"> & {
-  books: {
-    title: string;
-    author: string;
-  };
-};
+import { PostWithBook } from "@/app/_types/supabaseTypes";
 
 export default async function PostViewer({ post }: { post: PostWithBook }) {
   const supabse = createClient();

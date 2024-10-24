@@ -1,8 +1,6 @@
 import { Tables } from "@/types/database.types";
 import { createClient } from "@/utils/supabase/server";
 
-type Post = Tables<"posts">;
-
 export default async function getUserPosts(size: number, page: number = 1) {
   const supabase = createClient();
   const { data: userData, error } = await supabase.auth.getUser();
