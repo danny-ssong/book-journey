@@ -20,7 +20,7 @@ function PostPreview({ post }: { post: PostWithBook }) {
       </div>
       <div className="flex justify-between items-center">
         <div>
-          <RatingViewer rating={5} />
+          <RatingViewer rating={post.rating!} />
           <p>{post.title}</p>
         </div>
         <PostPreviewButtons postId={post.id} />
