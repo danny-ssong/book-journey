@@ -23,10 +23,8 @@ export default async function page({ params }: Props) {
         <h2 className="mb-5 text-xl px-4">글 관리</h2>
         <div>
           <ul className="min-h-[500px]">
-            {[...posts.reverse()].map((post) => (
-              <li key={post.id}>
-                <PostPreview post={post} />
-              </li>
+            {[...posts.reverse()].map((post, index) => (
+              <PostPreview key={post.id} post={post} />
             ))}
           </ul>
           <PaginationButtons baseURL={"/manage/posts"} currentPage={page} isLastPage={isLastPage} />

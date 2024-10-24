@@ -8,7 +8,13 @@ export default async function Page() {
 
   if (error) notFound();
 
-  const { data: profile, error: profileError } = await supabase.from("profiles").select("*").eq("user_id", data.user?.id).single();
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("user_id", data.user?.id)
+    .single();
+
+  if (!profile) notFound();
 
   return <ProfileViewer profile={profile} />;
 }

@@ -1,16 +1,8 @@
 import React from "react";
-import { Database, Tables, Enums } from "@/types/database.types";
 import dayjs from "dayjs";
 import RatingViewer from "../../../../_components/RatingViewer";
 import PostPreviewButtons from "./PostPreviewButtons";
-import { Post } from "@/app/_types/supabaseTypes";
-
-type PostWithBook = Post & {
-  books: {
-    title: string;
-    author: string;
-  };
-};
+import { PostWithBook } from "@/app/_types/supabaseTypes";
 
 function PostPreview({ post }: { post: PostWithBook }) {
   return (

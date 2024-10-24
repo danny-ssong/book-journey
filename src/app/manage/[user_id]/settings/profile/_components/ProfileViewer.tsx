@@ -1,7 +1,8 @@
+import { Profile } from "@/app/_types/supabaseTypes";
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 
-export default async function ProfileViewer({ profile }: { profile: any }) {
+export default async function ProfileViewer({ profile }: { profile: Profile }) {
   const supabase = createClient();
   const { data: user, error } = await supabase.auth.getUser();
   return (
