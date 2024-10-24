@@ -7,7 +7,7 @@ export default async function getUserPosts(size: number, page: number = 1) {
   const supabase = createClient();
   const { data: userData, error } = await supabase.auth.getUser();
 
-  if (error) console.log(error);
+  if (error) console.error(error);
   if (!userData?.user || error) return { posts: [], isLastPage: false };
 
   const start = size * (page - 1);

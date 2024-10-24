@@ -11,7 +11,7 @@ export default async function deletePost(postId: number) {
   const { data: postData, error: postError } = await supabase.from("posts").select("*").eq("id", postId);
 
   if (postError) {
-    console.log(postError.message);
+    console.error(postError.message);
     return;
   }
 

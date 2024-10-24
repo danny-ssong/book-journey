@@ -8,7 +8,7 @@ export default async function getPostsByIsbn(isbn: string): Promise<Post[] | und
   const { data, error } = await supabase.from("posts").select("*").eq("isbn", isbn);
 
   if (error) {
-    console.log(error);
+    console.error(error);
     return;
   }
 

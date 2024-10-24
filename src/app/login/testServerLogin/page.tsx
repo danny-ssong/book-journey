@@ -15,7 +15,7 @@ export default async function Page() {
   });
 
   if (error) {
-    console.log("error");
+    console.error("error");
     console.error("Error during sign-in:", error.message);
   }
 

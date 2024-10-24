@@ -12,7 +12,7 @@ export default async function getPostWithBook(postId: string): Promise<PostWithB
   const supabse = createClient();
   const { data, error } = await supabse.from("posts").select(`*, books(title, author)`).eq("id", postId);
 
-  if (error) console.log(error);
+  if (error) console.error(error);
 
   if (data) {
     return data[0];

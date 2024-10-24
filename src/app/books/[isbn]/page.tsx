@@ -5,16 +5,13 @@ import dayjs from "dayjs";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import getPostsByIsbn from "./_lib/getPostsByIsbn";
+import BookPostPreview from "./_components/BookPostPreview";
 
 type Props = {
   params: {
     isbn: string;
   };
 };
-//isbn
-//ISBN10(10자리) 또는 ISBN13(13자리) 형식의 국제 표준 도서번호(International Standard Book Number)
-// ISBN10 또는 ISBN13 중 하나 이상 포함
-// 두 값이 모두 제공될 경우 공백(' ')으로 구분
 
 export default async function Page({ params }: Props) {
   let { isbn } = params;
@@ -39,20 +36,11 @@ export default async function Page({ params }: Props) {
           <p>{book.contents}</p>
         </div>
       </div>
-      <div className="mt-20 border-t-2">
+      <div className="mt-20 border-t-2 mx-24">
         <ul>
           {posts?.map((post) => (
             <li key={post.id}>
-              <div>
-                <div>
-                  <p>id</p>
-                </div>
-                <div>
-                  <h3>title</h3>
-                  <RatingViewer rating={5} />
-                  <p>content</p>
-                </div>
-              </div>
+              <BookPostPreview post={post} />
             </li>
           ))}
         </ul>

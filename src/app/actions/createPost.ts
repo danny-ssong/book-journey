@@ -13,12 +13,12 @@ export async function createPost(book: SearchedBook, content: string, startDate:
   const { data, error } = await supabase.from("posts").insert([post]).select();
 
   if (resultError) {
-    console.log(`${resultError.details} \n${resultError.message}`);
+    console.error(`${resultError.details} \n${resultError.message}`);
     return;
   }
 
   if (error) {
-    console.log(`${error.details} \n${error.message}`);
+    console.error(`${error.details} \n${error.message}`);
     return;
   }
 

@@ -19,7 +19,7 @@ export async function updatePost(
   const { data, error } = await supabase.from("posts").update(post).eq("id", id).select();
 
   if (error) {
-    console.log(`${error.details} \n${error.message}`);
+    console.error(`${error.details} \n${error.message}`);
     alert(`${error.details} \n${error.message}`);
     return;
   }
