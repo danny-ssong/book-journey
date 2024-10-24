@@ -13,7 +13,7 @@ export default function Page() {
           //localhost:3000/auth/callback
           queryParams: {
             access_type: "offline",
-            prompt: "consent",
+            // prompt: "consent",// 로그인할 때 마다 권한 재확인하는 창 표시
           },
         },
       });

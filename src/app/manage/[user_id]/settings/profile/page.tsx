@@ -1,30 +1,14 @@
-"use client";
+import { createClient } from "@/utils/supabase/server";
+import Profile from "./_components/Profile";
+import { notFound } from "next/navigation";
 
-import Button from "@/app/_components/Button";
-import Link from "next/link";
+export default async function Page() {
+  const supabase = createClient();
+  const { data, error } = await supabase.auth.getUser();
 
-export default function Page() {
-  const handleSubmit = () => {};
+  if (error) notFound();
 
-  return (
-    <main>
-      <form onSubmit={handleSubmit} className=" flex flex-col border w-[600px] h-[800px]">
-        <div className="flex items-center">
-          <div className=" rounded-full w-24 h-24 overflow-hidden">
-            <img className="object-contain" src="https://picsum.photos/200/300" alt="user img" />
-          </div>
-          <div className="flex flex-1 justify-center">
-            <label className="text-xl mr-4">닉네임</label>
-            <input className="text-xl" value={"별명"} />
-          </div>
-        </div>
-        <textarea className="px-2 py-10 w-full flex-1 resize-none">
-          소개글 sfssss소개글 sfssss소개글 sfssss소개글 sfssss소개글 sfssss소개글 sfssss 소개글 sfssss소개글 sfssss
-        </textarea>
-      </form>
-      <div className="flex justify-end">
-        <Button>저장</Button>
-      </div>
-    </main>
-  );
+  const profile = await supabase.from("profiles").select("*").eq("user_id", data.user?.id).single();
+
+  return <Profile profile={profile} />;
 }
