@@ -1,3 +1,4 @@
+import getUserOnServer from "@/app/_lib/getUserOnServer";
 import { createClient } from "@/utils/supabase/server";
 
 type Props = {
@@ -9,8 +10,8 @@ type Props = {
 
 export default async function Layout({ children, params }: Props) {
   const supabse = createClient();
-  const { data, error } = await supabse.auth.getUser();
-  if (data.user?.id !== params.user_id) {
+  const user = await getUserOnServer();
+  if (user?.id !== params.user_id) {
     return <>please login</>;
   }
   return <>{children}</>;

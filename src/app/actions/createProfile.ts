@@ -1,18 +1,13 @@
 "use server";
 import { createClient } from "@/utils/supabase/server";
+import getUserOnServer from "../_lib/getUserOnServer";
 
 export default async function createUserProfileIfNotExists() {
   const supabase = createClient();
 
   // 세션 정보에서 유저 정보 가져오기
-  const { data: userData, error: userError } = await supabase.auth.getUser();
+  const user = await getUserOnServer();
 
-  if (userError) {
-    console.error("Error fetching session:", userError);
-    return;
-  }
-
-  const user = userData?.user;
   if (!user) {
     console.error("No user found in session");
     return;

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { User } from "@supabase/supabase-js";
+import getUserOnClient from "../_lib/getUserOnClient";
 
 function LoginStatus() {
   const supabase = createClient();
@@ -13,9 +14,9 @@ function LoginStatus() {
 
   useEffect(() => {
     const checkLoginStatus = async () => {
-      const { data, error } = await supabase.auth.getUser();
-      if (data?.user) {
-        setUser(data.user);
+      const user = await getUserOnClient();
+      if (user) {
+        setUser(user);
       }
     };
     checkLoginStatus();

@@ -2,6 +2,7 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
+import getUserOnServer from "../_lib/getUserOnServer";
 
 export async function updatePost(
   id: number,
@@ -13,7 +14,7 @@ export async function updatePost(
   title: string
 ) {
   const supabase = createClient();
-  const { data: user, error: userError } = await supabase.auth.getUser();
+  const user = await getUserOnServer();
 
   const post = { content, startDate, endDate, isbn: book.isbn, rating, title };
   const { data, error } = await supabase.from("posts").update(post).eq("id", id).select();
@@ -25,7 +26,7 @@ export async function updatePost(
   }
 
   if (data) {
-    const userId = user.user?.id;
+    const userId = user?.id;
     if (userId) revalidatePath(`/manage/${userId}/posts`);
 
     revalidatePath(`/books${book.isbn}`);

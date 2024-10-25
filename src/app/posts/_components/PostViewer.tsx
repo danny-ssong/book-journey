@@ -3,11 +3,11 @@ import dayjs from "dayjs";
 import RatingViewer from "../../_components/RatingViewer";
 import Link from "next/link";
 import { PostWithBook } from "@/app/_types/supabaseTypes";
+import getUserOnServer from "@/app/_lib/getUserOnServer";
 
 export default async function PostViewer({ post }: { post: PostWithBook }) {
-  const supabse = createClient();
-  const { data, error } = await supabse.auth.getUser();
-  const isOwner = data.user?.id === post.user_id;
+  const user = await getUserOnServer();
+  const isOwner = user?.id === post.user_id;
 
   return (
     <div>

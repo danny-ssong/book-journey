@@ -1,10 +1,10 @@
+import getUserOnServer from "@/app/_lib/getUserOnServer";
 import { Profile } from "@/app/_types/supabaseTypes";
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 
 export default async function ProfileViewer({ profile }: { profile: Profile }) {
-  const supabase = createClient();
-  const { data: user, error } = await supabase.auth.getUser();
+  const user = await getUserOnServer();
   return (
     <div>
       <div className=" flex flex-col border w-[600px] h-[500px]">
@@ -20,7 +20,7 @@ export default async function ProfileViewer({ profile }: { profile: Profile }) {
         <div className="px-2 mt-5 py-2 w-full flex-1 border-t">{profile.bio}</div>
       </div>
       <div className="flex justify-end mt-5">
-        <Link className="px-4 py-2 border rounded-full" href={`/manage/${user.user?.id}/settings/profile/edit`}>
+        <Link className="px-4 py-2 border rounded-full" href={`/manage/${user?.id}/settings/profile/edit`}>
           수정
         </Link>
       </div>

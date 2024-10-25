@@ -1,17 +1,12 @@
 "use server";
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
+import getUserOnServer from "../_lib/getUserOnServer";
 
 export default async function updateProfile(username: string, bio: string, image: File | null) {
   const supabase = createClient();
-  const { data: userData, error: userError } = await supabase.auth.getUser();
+  const user = await getUserOnServer();
 
-  if (userError) {
-    console.error("Error fetching session:", userError);
-    return;
-  }
-
-  const user = userData?.user;
   if (!user) {
     console.error("No user found in session");
     return;
@@ -25,13 +20,13 @@ export default async function updateProfile(username: string, bio: string, image
       bio: bio,
       favorite_authors: [],
     })
-    .eq("user_id", userData.user.id);
+    .eq("user_id", user.id);
 
   if (insertError) {
     console.error("Error inserting profile:", insertError);
     return;
   }
-  revalidatePath(`/manage/${userData.user.id}/settings/profile`);
+  revalidatePath(`/manage/${user.id}/settings/profile`);
 
   return true;
 }

@@ -1,9 +1,10 @@
 import { createClient } from "@/utils/supabase/server";
 import { User } from "@supabase/supabase-js";
+import getUserOnServer from "../_lib/getUserOnServer";
 
 export default async function Page() {
   const supabase = createClient();
-  const { data, error } = await supabase.auth.getUser();
+  const user = await getUserOnServer();
 
-  return <div>feed {data.user?.email}</div>;
+  return <div>feed {user?.email}</div>;
 }

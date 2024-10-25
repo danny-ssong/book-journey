@@ -1,6 +1,4 @@
-import RatingViewer from "@/app/_components/RatingViewer";
 import searchBooks from "@/app/actions/searchBooks";
-import getUserPosts from "@/app/manage/[user_id]/posts/_lib/getPosts";
 import dayjs from "dayjs";
 import Image from "next/image";
 import { notFound } from "next/navigation";

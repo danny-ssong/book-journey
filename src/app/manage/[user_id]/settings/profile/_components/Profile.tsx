@@ -1,5 +1,6 @@
 "use client";
 import Button from "@/app/_components/Button";
+import getUserOnClient from "@/app/_lib/getUserOnClient";
 import updateProfile from "@/app/actions/updateProfile";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
@@ -16,8 +17,8 @@ function Profile({ profile }: { profile: any }) {
     e.preventDefault();
     const result = await updateProfile(username, bio, image);
     if (result) {
-      const { data: user, error } = await supabase.auth.getUser();
-      const path = `/manage/${user.user?.id}/settings/profile`;
+      const user = await getUserOnClient();
+      const path = `/manage/${user?.id}/settings/profile`;
       router.push(path);
     } else {
       alert("프로필 수정 실패");
