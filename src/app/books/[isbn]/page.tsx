@@ -4,7 +4,7 @@ import getUserPosts from "@/app/manage/[user_id]/posts/_lib/getPosts";
 import dayjs from "dayjs";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import getPostsByIsbn from "./_lib/getPostsByIsbn";
+import getPostsWithUserProfileByIsbn from "./_lib/getPostsWithUserProfileByIsbn";
 import BookPostPreview from "./_components/BookPostPreview";
 
 type Props = {
@@ -19,7 +19,7 @@ export default async function Page({ params }: Props) {
   const response = await searchBooks(isbn, 5, 1);
   if (response.documents.length === 0) notFound();
   const book = response.documents[0];
-  const posts = await getPostsByIsbn(isbn);
+  const postWithProfiles = await getPostsWithUserProfileByIsbn(isbn);
 
   return (
     <div className="w-[1000px]">
@@ -38,9 +38,9 @@ export default async function Page({ params }: Props) {
       </div>
       <div className="mt-20 border-t-2 mx-24">
         <ul>
-          {posts?.map((post) => (
-            <li key={post.id}>
-              <BookPostPreview post={post} />
+          {postWithProfiles?.map((postWithProfile) => (
+            <li key={postWithProfile.id}>
+              <BookPostPreview postWithProfile={postWithProfile} />
             </li>
           ))}
         </ul>
