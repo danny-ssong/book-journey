@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { createPost } from "@/app/actions/createPost";
 import { updatePost } from "@/app/actions/updatePost";
 import { Post } from "@/app/_types/supabaseTypes";
+import refreshProfileMostReadAuthors from "@/app/actions/refreshProfileMostReadAuthors";
 
 type Props = {
   book: SearchedBook | undefined;
@@ -34,7 +35,7 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
     } else {
       postId = await createPost(book, content, startDate, endDate, rating, title);
     }
-
+    refreshProfileMostReadAuthors();
     if (postId) {
       router.push(`/posts/${postId}`);
     }
