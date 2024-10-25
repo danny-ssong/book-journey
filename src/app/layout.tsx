@@ -17,8 +17,8 @@ export default async function RootLayout({
     <html lang="en">
       <body className="w-full h-screen">
         <div className="w-full h-full flex flex-col">
-          <header className="w-full min-h-[64px] flex bg-slate-500 justify-between items-center fixed">
-            <div className="flex justify-between items-center w-[800px] pl-10">
+          <header className="w-full min-h-[64px] flex bg-slate-500 justify-between items-center fixed px-10">
+            <div className="flex justify-between items-center w-[800px]">
               <div>Book-Journey Logo</div>
               <nav>
                 <ul className="flex gap-10">
@@ -32,7 +32,7 @@ export default async function RootLayout({
               </nav>
               <BookSearchArea />
             </div>
-            {!!user ? <LogoutButton /> : <Link href="/login">로그인</Link>}
+            <div className="px-4 py-2">{!!user ? <LogoutButton /> : <Link href="/login">로그인</Link>}</div>
           </header>
           <div className="px-10 mt-[64px] pt-10 bg-red-50 flex flex-1 ">
             <aside className="min-w-[200px] bg-blue-200 px-5 py-4">

@@ -3,8 +3,10 @@ import dayjs from "dayjs";
 import RatingViewer from "../../../../_components/RatingViewer";
 import PostPreviewButtons from "./PostPreviewButtons";
 import { PostWithBook } from "@/app/_types/supabaseTypes";
+import getUserOnServer from "@/app/_lib/getUserOnServer";
 
-function PostPreview({ post }: { post: PostWithBook }) {
+async function PostPreview({ post }: { post: PostWithBook }) {
+  const user = await getUserOnServer();
   return (
     <div className="first:border-t-2 flex-col border-b-2 h-[150px] w-[650px] px-2 py-2 group">
       <div className="flex justify-between w-full">
@@ -16,7 +18,7 @@ function PostPreview({ post }: { post: PostWithBook }) {
           <RatingViewer rating={post.rating!} />
           <p>{post.title}</p>
         </div>
-        <PostPreviewButtons postId={post.id} />
+        {user?.id === post.user_id && <PostPreviewButtons postId={post.id} />}
       </div>
       <p className="w-full flex-1 overflow-hidden text-sm text-ellipsis line-clamp-3 ">{post.content}</p>
     </div>

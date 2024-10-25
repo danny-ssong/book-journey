@@ -1,25 +1,27 @@
 import getUserOnServer from "@/app/_lib/getUserOnServer";
+import { PostWithBook } from "@/app/_types/supabaseTypes";
 import { createClient } from "@/utils/supabase/server";
 
-export default async function getUserPosts(size: number, page: number = 1) {
+export default async function getUserPosts(
+  userId: string,
+  size: number,
+  page: number = 1
+): Promise<{ postsWithBook: PostWithBook[]; isLastPage: boolean }> {
   const supabase = createClient();
-  const user = await getUserOnServer();
-
-  if (!user) return { posts: [], isLastPage: false };
 
   const start = size * (page - 1);
   const end = start + size - 1;
-  const { data: posts, error: postsError } = await supabase
+  const { data: postsWithBook, error: postsError } = await supabase
     .from("posts")
-    .select(`*, books (title, author)`)
-    .eq("user_id", user.id)
+    .select(`*, books (*)`)
+    .eq("user_id", userId)
     .range(start, end);
 
-  if (!posts || postsError) return { posts: [], isLastPage: false };
+  if (!postsWithBook || postsError) return { postsWithBook: [], isLastPage: false };
 
-  const { count: postCount, error: countError } = await supabase.from("posts").select("*", { count: "exact" }).eq("user_id", user.id);
+  const { count: postCount, error: countError } = await supabase.from("posts").select("*", { count: "exact" }).eq("user_id", userId);
 
   const isLastPage = end >= (postCount ?? 0);
 
-  return { posts, isLastPage };
+  return { postsWithBook, isLastPage };
 }

@@ -21,7 +21,7 @@ export default async function Page({ params }: Props) {
 
   return (
     <div className="w-[1000px]">
-      <div className="flex mx-24">
+      <div className="flex mx-24 px-4 py-4">
         <div className="w-[120px] h-[180px] mr-4">
           <Image src={book.thumbnail} alt={"m"} width={120} height={174} />
         </div>
@@ -29,12 +29,12 @@ export default async function Page({ params }: Props) {
           <h3>{book.title}</h3>
           <p>{book.authors[0]}</p>
           <p>
-            {book.publisher} {dayjs(book.datetime).format("YYYY-MM-DD")}{" "}
+            {book.publisher} {dayjs(book.datetime).format("YYYY-MM-DD")}
           </p>
           <p>{book.contents}</p>
         </div>
       </div>
-      <div className="mt-20 border-t-2 mx-24">
+      <div className="mt-10 border-t-2 mx-24">
         <ul>
           {postWithProfiles?.map((postWithProfile) => (
             <li key={postWithProfile.id}>
