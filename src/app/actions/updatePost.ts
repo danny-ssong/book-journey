@@ -21,7 +21,6 @@ export async function updatePost(
 
   if (error) {
     console.error(`${error.details} \n${error.message}`);
-    alert(`${error.details} \n${error.message}`);
     return;
   }
 

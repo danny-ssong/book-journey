@@ -19,7 +19,7 @@ export default function Page() {
     queryKey: ["search", query, page],
     queryFn: () => searchBooks(query, 10, page),
     select: (response) => {
-      return { books: response.documents, isLastPage: response.meta.is_end };
+      return { books: response?.documents, isLastPage: response?.meta.is_end };
     },
   });
 

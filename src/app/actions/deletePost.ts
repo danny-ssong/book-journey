@@ -3,8 +3,6 @@ import { Tables } from "@/types/database.types";
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 
-type Post = Tables<"posts">;
-
 export default async function deletePost(postId: number) {
   const supabase = createClient();
 

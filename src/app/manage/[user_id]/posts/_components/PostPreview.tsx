@@ -10,7 +10,7 @@ async function PostPreview({ post }: { post: PostWithBook }) {
   return (
     <div className="first:border-t-2 flex-col border-b-2 h-[150px] w-[650px] px-2 py-2 group">
       <div className="flex justify-between w-full">
-        <p className="text-md font-medium">{post.books.title}</p>
+        <p className="text-md font-semibold">{post.books.title}</p>
         <div>{dayjs(post.created_at).format("YYYY-MM-DD")}</div>
       </div>
       <div className="flex justify-between items-center">

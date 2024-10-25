@@ -75,33 +75,40 @@ export type Database = {
             referencedRelation: "books"
             referencedColumns: ["isbn"]
           },
+          {
+            foreignKeyName: "posts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
         ]
       }
       profiles: {
         Row: {
           bio: string | null
           created_at: string
-          favorite_authors: string[] | null
           id: string
           imageURL: string | null
+          mostRead_authors: string[] | null
           user_id: string
           username: string | null
         }
         Insert: {
           bio?: string | null
           created_at?: string
-          favorite_authors?: string[] | null
           id?: string
           imageURL?: string | null
+          mostRead_authors?: string[] | null
           user_id?: string
           username?: string | null
         }
         Update: {
           bio?: string | null
           created_at?: string
-          favorite_authors?: string[] | null
           id?: string
           imageURL?: string | null
+          mostRead_authors?: string[] | null
           user_id?: string
           username?: string | null
         }

@@ -16,6 +16,13 @@ export default async function ProfileViewer({ profile }: { profile: Profile }) {
           </div>
         </div>
         <div className="px-2 mt-5 py-2 w-full flex-1 border-t">{profile.bio}</div>
+        <ul className="flex mt-2 justify-end">
+          {profile.mostRead_authors?.map((author) => (
+            <li key={author} className="px-2 py-2">
+              {author}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

@@ -4,6 +4,8 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import getPostsWithUserProfileByIsbn from "./_lib/getPostsWithUserProfileByIsbn";
 import BookPostPreview from "./_components/BookPostPreview";
+import Link from "next/link";
+import BookDetail from "./_components/BookDetail";
 
 type Props = {
   params: {
@@ -15,32 +17,27 @@ export default async function Page({ params }: Props) {
   let { isbn } = params;
 
   const response = await searchBooks(isbn, 5, 1);
-  if (response.documents.length === 0) notFound();
-  const book = response.documents[0];
+  if (response?.documents.length === 0) notFound();
+  const book = response?.documents[0];
+  if (!book) notFound();
   const postWithProfiles = await getPostsWithUserProfileByIsbn(isbn);
 
   return (
-    <div className="w-[1000px]">
-      <div className="flex mx-24 px-4 py-4">
-        <div className="w-[120px] h-[180px] mr-4">
-          <Image src={book.thumbnail} alt={"m"} width={120} height={174} />
-        </div>
-        <div className="flex-1">
-          <h3>{book.title}</h3>
-          <p>{book.authors[0]}</p>
-          <p>
-            {book.publisher} {dayjs(book.datetime).format("YYYY-MM-DD")}
-          </p>
-          <p>{book.contents}</p>
-        </div>
+    <div className="w-[1000px] mx-24">
+      <BookDetail book={book} />
+      <div className="flex justify-end items-center my-2">
+        <Link href={`/posts/new?isbn=${isbn}`}>
+          <div className="px-4 py-2 rounded-xl border">글 쓰기</div>
+        </Link>
       </div>
-      <div className="mt-10 border-t-2 mx-24">
+      <div className="border-t-2">
         <ul>
-          {postWithProfiles?.map((postWithProfile) => (
-            <li key={postWithProfile.id}>
-              <BookPostPreview postWithProfile={postWithProfile} />
-            </li>
-          ))}
+          {postWithProfiles &&
+            [...postWithProfiles.reverse()].map((postWithProfile) => (
+              <li key={postWithProfile.id}>
+                <BookPostPreview postWithProfile={postWithProfile} />
+              </li>
+            ))}
         </ul>
       </div>
     </div>
