@@ -2,6 +2,7 @@
 import { use, useEffect, useRef, useState } from "react";
 import searchBooks from "@/app/actions/searchBooks";
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 
 export default function MainBookSearchInput() {
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -104,8 +105,9 @@ export default function MainBookSearchInput() {
               className="px-4 py-2 cursor-pointer flex justify-between gap-4"
               onClick={() => handleSelectBook(book)}
             >
-              <span className="w-16 h-16 truncate">
-                <img src={book.thumbnail} alt={book.title} />
+              <span className="w-12 h-18 truncate">
+                {/* <img src={book.thumbnail} alt={book.title} /> */}
+                <Image src={book.thumbnail} alt={book.title} width={48} height={64} />
               </span>
               <p className="text-nowrap truncate max-w-[350px]">{book.title}</p>
               <p className="text-nowrap truncate max-w-[350px]">{book.authors[0]}</p>

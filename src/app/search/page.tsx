@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import PaginationButtons from "../manage/posts/_components/PaginationButtons";
+import Image from "next/image";
 
 //author로 redirect하는 경우 나중에 searchPage가 아니라 authorPage를 만들어서 next에서 캐싱해놔도 될 듯z
 // export default function Page({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
@@ -51,10 +52,16 @@ export default function Page() {
           <ul>
             {books?.map((book: SearchedBook, i: number) => (
               <li key={i}>
-                <div className="px-4 py-2 flex gap-4">
+                <div className="px-4 py-2 flex gap-4 mb-6">
                   <Link href={`/books/${book.isbn}`}>
                     <div className="w-[120px] h-[160px] cursor-pointer">
-                      <img src={book.thumbnail} alt={book.title} className="overflow-hidden border object-cover" />
+                      <Image
+                        src={book.thumbnail}
+                        alt={book.title}
+                        width={120}
+                        height={160}
+                        className="overflow-hidden border object-cover"
+                      />
                     </div>
                   </Link>
                   <div className="flex-1 flex flex-col gap-2">

@@ -7,7 +7,7 @@ export default async function ProfileViewer({ profile }: { profile: Profile }) {
     <div className=" flex flex-col border bg-white">
       <div className="flex items-center justify-center px-4 py-2 border-b">
         <div className="rounded-full w-24 h-24 overflow-hidden">
-          <img className="object-contain" src={"https://picsum.photos/200/300"} alt="user img" />
+          {/* <img className="object-contain" src={"https://picsum.photos/200/300"} alt="user img" /> */}
         </div>
         <div className="flex flex-1 justify-center">
           <div className="text-xl">{profile.username}</div>

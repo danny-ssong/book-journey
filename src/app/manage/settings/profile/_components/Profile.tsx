@@ -11,7 +11,6 @@ function Profile({ profile }: { profile: any }) {
   const [bio, setBio] = useState<string>(profile.bio);
   const [image, setImage] = useState<File | null>(null);
   const router = useRouter();
-  const supabase = createClient();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,7 +36,7 @@ function Profile({ profile }: { profile: any }) {
       <div className=" flex flex-col border w-[600px] bg-white">
         <div className="flex items-center px-4 py-2 border-b">
           <div className=" rounded-full w-24 h-24 overflow-hidden">
-            <img className="object-contain" src={"https://picsum.photos/200/300"} alt="user img" />
+            {/* <img className="object-contain" src={"https://picsum.photos/200/300"} alt="user img" /> */}
           </div>
           <div className="flex flex-1 justify-center">
             <label className="text-xl mr-4">닉네임</label>
