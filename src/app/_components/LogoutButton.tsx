@@ -1,6 +1,6 @@
 export default function LogoutButton() {
   return (
-    <form action="/auth/signout" method="post">
+    <form action={`${process.env.NEXT_PUBLIC_BASE_URL}/auth/signout`} method="post">
       <button className="px-4 py-2">로그아웃</button>
     </form>
   );
