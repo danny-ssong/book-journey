@@ -78,12 +78,12 @@ export default function BookSearchInput({ selectedBook, onSelectBook }: Props) {
   return (
     <div>
       <form
-        className="w-[400px] h-10 flex justify-between items-center bg-slate-200 pl-4 pr-2 rounded-full"
+        className="w-[400px] h-10 flex justify-between items-center bg-white pl-4 pr-2 rounded-full border focus-within:ring-1  focus-within:ring-black"
         onSubmit={(e) => e.preventDefault()}
       >
         <input
           ref={inputRef}
-          className="w-[360px] h-full"
+          className="w-[360px] h-full focus:outline-none "
           type="text"
           onChange={handleSearchInputChange}
           value={selectedBook ? selectedBook.title : searchQuery}

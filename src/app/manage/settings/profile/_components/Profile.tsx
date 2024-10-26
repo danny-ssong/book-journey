@@ -17,8 +17,7 @@ function Profile({ profile }: { profile: any }) {
     e.preventDefault();
     const result = await updateProfile(username, bio, image);
     if (result) {
-      const user = await getUserOnClient();
-      const path = `/manage/${user?.id}/settings/profile`;
+      const path = `/manage/settings/profile`;
       router.push(path);
     } else {
       alert("프로필 수정 실패");
@@ -34,25 +33,27 @@ function Profile({ profile }: { profile: any }) {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div className=" flex flex-col border w-[600px] h-[500px]">
-          <div className="flex items-center">
-            <div className=" rounded-full w-24 h-24 overflow-hidden">
-              <img className="object-contain" src={"https://picsum.photos/200/300"} alt="user img" />
-            </div>
-            <div className="flex flex-1 justify-center">
-              <label className="text-xl mr-4">닉네임</label>
-              <input className="text-xl" value={username} onChange={handleUsernameChange} />
-            </div>
+    <form onSubmit={handleSubmit}>
+      <div className=" flex flex-col border w-[600px] bg-white">
+        <div className="flex items-center px-4 py-2 border-b">
+          <div className=" rounded-full w-24 h-24 overflow-hidden">
+            <img className="object-contain" src={"https://picsum.photos/200/300"} alt="user img" />
           </div>
-          <textarea className="px-2 mt-5 py-2 w-full flex-1 resize-none border-t" value={bio} onChange={handleBioChange} />
+          <div className="flex flex-1 justify-center">
+            <label className="text-xl mr-4">닉네임</label>
+            <input className="text-xl border " value={username} onChange={handleUsernameChange} />
+          </div>
         </div>
-        <div className="flex justify-end mt-5">
-          <Button>저장</Button>
-        </div>
-      </form>
-    </div>
+        <textarea
+          className="px-2 py-2 w-full flex-1 resize-none border min-h-[300px]"
+          value={bio}
+          onChange={handleBioChange}
+        />
+      </div>
+      <div className="flex justify-end mt-5">
+        <Button>저장</Button>
+      </div>
+    </form>
   );
 }
 

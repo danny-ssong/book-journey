@@ -23,17 +23,15 @@ export default async function page({ params }: Props) {
   const { postsWithBook, isLastPage } = await getUserPosts(user.id, size, page);
 
   return (
-    <div className="flex justify-center">
-      <div className="px-4">
-        <h2 className="mb-5 text-xl px-4">글 관리</h2>
-        <div>
-          <ul className="min-h-[500px]">
-            {[...postsWithBook.reverse()].map((post, index) => (
-              <PostPreview key={post.id} post={post} />
-            ))}
-          </ul>
-          <PaginationButtons baseURL={"/manage/posts"} currentPage={page} isLastPage={isLastPage} />
-        </div>
+    <div className="mt-5">
+      <h2 className="mb-5 text-xl px-4">글 관리</h2>
+      <div>
+        <ul className="min-h-[500px] bg-white border">
+          {[...postsWithBook.reverse()].map((post, index) => (
+            <PostPreview key={post.id} post={post} />
+          ))}
+        </ul>
+        <PaginationButtons baseURL={"/manage/posts"} currentPage={page} isLastPage={isLastPage} />
       </div>
     </div>
   );

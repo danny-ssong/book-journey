@@ -8,10 +8,10 @@ function PostForm({ initPost, initBook }: { initPost?: Post; initBook?: Searched
   const [selectedBook, setSelectedBook] = useState<SearchedBook | undefined>(initBook);
 
   return (
-    <>
+    <div className="w-[800px] flex flex-col gap-3">
       <BookSearchInput selectedBook={selectedBook} onSelectBook={setSelectedBook} />
       <PostFormContent book={selectedBook} initPost={initPost} />
-    </>
+    </div>
   );
 }
 

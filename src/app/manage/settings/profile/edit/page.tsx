@@ -14,7 +14,7 @@ export default async function Page() {
   if (!profile) notFound();
 
   return (
-    <div className="ml-5">
+    <div className="mt-5">
       <Profile profile={profile} />
     </div>
   );

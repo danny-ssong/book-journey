@@ -1,8 +1,8 @@
-import PaginationButtons from "@/app/manage/[user_id]/posts/_components/PaginationButtons";
-import PostPreview from "@/app/manage/[user_id]/posts/_components/PostPreview";
-import getUserPosts from "@/app/manage/[user_id]/posts/_lib/getPosts";
-import getProfile from "@/app/manage/[user_id]/posts/_lib/getProfile";
-import ProfileViewer from "@/app/manage/[user_id]/settings/profile/_components/ProfileViewer";
+import PaginationButtons from "@/app/manage/posts/_components/PaginationButtons";
+import PostPreview from "@/app/manage/posts/_components/PostPreview";
+import getUserPosts from "@/app/manage/posts/_lib/getPosts";
+import getProfile from "@/app/manage/posts/_lib/getProfile";
+import ProfileViewer from "@/app/manage/settings/profile/_components/ProfileViewer";
 import getPostWithBook from "@/app/posts/[postId]/_lib/getPostWithBook";
 import { notFound } from "next/navigation";
 

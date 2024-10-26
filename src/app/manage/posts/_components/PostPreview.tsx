@@ -1,6 +1,6 @@
 import React from "react";
 import dayjs from "dayjs";
-import RatingViewer from "../../../../_components/RatingViewer";
+import RatingViewer from "../../../_components/RatingViewer";
 import PostPreviewButtons from "./PostPreviewButtons";
 import { PostWithBook } from "@/app/_types/supabaseTypes";
 import getUserOnServer from "@/app/_lib/getUserOnServer";
@@ -8,7 +8,7 @@ import getUserOnServer from "@/app/_lib/getUserOnServer";
 async function PostPreview({ post }: { post: PostWithBook }) {
   const user = await getUserOnServer();
   return (
-    <div className="first:border-t-2 flex-col border-b-2 h-[150px] w-[650px] px-2 py-2 group">
+    <div className="last:border-none flex-col border-b h-[160px] w-[650px] px-6 py-4 group">
       <div className="flex justify-between w-full">
         <p className="text-md font-semibold">{post.books.title}</p>
         <div>{dayjs(post.created_at).format("YYYY-MM-DD")}</div>

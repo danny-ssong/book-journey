@@ -19,7 +19,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className="w-full h-screen">
         <div className="w-full h-full flex flex-col">
-          <header className="w-full min-h-[64px] flex bg-slate-500 justify-between items-center fixed px-10">
+          <header className="w-full min-h-[64px] flex bg-white justify-between items-center fixed px-10">
             <div className="flex justify-between items-center w-[800px]">
               <div>Book-Journey Logo</div>
               <HeaderNavLinks />
@@ -27,7 +27,7 @@ export default async function RootLayout({
             </div>
             <UserLoginStatus user={user} />
           </header>
-          <div className="px-10 mt-[64px] pt-10 bg-slate-100 flex flex-1 ">
+          <div className="px-10 mt-[64px] pt-10 bg-slate-50 flex flex-1 ">
             <SidebarMenu user={user} />
             <ReactQueryProvider>
               <main className="mx-auto px-4 md:px-10 lg:px-20">{children}</main>

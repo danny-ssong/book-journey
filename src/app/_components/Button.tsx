@@ -14,7 +14,7 @@ export default function Button({ children, onClick = () => {}, type = "submit" }
       onClick={() => {
         onClick();
       }}
-      className="px-4 py-2 border-2 rounded-full"
+      className="px-4 py-2 border border-black rounded-full hover:bg-slate-200 bg-white"
     >
       {children}
     </button>

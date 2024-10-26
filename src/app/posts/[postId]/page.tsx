@@ -11,7 +11,7 @@ export default async function Page({ params }: { params: { [key: string]: string
   if (!postWithBook) notFound();
 
   return (
-    <div className="w-[800px] px-4 flex flex-col gap-5">
+    <div className="mt-5">
       <PostViewer post={postWithBook} />
     </div>
   );

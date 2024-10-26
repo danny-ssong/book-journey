@@ -12,7 +12,7 @@ export default function Rating({ rating, onClickStar }: Props) {
         const starValue = index + 1;
         return (
           <span
-            className={`${starValue > rating ? "text-gray-300" : "text-yellow-400"} cursor-pointer text-3xl`}
+            className={`${starValue > rating ? "text-gray-300" : "text-yellow-400"} cursor-pointer text-3xl `}
             key={index}
             onClick={onClickStar ? () => onClickStar(starValue) : undefined}
           >

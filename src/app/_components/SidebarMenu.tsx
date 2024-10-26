@@ -10,10 +10,10 @@ export default function SidebarMenu({ user }: { user: User | null }) {
             <Link href="/posts/new">글쓰기</Link>
           </li>
           <li>
-            <Link href={`/manage/${user.id}/posts`}>글 관리</Link>
+            <Link href={`/manage/posts`}>글 관리</Link>
           </li>
           <li>
-            <Link href={`/manage/${user.id}/settings/profile`}>프로필 관리</Link>
+            <Link href={`/manage/settings/profile`}>프로필 관리</Link>
           </li>
         </ul>
       ) : (

@@ -18,7 +18,6 @@ export default async function updateProfile(username: string, bio: string, image
       username: username,
       // imageURL: undefined,
       bio: bio,
-      favorite_authors: [],
     })
     .eq("user_id", user.id);
 
@@ -26,7 +25,7 @@ export default async function updateProfile(username: string, bio: string, image
     console.error("Error inserting profile:", insertError);
     return;
   }
-  revalidatePath(`/manage/${user.id}/settings/profile`);
+  revalidatePath(`/manage/settings/profile`);
 
   return true;
 }

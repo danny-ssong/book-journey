@@ -23,12 +23,12 @@ export default async function Page({ params }: Props) {
   const postWithProfiles = await getPostsWithUserProfileByIsbn(isbn);
 
   return (
-    <div className="w-[1000px] mx-24">
+    <div className="w-[800px] bg-white">
       <BookDetail book={book} />
       <div className="flex justify-end items-center my-2">
-        <Link href={`/posts/new?isbn=${isbn}`}>
-          <div className="px-4 py-2 rounded-xl border">글 쓰기</div>
-        </Link>
+        <div className="px-4 py-2 rounded-xl border hover:bg-slate-100">
+          <Link href={`/posts/new?isbn=${isbn}`}>글 쓰기</Link>
+        </div>
       </div>
       <div className="border-t-2">
         <ul>

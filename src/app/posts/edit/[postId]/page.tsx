@@ -19,7 +19,7 @@ export default async function Page({ params }: { params: { postId: string } }) {
   const book = response?.documents[0];
 
   return (
-    <div className="w-[800px] px-4 flex flex-col gap-5">
+    <div className="mt-5">
       <PostForm initBook={book} initPost={postWithBook} />
     </div>
   );
