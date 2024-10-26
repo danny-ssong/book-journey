@@ -4,5 +4,5 @@ export default async function Home() {
   //메인 (바로 글 관리)
   //사이드 오른쪽 추천??
 
-  return <div> 책을 읽고 기록을 남겨보세요!</div>;
+  return <div className="mt-5"> 책을 읽고 기록을 남겨보세요!</div>;
 }

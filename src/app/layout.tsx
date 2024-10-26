@@ -19,7 +19,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className="w-full h-screen">
         <div className="w-full h-full flex flex-col">
-          <header className="w-full min-h-[64px] flex bg-white justify-between items-center fixed px-10">
+          <header className="w-full min-h-[64px] flex bg-white justify-between items-center fixed px-10 border">
             <div className="flex justify-between items-center w-[800px]">
               <div>Book-Journey Logo</div>
               <HeaderNavLinks />
