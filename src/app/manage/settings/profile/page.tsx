@@ -15,7 +15,7 @@ export default async function Page() {
   if (!profile) notFound();
 
   return (
-    <div className="mt-5">
+    <div className="mt-5 w-[600px]">
       <ProfileViewer profile={profile} />
       <div className="flex justify-end mt-5">
         <Button>

@@ -8,7 +8,7 @@ import getUserOnServer from "@/app/_lib/getUserOnServer";
 async function PostPreview({ post }: { post: PostWithBook }) {
   const user = await getUserOnServer();
   return (
-    <div className="last:border-none flex-col border-b h-[160px] w-[650px] px-6 py-4 group">
+    <div className="last:border-none flex-col border-b h-[160px] px-6 py-4 group">
       <div className="flex justify-between w-full">
         <p className="text-md font-semibold">{post.books.title}</p>
         <div>{dayjs(post.created_at).format("YYYY-MM-DD")}</div>

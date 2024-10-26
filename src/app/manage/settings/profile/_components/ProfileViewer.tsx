@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default async function ProfileViewer({ profile }: { profile: Profile }) {
   return (
-    <div className=" flex flex-col border w-[600px] bg-white">
+    <div className=" flex flex-col border bg-white">
       <div className="flex items-center justify-center px-4 py-2 border-b">
         <div className="rounded-full w-24 h-24 overflow-hidden">
           <img className="object-contain" src={"https://picsum.photos/200/300"} alt="user img" />
