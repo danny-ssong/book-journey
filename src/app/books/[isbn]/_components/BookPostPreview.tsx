@@ -9,7 +9,7 @@ type Props = {
 
 export default function BookPostPreview({ postWithProfile }: Props) {
   return (
-    <div className=" flex-col border-b-2 h-[180px] px-2 py-2">
+    <div className="last:border-none flex-col border-b-2 h-[180px] px-2 py-2">
       <div className="flex justify-between w-full mb-2">
         <div>
           <RatingViewer rating={postWithProfile.rating!} />

@@ -14,7 +14,7 @@ export default async function NewPostPage({ searchParams }: Props) {
   const initBook = response?.documents && response?.documents?.length > 0 ? response.documents[0] : undefined;
 
   return (
-    <div className="w-[800px] px-4 flex flex-col gap-5">
+    <div className="w-[800px] mt-5">
       <PostForm initBook={initBook} />
     </div>
   );

@@ -26,7 +26,7 @@ export default async function Page({ params }: Props) {
   const postWithProfiles = await getPostsWithUserProfileByIsbn(isbn);
 
   return (
-    <div className="w-[800px] bg-white">
+    <div className="w-[800px] bg-white border">
       <BookDetail book={book} />
       <div className="flex justify-end items-center my-2">
         <div className="px-4 py-2 rounded-xl border hover:bg-slate-100">
@@ -37,9 +37,7 @@ export default async function Page({ params }: Props) {
         <ul>
           {postWithProfiles &&
             [...postWithProfiles.reverse()].map((postWithProfile) => (
-              <li key={postWithProfile.id}>
-                <BookPostPreview postWithProfile={postWithProfile} />
-              </li>
+              <BookPostPreview key={postWithProfile.id} postWithProfile={postWithProfile} />
             ))}
         </ul>
       </div>
@@ -58,5 +56,5 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const book = await getBook(params.isbn);
   if (!book) return { title: "Book Not Found" };
-  return { title: `${book.username} 정보` };
+  return { title: `${book.title} 책 정보` };
 }
