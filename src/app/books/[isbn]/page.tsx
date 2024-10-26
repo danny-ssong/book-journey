@@ -6,6 +6,9 @@ import getPostsWithUserProfileByIsbn from "./_lib/getPostsWithUserProfileByIsbn"
 import BookPostPreview from "./_components/BookPostPreview";
 import Link from "next/link";
 import BookDetail from "./_components/BookDetail";
+import { getBooks } from "@/app/actions/forGenerateStaticParams/getBooks";
+import { getBook } from "@/app/actions/forGenerateStaticParams/getBook";
+import { Metadata } from "next";
 
 type Props = {
   params: {
@@ -42,4 +45,18 @@ export default async function Page({ params }: Props) {
       </div>
     </div>
   );
+}
+
+export async function generateStaticParams() {
+  const books = await getBooks();
+  if (!books) return [];
+  return books?.map((book) => ({
+    isbn: book.isbn,
+  }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const book = await getBook(params.isbn);
+  if (!book) return { title: "Book Not Found" };
+  return { title: `${book.username} 정보` };
 }

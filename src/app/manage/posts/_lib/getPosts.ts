@@ -10,7 +10,7 @@ export default async function getUserPosts(
   const supabase = createClient();
 
   const start = size * (page - 1);
-  const end = start + size - 1;
+  const end = start + size;
   const { data: postsWithBook, error: postsError } = await supabase
     .from("posts")
     .select(`*, books (*)`)
@@ -19,7 +19,10 @@ export default async function getUserPosts(
 
   if (!postsWithBook || postsError) return { postsWithBook: [], isLastPage: false };
 
-  const { count: postCount, error: countError } = await supabase.from("posts").select("*", { count: "exact" }).eq("user_id", userId);
+  const { count: postCount, error: countError } = await supabase
+    .from("posts")
+    .select("*", { count: "exact" })
+    .eq("user_id", userId);
 
   const isLastPage = end >= (postCount ?? 0);
 
