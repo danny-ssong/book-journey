@@ -6,5 +6,5 @@ export default async function Page() {
   const supabase = createClient();
   const user = await getUserOnServer();
 
-  return <div>feed {user?.email}</div>;
+  return <div>will be update..</div>;
 }
