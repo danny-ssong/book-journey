@@ -1,7 +1,7 @@
 import React from "react";
 import { Database, Tables, Enums } from "@/types/database.types";
-import PostPreview from "./_components/PostPreview";
-import getUserPosts from "./_lib/getPosts";
+import PostPreviewForManage from "./_components/PostPreviewForManage";
+import getUserPosts from "./_lib/getUserPosts";
 import PaginationButtons from "./_components/PaginationButtons";
 import getUserOnServer from "@/app/_lib/getUserOnServer";
 import { notFound } from "next/navigation";
@@ -23,12 +23,12 @@ export default async function page({ params }: Props) {
   const { postsWithBook, isLastPage } = await getUserPosts(user.id, size, page);
 
   return (
-    <div className="mt-5">
+    <div className="mt-5 w-[800px]">
       <h2 className="mb-5 text-xl px-4">글 관리</h2>
       <div>
         <ul className="min-h-[500px] bg-white border">
           {[...postsWithBook.reverse()].map((post, index) => (
-            <PostPreview key={post.id} post={post} />
+            <PostPreviewForManage key={post.id} post={post} />
           ))}
         </ul>
         <PaginationButtons baseURL={"/manage/posts"} currentPage={page} isLastPage={isLastPage} />

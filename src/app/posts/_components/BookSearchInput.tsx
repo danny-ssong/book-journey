@@ -1,6 +1,5 @@
-import { use, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import searchBooks from "@/app/actions/searchBooks";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 type Props = {

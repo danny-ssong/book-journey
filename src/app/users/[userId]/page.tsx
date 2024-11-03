@@ -1,7 +1,7 @@
-import { getUserProfiles } from "@/app/actions/forGenerateStaticParams/getUserProfiles";
+import { getUserProfiles } from "@/app/_lib/forGenerateStaticParams/getUserProfiles";
 import PaginationButtons from "@/app/manage/posts/_components/PaginationButtons";
-import PostPreview from "@/app/manage/posts/_components/PostPreview";
-import getUserPosts from "@/app/manage/posts/_lib/getPosts";
+import PostPreviewForManage from "@/app/manage/posts/_components/PostPreviewForManage";
+import getUserPosts from "@/app/manage/posts/_lib/getUserPosts";
 import getProfile from "@/app/manage/posts/_lib/getProfile";
 import ProfileViewer from "@/app/manage/settings/profile/_components/ProfileViewer";
 import { Metadata } from "next";
@@ -34,7 +34,8 @@ export default async function UserProfilePage({ params, searchParams }: Props) {
       <div>
         <div className="px-2 text-lg my-4">최근 작성한 글</div>
         <ul className="bg-white">
-          {postsWithBook && [...postsWithBook.reverse()]?.map((post) => <PostPreview key={post.id} post={post} />)}
+          {postsWithBook &&
+            [...postsWithBook.reverse()]?.map((post) => <PostPreviewForManage key={post.id} post={post} />)}
         </ul>
       </div>
       <PaginationButtons baseURL={`/users/${userId}`} currentPage={page} isLastPage={isLastPage} />

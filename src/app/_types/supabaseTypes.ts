@@ -5,3 +5,4 @@ export type Book = Tables<"books">;
 export type Profile = Tables<"profiles">;
 export type PostWithBook = Post & { books: Book };
 export type PostWithUserProfile = Post & { profiles: Profile };
+export type PostWithUserProfileAndBook = Post & { profiles: Profile } & { books: Book };

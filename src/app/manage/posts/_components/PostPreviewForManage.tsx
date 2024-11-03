@@ -5,7 +5,7 @@ import PostPreviewButtons from "./PostPreviewButtons";
 import { PostWithBook } from "@/app/_types/supabaseTypes";
 import getUserOnServer from "@/app/_lib/getUserOnServer";
 
-async function PostPreview({ post }: { post: PostWithBook }) {
+async function PostPreviewForManage({ post }: { post: PostWithBook }) {
   const user = await getUserOnServer();
   return (
     <div className="last:border-none flex-col border-b h-[160px] px-6 py-4 group">
@@ -25,4 +25,4 @@ async function PostPreview({ post }: { post: PostWithBook }) {
   );
 }
 
-export default PostPreview;
+export default PostPreviewForManage;

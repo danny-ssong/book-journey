@@ -106,7 +106,6 @@ export default function MainBookSearchInput() {
               onClick={() => handleSelectBook(book)}
             >
               <span className="w-12 h-18 truncate">
-                {/* <img src={book.thumbnail} alt={book.title} /> */}
                 <Image src={book.thumbnail} alt={book.title} width={48} height={64} />
               </span>
               <p className="text-nowrap truncate max-w-[350px]">{book.title}</p>

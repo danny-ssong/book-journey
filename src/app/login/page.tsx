@@ -19,7 +19,6 @@ export default function Page() {
       });
     };
     signInWithGoogle();
-    console.log("redirectPath : ", `${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback`);
   }, [supabase]);
 
   return <p>Redirecting...</p>;
