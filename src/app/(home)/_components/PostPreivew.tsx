@@ -8,12 +8,12 @@ export default function PostPreview({ post }: { post: PostWithUserProfileAndBook
     <div className="last:border-none flex-col border-b-2 h-[200px] px-2 py-2">
       <div className="flex justify-between w-full mb-2">
         <div>
-          <Link href={`books/${post.books.isbn}`}>
-            <p className="hover:underline font-semibold">{post.books.title}</p>
+          <Link href={`books/${post.book.isbn}`}>
+            <p className="hover:underline font-semibold">{post.book.title}</p>
           </Link>
           <RatingViewer rating={post.rating!} />
           <Link className="hover:underline" href={`/users/${post.user_id}`}>
-            <p className="text-sm">{post.profiles.username}</p>
+            <p className="text-sm">{post.profile.username}</p>
           </Link>
         </div>
         <div>{dayjs(post.created_at).format("YYYY-MM-DD")}</div>

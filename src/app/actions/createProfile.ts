@@ -15,11 +15,15 @@ export default async function createUserProfileIfNotExists() {
   const userId = user.id;
 
   // 프로필이 이미 존재하는지 확인
-  const { data: profile, error: fetchError } = await supabase.from("profiles").select("id").eq("user_id", userId).single();
+  const { data: profile, error: fetchError } = await supabase
+    .from("profile")
+    .select("id")
+    .eq("user_id", userId)
+    .single();
 
   if (!profile) {
     // 프로필이 없으면 랜덤한 이름으로 insert
-    const { error: insertError } = await supabase.from("profiles").insert({
+    const { error: insertError } = await supabase.from("profile").insert({
       username: getRandomUserName(),
       imageURL: undefined,
       bio: "",

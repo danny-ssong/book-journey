@@ -19,7 +19,7 @@ export default async function refreshProfileMostReadAuthors() {
   }
 
   const { data, error } = await supabase
-    .from("profiles")
+    .from("profile")
     .update({ mostRead_authors: mostReadAuthors })
     .eq("user_id", user.id);
 }
@@ -27,7 +27,7 @@ export default async function refreshProfileMostReadAuthors() {
 async function calcMostReadAuthors(user_id: string) {
   const supabase = createClient();
 
-  const { data: postsWithBook, error } = await supabase.from("posts").select(`*, books(author)`).eq("user_id", user_id);
+  const { data: postsWithBook, error } = await supabase.from("post").select(`*, book(author)`).eq("user_id", user_id);
 
   if (error) return null;
 

@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 export default async function deletePost(postId: number) {
   const supabase = createClient();
 
-  const { data: postData, error: postError } = await supabase.from("posts").select("*").eq("id", postId);
+  const { data: postData, error: postError } = await supabase.from("post").select("*").eq("id", postId);
 
   if (postError) {
     console.error(postError.message);
@@ -19,7 +19,7 @@ export default async function deletePost(postId: number) {
     isbn = postData[0].isbn;
     userId = postData[0].user_id;
   }
-  const { data, error } = await supabase.from("posts").delete().eq("id", postId);
+  const { data, error } = await supabase.from("post").delete().eq("id", postId);
   if (error) {
     alert(error.message);
     return false;

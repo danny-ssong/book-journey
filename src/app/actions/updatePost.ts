@@ -17,7 +17,7 @@ export async function updatePost(
   const user = await getUserOnServer();
 
   const post = { content, startDate, endDate, isbn: book.isbn, rating, title };
-  const { data, error } = await supabase.from("posts").update(post).eq("id", id).select();
+  const { data, error } = await supabase.from("post").update(post).eq("id", id).select();
 
   if (error) {
     console.error(`${error.details} \n${error.message}`);

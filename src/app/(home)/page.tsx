@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import getPosts from "../_lib/getPosts";
 import PostPreview from "./_components/PostPreivew";
 
@@ -18,3 +19,9 @@ export default async function HOME() {
     </div>
   );
 }
+
+export async function generateMetadata(): Promise<Metadata> {
+  return { title: `book-journey` };
+}
+
+export const revalidate = 60;

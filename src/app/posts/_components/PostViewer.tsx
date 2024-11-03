@@ -15,7 +15,7 @@ export default async function PostViewer({ post }: { post: PostWithBook }) {
       <article className="flex flex-col ">
         <header className="flex flex-col px-4 py-4 mb-5 border bg-white">
           <div className="flex items-center justify-between mb-1">
-            <h3 className="text-2xl">{post.books.title}</h3>
+            <h3 className="text-2xl">{post.book.title}</h3>
             <div>{`${dayjs(post.startDate).format("YYYY-MM-DD")} ~ ${dayjs(post.endDate).format("YYYY-MM-DD")}`}</div>
           </div>
           <RatingViewer rating={post.rating!} />

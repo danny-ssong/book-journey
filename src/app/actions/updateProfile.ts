@@ -13,7 +13,7 @@ export default async function updateProfile(username: string, bio: string, image
   }
 
   const { error: insertError } = await supabase
-    .from("profiles")
+    .from("profile")
     .update({
       username: username,
       // imageURL: undefined,

@@ -12,7 +12,7 @@ export default async function getUserPosts(
   const start = size * (page - 1);
   const end = start + size;
   const { data: postsWithBook, error: postsError } = await supabase
-    .from("posts")
+    .from("post")
     .select(`*, books (*)`)
     .eq("user_id", userId)
     .range(start, end);
@@ -20,7 +20,7 @@ export default async function getUserPosts(
   if (!postsWithBook || postsError) return { postsWithBook: [], isLastPage: false };
 
   const { count: postCount, error: countError } = await supabase
-    .from("posts")
+    .from("post")
     .select("*", { count: "exact" })
     .eq("user_id", userId);
 

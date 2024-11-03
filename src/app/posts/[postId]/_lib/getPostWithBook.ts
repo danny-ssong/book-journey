@@ -3,7 +3,7 @@ import { createClient } from "@/utils/supabase/server";
 
 export default async function getPostWithBook(postId: string): Promise<PostWithBook | undefined> {
   const supabse = createClient();
-  const { data, error } = await supabse.from("posts").select(`*, books(*)`).eq("id", postId);
+  const { data, error } = await supabse.from("post").select(`*, book(*)`).eq("id", postId);
 
   if (error) console.error(error);
 

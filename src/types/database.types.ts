@@ -9,7 +9,7 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      books: {
+      book: {
         Row: {
           author: string
           created_at: string | null
@@ -33,7 +33,7 @@ export type Database = {
         }
         Relationships: []
       }
-      posts: {
+      post: {
         Row: {
           content: string | null
           created_at: string | null
@@ -72,19 +72,19 @@ export type Database = {
             foreignKeyName: "posts_isbn_fkey"
             columns: ["isbn"]
             isOneToOne: false
-            referencedRelation: "books"
+            referencedRelation: "book"
             referencedColumns: ["isbn"]
           },
           {
             foreignKeyName: "posts_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "profile"
             referencedColumns: ["user_id"]
           },
         ]
       }
-      profiles: {
+      profile: {
         Row: {
           bio: string | null
           created_at: string

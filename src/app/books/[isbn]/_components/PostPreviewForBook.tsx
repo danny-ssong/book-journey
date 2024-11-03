@@ -14,7 +14,7 @@ export default function PostPreviewForBook({ postWithProfile }: Props) {
         <div>
           <RatingViewer rating={postWithProfile.rating!} />
           <Link href={`/users/${postWithProfile.user_id}`}>
-            <p className="hover:underline text-sm">{postWithProfile.profiles.username}</p>
+            <p className="hover:underline text-sm">{postWithProfile.profile.username}</p>
           </Link>
         </div>
         <div>{dayjs(postWithProfile.created_at).format("YYYY-MM-DD")}</div>
