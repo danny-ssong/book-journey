@@ -2,7 +2,7 @@
 import { Post } from "@/app/_types/supabaseTypes";
 import { createClient } from "@/utils/supabase/client";
 
-export async function getPosts(): Promise<Post[] | undefined> {
+export async function getAllPosts(): Promise<Post[] | undefined> {
   const supabase = createClient();
   const { data, error } = await supabase.from("posts").select();
 
