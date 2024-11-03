@@ -13,7 +13,7 @@ export default async function getUserPosts(
   const end = start + size;
   const { data: postsWithBook, error: postsError } = await supabase
     .from("post")
-    .select(`*, books (*)`)
+    .select(`*, book (*)`)
     .eq("user_id", userId)
     .range(start, end);
 

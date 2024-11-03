@@ -17,7 +17,6 @@ export default async function getPosts(
   if (!posts || postsError) return { posts: [], isLastPage: false };
 
   const { count: postCount, error: countError } = await supabase.from("post").select("*", { count: "exact" });
-
   const isLastPage = end >= (postCount ?? 0);
 
   return { posts, isLastPage };

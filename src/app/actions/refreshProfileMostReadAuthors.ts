@@ -34,7 +34,7 @@ async function calcMostReadAuthors(user_id: string) {
   const readAuthorCounts = new Map();
 
   for (const post of postsWithBook) {
-    const author = post.books.author;
+    const author = post.book.author;
     const readAuthorCount = readAuthorCounts.get(author);
 
     if (!readAuthorCount) {
