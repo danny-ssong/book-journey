@@ -12,7 +12,7 @@ export default async function HOME() {
     <div className="mt-5 w-[800px]">
       <h2 className="mb-5 text-xl px-4">최신 글</h2>
       <ul className="min-h-[500px] bg-white border">
-        {[...posts.reverse()].map((post, index) => (
+        {posts.map((post, index) => (
           <PostPreview key={post.id} post={post} />
         ))}
       </ul>

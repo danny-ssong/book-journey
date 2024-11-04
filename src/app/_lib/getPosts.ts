@@ -8,10 +8,11 @@ export default async function getPosts(
   const supabase = createClient();
 
   const start = size * (page - 1);
-  const end = start + size;
+  const end = start + size - 1;
   const { data: posts, error: postsError } = await supabase
     .from("post")
     .select(`*, book (*), profile(*)`)
+    .order("created_at", { ascending: false })
     .range(start, end);
 
   if (!posts || postsError) return { posts: [], isLastPage: false };

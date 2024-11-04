@@ -5,12 +5,17 @@ import Link from "next/link";
 
 export default function PostPreview({ post }: { post: PostWithUserProfileAndBook }) {
   return (
-    <div className="last:border-none flex-col border-b-2 h-[200px] px-2 py-2">
+    <div className="last:border-none flex-col border-b-2 h-[200px] px-4 py-4">
       <div className="flex justify-between w-full mb-2">
         <div>
-          <Link href={`books/${post.book.isbn}`}>
-            <p className="hover:underline font-semibold">{post.book.title}</p>
-          </Link>
+          <div className="flex gap-2 items-center">
+            <Link href={`/books/${post.book.isbn}`}>
+              <p className="hover:underline font-semibold">{post.book.title}</p>
+            </Link>
+            <Link href={`/search?query=${post.book.author}`}>
+              <p className="hover:underline text-xs ">{post.book.author}</p>
+            </Link>
+          </div>
           <RatingViewer rating={post.rating!} />
           <Link className="hover:underline" href={`/users/${post.user_id}`}>
             <p className="text-sm">{post.profile.username}</p>
@@ -20,7 +25,7 @@ export default function PostPreview({ post }: { post: PostWithUserProfileAndBook
       </div>
       <div className="flex justify-between items-center mb-2">
         <Link href={`/posts/${post.id}`}>
-          <p className="hover:underline text-lg">{post.title}</p>
+          <p className="hover:underline">{post.title}</p>
         </Link>
       </div>
       <Link href={`/posts/${post.id}`}>

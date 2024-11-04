@@ -34,8 +34,9 @@ export default async function UserProfilePage({ params, searchParams }: Props) {
       <div>
         <div className="px-2 text-lg my-4">최근 작성한 글</div>
         <ul className="bg-white">
-          {postsWithBook &&
-            [...postsWithBook.reverse()]?.map((post) => <PostPreviewForManage key={post.id} post={post} />)}
+          {postsWithBook.map((post) => (
+            <PostPreviewForManage key={post.id} post={post} />
+          ))}
         </ul>
       </div>
       <PaginationButtons baseURL={`/users/${userId}`} currentPage={page} isLastPage={isLastPage} />

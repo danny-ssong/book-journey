@@ -35,10 +35,9 @@ export default async function Page({ params }: Props) {
       </div>
       <div className="border-t-2">
         <ul>
-          {postWithProfiles &&
-            [...postWithProfiles.reverse()].map((postWithProfile) => (
-              <PostPreviewForBook key={postWithProfile.id} postWithProfile={postWithProfile} />
-            ))}
+          {postWithProfiles?.map((postWithProfile) => (
+            <PostPreviewForBook key={postWithProfile.id} postWithProfile={postWithProfile} />
+          ))}
         </ul>
       </div>
     </div>

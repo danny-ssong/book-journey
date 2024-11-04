@@ -1,4 +1,3 @@
-import getUserOnServer from "@/app/_lib/getUserOnServer";
 import { PostWithBook } from "@/app/_types/supabaseTypes";
 import { createClient } from "@/utils/supabase/server";
 
@@ -10,11 +9,12 @@ export default async function getUserPosts(
   const supabase = createClient();
 
   const start = size * (page - 1);
-  const end = start + size;
+  const end = start + size - 1;
   const { data: postsWithBook, error: postsError } = await supabase
     .from("post")
     .select(`*, book (*)`)
     .eq("user_id", userId)
+    .order("created_at", { ascending: false })
     .range(start, end);
 
   if (!postsWithBook || postsError) return { postsWithBook: [], isLastPage: false };
