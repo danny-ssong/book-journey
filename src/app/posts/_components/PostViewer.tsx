@@ -22,7 +22,7 @@ export default async function PostViewer({ post }: { post: PostWithBook }) {
         </header>
         <div className="flex-1 px-4 py-4 bg-white border min-h-[500px]">
           <h3 className="text-xl mb-5">{post.title}</h3>
-          <p className="w-full ">{post.content}</p>
+          <p className="w-full whitespace-pre-line">{post.content}</p>
         </div>
       </article>
       {isOwner && (
