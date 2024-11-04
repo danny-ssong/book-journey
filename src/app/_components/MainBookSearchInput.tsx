@@ -21,6 +21,8 @@ export default function MainBookSearchInput() {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
+    } else {
+      setSearchQuery("");
     }
   }, [searchParams]);
 
