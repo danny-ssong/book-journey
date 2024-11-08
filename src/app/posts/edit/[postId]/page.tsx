@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import PostForm from "../../_components/PostForm";
 import { notFound } from "next/navigation";
-import getPostWithBook from "../../[postId]/_lib/getPostWithBook";
+import getPost from "../../[postId]/_lib/getPostWithBook";
 import searchBooks from "@/app/actions/searchBooks";
 import getUserOnServer from "@/app/_lib/getUserOnServer";
 
@@ -10,7 +10,7 @@ export default async function Page({ params }: { params: { postId: string } }) {
   const postId = params?.postId;
   if (!postId) notFound();
 
-  const postWithBook = await getPostWithBook(postId);
+  const postWithBook = await getPost(postId);
   if (!postWithBook) notFound();
 
   if (postWithBook.user_id !== user?.id) notFound();
