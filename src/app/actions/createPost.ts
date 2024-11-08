@@ -14,7 +14,13 @@ export async function createPost(
 ) {
   const supabase = createClient();
   const user = await getUserOnServer();
-  const bookData = { isbn: book.isbn, title: book.title, author: book.authors[0], published_date: book.datetime };
+  const bookData = {
+    isbn: book.isbn,
+    title: book.title,
+    author: book.authors[0],
+    published_date: book.datetime,
+    thumbnail: book.thumbnail,
+  };
   const { data: result, error: resultError } = await supabase.from("book").upsert([bookData]).select();
 
   const post = { content, startDate, endDate, isbn: book.isbn, rating, title };
