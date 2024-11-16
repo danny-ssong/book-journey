@@ -21,6 +21,7 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
   const [startDate, setStartDate] = useState<string>(dayjs(initPost?.startDate ?? new Date()).format("YYYY-MM-DD"));
   const [endDate, setEndDate] = useState<string>(dayjs(initPost?.endDate ?? new Date()).format("YYYY-MM-DD"));
   const [rating, setRating] = useState<number>(initPost?.rating ?? 5);
+  const [isPrivate, setIsPrivate] = useState<boolean>(initPost?.is_private ?? false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,9 +33,9 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
     let postId = undefined;
 
     if (initPost) {
-      postId = await updatePost(initPost.id, book, content, startDate, endDate, rating, title);
+      postId = await updatePost(initPost.id, book, content, startDate, endDate, rating, title, isPrivate);
     } else {
-      postId = await createPost(book, content, startDate, endDate, rating, title);
+      postId = await createPost(book, content, startDate, endDate, rating, title, isPrivate);
     }
     refreshProfileMostReadAuthors();
     if (postId) {
@@ -45,6 +46,18 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
   return (
     <article>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <div className="flex justify-end">
+          <select
+            value={String(isPrivate)}
+            onChange={(e) => {
+              setIsPrivate(e.target.value === "true");
+            }}
+            className="border px-2 py-1"
+          >
+            <option value="true">비공개</option>
+            <option value="false">공개</option>
+          </select>
+        </div>
         <div className="flex justify-between">
           <Rating rating={rating} onClickStar={setRating} />
           <div className="flex gap-4">
