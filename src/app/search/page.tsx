@@ -52,7 +52,7 @@ export default function Page() {
       <div className="space-y-4 min-h-[400px]">
         <h1 className=" pl-4 text-2xl font-semibold">검색 결과</h1>
         {books && books.length > 0 ? (
-          <ul className="list-none">
+          <ul>
             {books?.map((book: SearchedBook) => (
               <li key={book.isbn}>
                 <BookItem book={book} />

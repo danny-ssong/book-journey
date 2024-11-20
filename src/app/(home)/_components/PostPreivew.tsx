@@ -35,9 +35,11 @@ export default function PostPreview({ post }: { post: PostWithUserProfileAndBook
         <h1 className="hover:underline ">
           <Link href={`/posts/${post.id}`}>{post.title}</Link>
         </h1>
-        <p className="hover:underline w-full flex-1 overflow-hidden text-sm text-ellipsis line-clamp-3 ">
-          <Link href={`/posts/${post.id}`}>{post.content}</Link>
-        </p>
+        <Link href={`/posts/${post.id}`}>
+          <p className="hover:underline w-full flex-1 overflow-hidden text-sm text-ellipsis line-clamp-3 ">
+            {post.content}
+          </p>
+        </Link>
       </div>
     </article>
   );
