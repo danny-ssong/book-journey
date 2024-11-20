@@ -4,7 +4,6 @@ import getPost from "./_lib/getPostWithBook";
 import PostViewer from "../_components/PostViewer";
 import { getAllPosts } from "@/app/_lib/forGenerateStaticParams/getAllPosts";
 import { Metadata } from "next";
-import getPosts from "@/app/_lib/getPosts";
 
 type Props = {
   params: {
