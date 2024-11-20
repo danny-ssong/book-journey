@@ -16,16 +16,16 @@ export default async function PostViewer({ post }: { post: PostWithUserProfileAn
         <header className="flex flex-col px-4 py-4 mb-5 border bg-white">
           <div className="flex items-center justify-between mb-1">
             <div className="flex items-end gap-2">
-              <h3 className="text-2xl">{post.book.title}</h3>
+              <h2 className="text-2xl">{post.book.title}</h2>
               <p className="text-sm text-gray-600">{post.book.author}</p>
             </div>
-            <div>{`${dayjs(post.startDate).format("YYYY-MM-DD")} ~ ${dayjs(post.endDate).format("YYYY-MM-DD")}`}</div>
+            <p>{`${dayjs(post.startDate).format("YYYY-MM-DD")} ~ ${dayjs(post.endDate).format("YYYY-MM-DD")}`}</p>
           </div>
           <p className="mt-2">{post.profile.username}</p>
           <RatingViewer rating={post.rating!} />
         </header>
         <div className="flex-1 px-4 py-4 bg-white border min-h-[500px]">
-          <h3 className="text-xl mb-5">{post.title}</h3>
+          <h1 className="text-xl mb-5">{post.title}</h1>
           <p className="w-full whitespace-pre-line">{post.content}</p>
         </div>
       </article>

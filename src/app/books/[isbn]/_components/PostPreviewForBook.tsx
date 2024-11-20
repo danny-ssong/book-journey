@@ -13,22 +13,22 @@ export default function PostPreviewForBook({ postWithProfile }: Props) {
       <div className="flex justify-between w-full mb-2">
         <div>
           <RatingViewer rating={postWithProfile.rating!} />
-          <Link href={`/users/${postWithProfile.user_id}`}>
-            <p className="hover:underline text-sm">{postWithProfile.profile.username}</p>
-          </Link>
+          <p className="hover:underline text-sm">
+            <Link href={`/users/${postWithProfile.user_id}`}>{postWithProfile.profile.username}</Link>
+          </p>
         </div>
-        <div>{dayjs(postWithProfile.created_at).format("YYYY-MM-DD")}</div>
+        <time dateTime={postWithProfile.created_at || ""}>
+          {dayjs(postWithProfile.created_at).format("YYYY-MM-DD")}
+        </time>
       </div>
       <div className="flex justify-between items-center mb-2">
-        <Link href={`/posts/${postWithProfile.id}`}>
-          <p className="hover:underline text-lg">{postWithProfile.title}</p>
-        </Link>
-      </div>
-      <Link href={`/posts/${postWithProfile.id}`}>
-        <p className="hover:underline w-full flex-1 overflow-hidden text-sm text-ellipsis line-clamp-3 ">
-          {postWithProfile.content}
+        <p className="hover:underline text-lg">
+          <Link href={`/posts/${postWithProfile.id}`}>{postWithProfile.title}</Link>
         </p>
-      </Link>
+      </div>
+      <p className="hover:underline w-full flex-1 overflow-hidden text-sm text-ellipsis line-clamp-3 ">
+        <Link href={`/posts/${postWithProfile.id}`}>{postWithProfile.content}</Link>
+      </p>
     </div>
   );
 }

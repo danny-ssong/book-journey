@@ -3,7 +3,7 @@ import React from "react";
 import deletePost from "@/app/actions/deletePost";
 import Link from "next/link";
 
-function PostPreviewButtons({ postId }: { postId: number }) {
+function PostActionButtons({ postId }: { postId: number }) {
   const handleDelete = async () => {
     const boolean = confirm("정말로 삭제하시겠습니까?");
     if (boolean) await deletePost(postId);
@@ -21,4 +21,4 @@ function PostPreviewButtons({ postId }: { postId: number }) {
   );
 }
 
-export default PostPreviewButtons;
+export default PostActionButtons;

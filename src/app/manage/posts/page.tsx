@@ -1,5 +1,4 @@
 import React from "react";
-import { Database, Tables, Enums } from "@/types/database.types";
 import PostPreviewForManage from "./_components/PostPreviewForManage";
 import getUserPosts from "./_lib/getUserPosts";
 import PaginationButtons from "./_components/PaginationButtons";
@@ -12,7 +11,7 @@ type Props = {
   };
 };
 
-export default async function page({ params }: Props) {
+export default async function ManagePostsPage({ params }: Props) {
   let page = parseInt(params.page || "1");
   if (!page) page = 1;
 
@@ -24,7 +23,7 @@ export default async function page({ params }: Props) {
 
   return (
     <div className="mt-5 w-[800px]">
-      <h2 className="mb-5 text-xl px-4">글 관리</h2>
+      <h1 className="mb-5 text-xl px-4">글 관리</h1>
       <div>
         <ul className="min-h-[500px] bg-white border">
           {postsWithBook.map((post, index) => (

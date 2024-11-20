@@ -1,4 +1,3 @@
-import { createClient } from "@/utils/supabase/server";
 import PostForm from "../../_components/PostForm";
 import { notFound } from "next/navigation";
 import getPost from "../../[postId]/_lib/getPostWithBook";
