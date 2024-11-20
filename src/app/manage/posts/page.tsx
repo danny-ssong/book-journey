@@ -2,19 +2,32 @@
 
 import { useQuery } from "@tanstack/react-query";
 import ExapndedPostPreviewForManage from "./_components/PostPreviewForManage";
-import getUserOwnPosts from "@/app/actions/getUserPosts";
 import PaginationForClient from "@/app/search/_components/Pagination";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CompactPostPreviewForManage from "./_components/CompactPostPreview";
+import getPosts from "@/app/actions/getPosts";
+import { User } from "@supabase/supabase-js";
+import getUserOnClient from "@/app/_lib/getUserOnClient";
 
 export default function ManagePostsPage() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [showExpanded, setShowExpanded] = useState<boolean>(true);
   const size = 10;
 
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    async function getUser() {
+      const user = await getUserOnClient();
+      setUser(user);
+    }
+    getUser();
+  }, []);
+
   const { data, isLoading, error } = useQuery({
     queryKey: ["userPosts", currentPage],
-    queryFn: () => getUserOwnPosts(size, currentPage),
+    queryFn: () => getPosts(size, currentPage, user?.id, true),
+    enabled: !!user,
   });
 
   if (isLoading) {
@@ -50,7 +63,7 @@ export default function ManagePostsPage() {
       </header>
       <div>
         <ul className="min-h-[500px] bg-white border">
-          {data?.postsWithBook.map((post) =>
+          {data?.posts.map((post) =>
             showExpanded ? (
               <ExapndedPostPreviewForManage key={post.id} post={post} isOwner />
             ) : (

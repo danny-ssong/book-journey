@@ -29,7 +29,7 @@ export default function PostPreview({ post }: { post: PostWithUserProfileAndBook
           <time dateTime={post.created_at || ""}>{dayjs(post.created_at).format("YYYY-MM-DD")}</time>
         </div>
         <RatingViewer rating={post.rating!} />
-        <p className="text-sm hover:underline">
+        <p className="text-sm hover:underline mb-2">
           <Link href={`/users/${post.user_id}`}>{post.profile.username}</Link>
         </p>
         <h1 className="hover:underline ">

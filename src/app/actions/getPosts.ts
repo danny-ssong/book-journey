@@ -1,9 +1,12 @@
+"use server";
+
 import { PostWithUserProfileAndBook } from "@/app/_types/supabaseTypes";
 import { createClient } from "@/utils/supabase/server";
 
 export default async function getPosts(
   size: number,
   page: number = 1,
+  userId?: string,
   isContainPrivate: boolean = false
 ): Promise<{ posts: PostWithUserProfileAndBook[]; isLastPage: boolean }> {
   const supabase = createClient();
@@ -18,6 +21,11 @@ export default async function getPosts(
     .range(start, end);
 
   let postTotalCountQuery = supabase.from("post").select("*", { count: "exact" });
+
+  if (userId) {
+    postQuery = postQuery.eq("user_id", userId);
+    postTotalCountQuery = postTotalCountQuery.eq("user_id", userId);
+  }
 
   if (!isContainPrivate) {
     postQuery = postQuery.eq("is_private", false);

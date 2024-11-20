@@ -1,11 +1,11 @@
 import { getUserProfiles } from "@/app/_lib/forGenerateStaticParams/getUserProfiles";
 import PaginationButtons from "@/app/manage/posts/_components/PaginationButtons";
 import ExapndedPostPreviewForManage from "@/app/manage/posts/_components/PostPreviewForManage";
-import getUserOwnPosts from "@/app/actions/getUserPosts";
 import getProfile from "@/app/manage/posts/_lib/getProfile";
 import ProfileViewer from "@/app/manage/settings/profile/_components/ProfileViewer";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import getPosts from "@/app/actions/getPosts";
 
 type Props = {
   params: {
@@ -26,7 +26,7 @@ export default async function UserProfilePage({ params, searchParams }: Props) {
   if (!profile) notFound();
 
   const size = 5;
-  const { postsWithBook, isLastPage } = await getUserOwnPosts(userId, size, page);
+  const { posts, isLastPage } = await getPosts(size, page, userId);
 
   return (
     <div className="ml-5 w-[600px]">
@@ -34,8 +34,8 @@ export default async function UserProfilePage({ params, searchParams }: Props) {
       <div>
         <div className="px-2 text-lg my-4">최근 작성한 글</div>
         <ul className="bg-white">
-          {postsWithBook.map((post) => (
-            <ExapndedPostPreviewForManage key={post.id} post={post} />
+          {posts.map((post) => (
+            <ExapndedPostPreviewForManage key={post.id} post={post} isOwner={userId === post.user_id} />
           ))}
         </ul>
       </div>

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import getPosts from "../_lib/getPosts";
+import getPosts from "../actions/getPosts";
 import PostPreview from "./_components/PostPreivew";
 
 export default async function HOME() {
