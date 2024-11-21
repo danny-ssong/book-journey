@@ -1,7 +1,6 @@
 "use server";
-import { Tables } from "@/types/database.types";
 import { createClient } from "@/utils/supabase/server";
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 
 export default async function deletePost(postId: number) {
   const supabase = createClient();
@@ -25,8 +24,8 @@ export default async function deletePost(postId: number) {
     return false;
   }
 
-  revalidatePath(`/books${isbn}`);
-  revalidatePath(`/manage/${userId}/posts`);
+  revalidateTag(`posts-${isbn}`);
+  revalidateTag(`posts-${postId}`);
 
   return true;
 }

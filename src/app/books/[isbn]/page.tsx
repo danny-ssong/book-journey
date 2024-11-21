@@ -2,7 +2,7 @@ import searchBooks from "@/app/actions/searchBooks";
 import dayjs from "dayjs";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import getPostsWithUserProfileByIsbn from "./_lib/getPostsWithUserProfileByIsbn";
+import getPostsByISBN from "./_lib/getPostsWithUserProfileByIsbn";
 import PostPreviewForBook from "./_components/PostPreviewForBook";
 import Link from "next/link";
 import BookDetail from "./_components/BookDetail";
@@ -23,7 +23,7 @@ export default async function Page({ params }: Props) {
   if (response?.documents.length === 0) notFound();
   const book = response?.documents[0];
   if (!book) notFound();
-  const postWithProfiles = await getPostsWithUserProfileByIsbn(isbn);
+  const postWithProfiles = await getPostsByISBN(isbn);
 
   return (
     <div className="w-[800px] bg-white border">

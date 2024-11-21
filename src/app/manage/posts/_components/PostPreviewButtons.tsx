@@ -2,11 +2,17 @@
 import React from "react";
 import deletePost from "@/app/actions/deletePost";
 import Link from "next/link";
+import { useQueryClient } from "@tanstack/react-query";
 
 function PostActionButtons({ postId }: { postId: number }) {
+  const queryClient = useQueryClient();
+
   const handleDelete = async () => {
     const boolean = confirm("정말로 삭제하시겠습니까?");
-    if (boolean) await deletePost(postId);
+    if (boolean) {
+      await deletePost(postId);
+      queryClient.invalidateQueries({ queryKey: ["userOwnPosts"] });
+    }
   };
 
   return (

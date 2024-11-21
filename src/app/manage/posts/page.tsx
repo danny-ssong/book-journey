@@ -25,7 +25,7 @@ export default function ManagePostsPage() {
   }, []);
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["userPosts", currentPage],
+    queryKey: ["userOwnPosts", currentPage],
     queryFn: () => getPosts(size, currentPage, user?.id, true),
     enabled: !!user,
   });

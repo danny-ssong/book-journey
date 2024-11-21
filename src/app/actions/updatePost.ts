@@ -1,7 +1,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 import getUserOnServer from "../_lib/getUserOnServer";
 
 export async function updatePost(
@@ -26,10 +26,8 @@ export async function updatePost(
   }
 
   if (data) {
-    const userId = user?.id;
-    if (userId) revalidatePath(`/manage/${userId}/posts`);
-
-    revalidatePath(`/books${book.isbn}`);
+    revalidateTag(`posts-${id}`);
+    revalidateTag(`posts-${book.isbn}`);
     return id;
   }
 

@@ -1,4 +1,3 @@
-import { createClient } from "@/utils/supabase/server";
 import { notFound } from "next/navigation";
 import ProfileViewer from "./_components/ProfileViewer";
 import getProfile from "../../posts/_lib/getProfile";

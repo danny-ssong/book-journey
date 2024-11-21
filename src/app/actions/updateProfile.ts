@@ -1,6 +1,6 @@
 "use server";
 import { createClient } from "@/utils/supabase/server";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import getUserOnServer from "../_lib/getUserOnServer";
 
 export default async function updateProfile(username: string, bio: string, image: File | null) {
@@ -9,7 +9,7 @@ export default async function updateProfile(username: string, bio: string, image
 
   if (!user) {
     console.error("No user found in session");
-    return;
+    return false;
   }
 
   const { error: insertError } = await supabase
@@ -23,9 +23,10 @@ export default async function updateProfile(username: string, bio: string, image
 
   if (insertError) {
     console.error("Error inserting profile:", insertError);
-    return;
+    return false;
   }
-  revalidatePath(`/manage/settings/profile`);
+  // revalidatePath(`/manage/settings/profile`);
+  revalidateTag(`profile-${user.id}`);
 
   return true;
 }

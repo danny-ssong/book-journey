@@ -8,6 +8,7 @@ import { updatePost } from "@/app/actions/updatePost";
 import { Post } from "@/app/_types/supabaseTypes";
 import refreshProfileMostReadAuthors from "@/app/actions/refreshProfileMostReadAuthors";
 import Button from "@/app/_components/Button";
+import { useQueryClient } from "@tanstack/react-query";
 
 type Props = {
   book: SearchedBook | undefined;
@@ -15,6 +16,7 @@ type Props = {
 };
 
 export default function PostFormContent({ book, initPost = undefined }: Props) {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const [title, setTitle] = useState(initPost?.title ?? "");
   const [content, setContent] = useState(initPost?.content ?? "");
@@ -39,6 +41,7 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
     }
     refreshProfileMostReadAuthors();
     if (postId) {
+      queryClient.invalidateQueries({ queryKey: ["userOwnPosts"] });
       router.push(`/posts/${postId}`);
     }
   };
