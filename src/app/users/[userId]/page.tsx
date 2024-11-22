@@ -32,7 +32,7 @@ export default async function UserProfilePage({ params, searchParams }: Props) {
     <div className="ml-5 w-[600px]">
       <ProfileViewer profile={profile} />
       <div>
-        <div className="px-2 text-lg my-4">최근 작성한 글</div>
+        <h1 className="px-2 text-lg my-4">최근 작성한 글</h1>
         <ul className="bg-white">
           {posts.map((post) => (
             <ExapndedPostPreviewForManage key={post.id} post={post} isOwner={userId === post.user_id} />

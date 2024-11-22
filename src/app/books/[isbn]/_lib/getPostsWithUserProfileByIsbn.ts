@@ -1,6 +1,6 @@
 import { PostWithUserProfile } from "@/app/_types/supabaseTypes";
+import { cacheWithLogging } from "@/utils/cache-utils";
 import { createClient } from "@/utils/supabase/server";
-import { unstable_cache } from "next/cache";
 
 export default async function getPostsByISBN(isbn: string): Promise<PostWithUserProfile[] | undefined> {
   const supabase = createClient();
@@ -20,7 +20,9 @@ export default async function getPostsByISBN(isbn: string): Promise<PostWithUser
     return data;
   };
 
-  const cachedPosts = unstable_cache(fetchPostsByISBN, ["posts", isbn], { tags: [`posts-${isbn}`] });
+  const cachedPosts = cacheWithLogging(fetchPostsByISBN, ["posts", isbn], `getPostsByISBN_${isbn}`, {
+    tags: [`posts-${isbn}`],
+  });
 
-  return cachedPosts();
+  return cachedPosts;
 }

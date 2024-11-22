@@ -1,6 +1,6 @@
 import { Profile } from "@/app/_types/supabaseTypes";
 import { createClient } from "@/utils/supabase/server";
-import { unstable_cache } from "next/cache";
+import { cacheWithLogging } from "@/utils/cache-utils";
 
 export default async function getProfile(user_id: string): Promise<Profile | null> {
   const supabase = createClient();
@@ -16,7 +16,7 @@ export default async function getProfile(user_id: string): Promise<Profile | nul
     return profile;
   };
 
-  const cachedProfile = unstable_cache(fetchUserProfile, ["profile", user_id], { tags: [`profile-${user_id}`] });
-
-  return cachedProfile();
+  return cacheWithLogging(fetchUserProfile, ["profile", user_id], `getProfile_${user_id}`, {
+    tags: [`profile-${user_id}`],
+  });
 }
