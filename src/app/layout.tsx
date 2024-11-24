@@ -1,6 +1,4 @@
-import { createClient } from "@/utils/supabase/server";
 import "./globals.css";
-import LogoutButton from "./_components/LogoutButton";
 import BookSearchArea from "./_components/MainBookSearchInput";
 import ReactQueryProvider from "./_components/ReactQueryProvider";
 import getUserOnServer from "./_lib/getUserOnServer";

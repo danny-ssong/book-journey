@@ -1,8 +1,23 @@
 import Link from "next/link";
-import getUserOnServer from "../_lib/getUserOnServer";
 import LogoutButton from "./LogoutButton";
 import { User } from "@supabase/supabase-js";
+import getUserProfile from "../_lib/getUserProfile";
 
 export default async function UserLoginStatus({ user }: { user: User | null }) {
-  return <div className="px-4 py-2">{!!user ? <LogoutButton /> : <Link href="/login">로그인</Link>}</div>;
+  if (!user) {
+    return (
+      <div className="pl-4 py-2">
+        <Link href="/login">로그인</Link>
+      </div>
+    );
+  }
+
+  const profile = await getUserProfile(user?.id);
+
+  return (
+    <div className="pl-4 py-2 flex justify-between items-center">
+      <p className="text-nowrap text-xs">{profile?.username}</p>
+      <LogoutButton />
+    </div>
+  );
 }
