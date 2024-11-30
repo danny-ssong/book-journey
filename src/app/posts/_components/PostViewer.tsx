@@ -19,7 +19,7 @@ export default async function PostViewer({ post }: { post: PostWithUserProfileAn
               <h2 className="text-2xl">{post.book.title}</h2>
               <p className="text-sm text-gray-600">{post.book.author}</p>
             </div>
-            <p>{`${dayjs(post.startDate).format("YYYY-MM-DD")} ~ ${dayjs(post.endDate).format("YYYY-MM-DD")}`}</p>
+            <p>{`${dayjs(post.start_date).format("YYYY-MM-DD")} ~ ${dayjs(post.end_date).format("YYYY-MM-DD")}`}</p>
           </div>
           <p className="mt-2">{post.profile.username}</p>
           <RatingViewer rating={post.rating!} />

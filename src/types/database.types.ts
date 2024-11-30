@@ -40,36 +40,36 @@ export type Database = {
         Row: {
           content: string | null
           created_at: string | null
-          endDate: string
+          end_date: string
           id: number
           is_private: boolean
           isbn: string
           rating: number | null
-          startDate: string
+          start_date: string
           title: string | null
           user_id: string
         }
         Insert: {
           content?: string | null
           created_at?: string | null
-          endDate?: string
+          end_date?: string
           id?: number
           is_private?: boolean
           isbn: string
           rating?: number | null
-          startDate?: string
+          start_date?: string
           title?: string | null
           user_id?: string
         }
         Update: {
           content?: string | null
           created_at?: string | null
-          endDate?: string
+          end_date?: string
           id?: number
           is_private?: boolean
           isbn?: string
           rating?: number | null
-          startDate?: string
+          start_date?: string
           title?: string | null
           user_id?: string
         }

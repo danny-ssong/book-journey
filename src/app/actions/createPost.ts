@@ -7,8 +7,8 @@ import { revalidateTag } from "next/cache";
 export async function createPost(
   book: SearchedBook,
   content: string,
-  startDate: string,
-  endDate: string,
+  start_date: string,
+  end_date: string,
   rating: number,
   title: string,
   is_private: boolean
@@ -24,7 +24,7 @@ export async function createPost(
   };
   const { data: result, error: resultError } = await supabase.from("book").upsert([bookData]).select();
 
-  const post = { content, startDate, endDate, isbn: book.isbn, rating, title, is_private };
+  const post = { content, start_date, end_date, isbn: book.isbn, rating, title, is_private };
   const { data, error } = await supabase.from("post").insert([post]).select();
 
   if (resultError) {

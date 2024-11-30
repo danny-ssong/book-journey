@@ -20,8 +20,8 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
   const router = useRouter();
   const [title, setTitle] = useState(initPost?.title ?? "");
   const [content, setContent] = useState(initPost?.content ?? "");
-  const [startDate, setStartDate] = useState<string>(dayjs(initPost?.startDate ?? new Date()).format("YYYY-MM-DD"));
-  const [endDate, setEndDate] = useState<string>(dayjs(initPost?.endDate ?? new Date()).format("YYYY-MM-DD"));
+  const [startDate, setStartDate] = useState<string>(dayjs(initPost?.start_date ?? new Date()).format("YYYY-MM-DD"));
+  const [endDate, setEndDate] = useState<string>(dayjs(initPost?.end_date ?? new Date()).format("YYYY-MM-DD"));
   const [rating, setRating] = useState<number>(initPost?.rating ?? 5);
   const [isPrivate, setIsPrivate] = useState<boolean>(initPost?.is_private ?? false);
 

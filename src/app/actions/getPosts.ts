@@ -17,7 +17,7 @@ export default async function getPosts(
   let postQuery = supabase
     .from("post")
     .select(`*, book (*), profile(*)`)
-    .order("created_at", { ascending: false })
+    .order("start_date", { ascending: false })
     .range(start, end);
 
   let postTotalCountQuery = supabase.from("post").select("*", { count: "exact" });
