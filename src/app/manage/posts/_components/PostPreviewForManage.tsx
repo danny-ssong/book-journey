@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import RatingViewer from "../../../_components/RatingViewer";
 import PostActionButtons from "./PostPreviewButtons";
-import { PostWithBook } from "@/app/_types/supabaseTypes";
+import { PostWithBook } from "@/app/_models/supabaseTypes";
 import Image from "next/image";
 
 function ExapndedPostPreviewForManage({ post, isOwner }: { post: PostWithBook; isOwner: boolean }) {

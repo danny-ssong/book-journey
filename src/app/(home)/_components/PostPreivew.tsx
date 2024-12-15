@@ -1,5 +1,5 @@
 import RatingViewer from "@/app/_components/RatingViewer";
-import { PostWithUserProfileAndBook } from "@/app/_types/supabaseTypes";
+import { PostWithUserProfileAndBook } from "@/app/_models/supabaseTypes";
 import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";

@@ -2,7 +2,7 @@ import { createClient } from "@/utils/supabase/server";
 import dayjs from "dayjs";
 import RatingViewer from "../../_components/RatingViewer";
 import Link from "next/link";
-import { PostWithUserProfileAndBook } from "@/app/_types/supabaseTypes";
+import { PostWithUserProfileAndBook } from "@/app/_models/supabaseTypes";
 import getUserOnServer from "@/app/_lib/getUserOnServer";
 import Button from "@/app/_components/Button";
 
@@ -19,7 +19,10 @@ export default async function PostViewer({ post }: { post: PostWithUserProfileAn
               <h2 className="text-2xl">{post.book.title}</h2>
               <p className="text-sm text-gray-600">{post.book.author}</p>
             </div>
-            <p>{`${dayjs(post.start_date).format("YYYY-MM-DD")} ~ ${dayjs(post.end_date).format("YYYY-MM-DD")}`}</p>
+            <div className="flex items-center gap-2">
+              <p className="text-xs">읽은 날짜</p>
+              <p>{`${dayjs(post.start_date).format("YYYY")}년 ${dayjs(post.start_date).format("MM")}월`}</p>
+            </div>
           </div>
           <p className="mt-2">{post.profile.username}</p>
           <RatingViewer rating={post.rating!} />

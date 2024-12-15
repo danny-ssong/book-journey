@@ -1,4 +1,4 @@
-import { Profile } from "@/app/_types/supabaseTypes";
+import { Profile } from "@/app/_models/supabaseTypes";
 import { createClient } from "@/utils/supabase/server";
 import { cacheWithLogging } from "@/utils/cache-utils";
 

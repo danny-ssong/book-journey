@@ -1,5 +1,5 @@
 import getUserOnServer from "@/app/_lib/getUserOnServer";
-import { Profile } from "@/app/_types/supabaseTypes";
+import { Profile } from "@/app/_models/supabaseTypes";
 import Link from "next/link";
 
 export default async function ProfileViewer({ profile }: { profile: Profile }) {

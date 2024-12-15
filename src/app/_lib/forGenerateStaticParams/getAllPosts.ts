@@ -1,5 +1,5 @@
 "use server";
-import { Post } from "@/app/_types/supabaseTypes";
+import { Post } from "@/app/_models/supabaseTypes";
 import { createClient } from "@/utils/supabase/client";
 
 export async function getAllPosts(): Promise<Post[] | undefined> {

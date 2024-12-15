@@ -5,10 +5,12 @@ import Rating from "./Rating";
 import { useRouter } from "next/navigation";
 import { createPost } from "@/app/actions/createPost";
 import { updatePost } from "@/app/actions/updatePost";
-import { Post } from "@/app/_types/supabaseTypes";
+import { Post } from "@/app/_models/supabaseTypes";
 import refreshProfileMostReadAuthors from "@/app/actions/refreshProfileMostReadAuthors";
 import Button from "@/app/_components/Button";
 import { useQueryClient } from "@tanstack/react-query";
+import DateInput from "../../_components/DateInput";
+import SelectPrivacy from "./SelectPrivacy";
 
 type Props = {
   book: SearchedBook | undefined;
@@ -21,7 +23,6 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
   const [title, setTitle] = useState(initPost?.title ?? "");
   const [content, setContent] = useState(initPost?.content ?? "");
   const [startDate, setStartDate] = useState<string>(dayjs(initPost?.start_date ?? new Date()).format("YYYY-MM-DD"));
-  const [endDate, setEndDate] = useState<string>(dayjs(initPost?.end_date ?? new Date()).format("YYYY-MM-DD"));
   const [rating, setRating] = useState<number>(initPost?.rating ?? 5);
   const [isPrivate, setIsPrivate] = useState<boolean>(initPost?.is_private ?? false);
 
@@ -35,9 +36,9 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
     let postId = undefined;
 
     if (initPost) {
-      postId = await updatePost(initPost.id, book, content, startDate, endDate, rating, title, isPrivate);
+      postId = await updatePost(initPost.id, book, content, startDate, startDate, rating, title, isPrivate);
     } else {
-      postId = await createPost(book, content, startDate, endDate, rating, title, isPrivate);
+      postId = await createPost(book, content, startDate, startDate, rating, title, isPrivate);
     }
     refreshProfileMostReadAuthors();
     if (postId) {
@@ -50,32 +51,13 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
     <article>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div className="flex justify-end">
-          <select
-            value={String(isPrivate)}
-            onChange={(e) => {
-              setIsPrivate(e.target.value === "true");
-            }}
-            className="border px-2 py-1"
-          >
-            <option value="true">비공개</option>
-            <option value="false">공개</option>
-          </select>
+          <SelectPrivacy isPrivate={isPrivate} setIsPrivate={setIsPrivate} />
         </div>
         <div className="flex justify-between">
           <Rating rating={rating} onClickStar={setRating} />
-          <div className="flex gap-4">
-            <input
-              className="px-4 py-1 border"
-              type="date"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-            />
-            <input
-              className="px-4 py-1 border"
-              type="date"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-            />
+          <div className="flex gap-2 items-center">
+            <p className="text-sm">읽은 날짜</p>
+            <DateInput date={startDate} setDate={setStartDate} />
           </div>
         </div>
         <input

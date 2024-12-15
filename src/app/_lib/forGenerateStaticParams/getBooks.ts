@@ -1,5 +1,5 @@
 "use server";
-import { Book } from "@/app/_types/supabaseTypes";
+import { Book } from "@/app/_models/supabaseTypes";
 import { createClient } from "@/utils/supabase/client";
 
 export async function getBooks(): Promise<Book[] | null> {

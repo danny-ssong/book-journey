@@ -1,4 +1,4 @@
-import { PostWithUserProfile } from "@/app/_types/supabaseTypes";
+import { PostWithUserProfile } from "@/app/_models/supabaseTypes";
 import { cacheWithLogging } from "@/utils/cache-utils";
 import { createClient } from "@/utils/supabase/server";
 

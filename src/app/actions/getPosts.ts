@@ -1,6 +1,6 @@
 "use server";
 
-import { PostWithUserProfileAndBook } from "@/app/_types/supabaseTypes";
+import { PostWithUserProfileAndBook } from "@/app/_models/supabaseTypes";
 import { createClient } from "@/utils/supabase/server";
 
 export default async function getPosts(

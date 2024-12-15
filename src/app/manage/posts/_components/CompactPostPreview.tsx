@@ -1,6 +1,6 @@
 import RatingViewer from "@/app/_components/RatingViewer";
 import getUserOnClient from "@/app/_lib/getUserOnClient";
-import { PostWithBook } from "@/app/_types/supabaseTypes";
+import { PostWithBook } from "@/app/_models/supabaseTypes";
 import PostActionButtons from "./PostPreviewButtons";
 import dayjs from "dayjs";
 
