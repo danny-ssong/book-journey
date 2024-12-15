@@ -18,13 +18,13 @@ function ExapndedPostPreviewForManage({ post, isOwner }: { post: PostWithBook; i
       </figure>
       <div className="flex flex-col w-full mb-2">
         <div className="flex justify-between w-full">
-          <div className="flex gap-2 items-center">
-            <h2 className="text-md font-semibold">{post.book.title}</h2>
-            <p className="text-xs">{post.book.author}</p>
+          <div className="flex gap-2 items-center w-[400px]">
+            <h2 className="text-md font-semibold line-clamp-1">{post.book.title}</h2>
+            <p className="text-xs text-nowrap">{post.book.author}</p>
           </div>
           <div className="flex gap-2 items-center">
-            <p className="text-xs">작성일</p>
-            <time dateTime={post.created_at || ""}>{dayjs(post.created_at).format("YYYY-MM-DD")}</time>
+            <p className="text-xs">최근 수정일</p>
+            <time dateTime={post.updated_at || ""}>{dayjs(post.updated_at).format("YYYY-MM-DD")}</time>
           </div>
         </div>
         <div className="flex justify-between items-center py-2">

@@ -13,7 +13,10 @@ export default function CompactPostPreviewForManage({ post, isOwner }: { post: P
             <h2 className="text-md font-semibold">{post.book.title}</h2>
             <p className="text-xs">{post.book.author}</p>
           </div>
-          <time dateTime={post.created_at || ""}>{dayjs(post.created_at).format("YYYY-MM-DD")}</time>
+          <div className="flex gap-2 items-center">
+            <p className="text-xs">최근 수정일</p>
+            <time dateTime={post.updated_at || ""}>{dayjs(post.updated_at).format("YYYY-MM-DD")}</time>
+          </div>
         </div>
         <div className="flex justify-between items-center">
           <div>

@@ -17,9 +17,12 @@ export default function PostPreviewForBook({ postWithProfile }: Props) {
             <Link href={`/users/${postWithProfile.user_id}`}>{postWithProfile.profile.username}</Link>
           </p>
         </div>
-        <time dateTime={postWithProfile.created_at || ""}>
-          {dayjs(postWithProfile.created_at).format("YYYY-MM-DD")}
-        </time>
+        <div className="flex gap-2 items-center">
+          <p className="text-xs">최근 수정일</p>
+          <time dateTime={postWithProfile.updated_at || ""}>
+            {dayjs(postWithProfile.updated_at).format("YYYY-MM-DD")}
+          </time>
+        </div>
       </div>
       <div className="flex justify-between items-center mb-2">
         <p className="hover:underline text-lg">

@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import ExapndedPostPreviewForManage from "./_components/PostPreviewForManage";
+import ExapndedPostPreviewForManage from "./_components/ExapndedPostPreviewForManage";
 import PaginationForClient from "@/app/search/_components/Pagination";
 import { useEffect, useState } from "react";
 import CompactPostPreviewForManage from "./_components/CompactPostPreview";

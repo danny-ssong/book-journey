@@ -18,15 +18,18 @@ export default function PostPreview({ post }: { post: PostWithUserProfileAndBook
       </div>
       <div className="flex flex-col w-full mb-2">
         <div className="flex justify-between">
-          <div className="flex gap-2 items-center">
-            <h2 className="hover:underline font-semibold">
+          <div className="flex gap-2 items-center w-[400px]">
+            <h2 className="hover:underline font-semibold line-clamp-1">
               <Link href={`/books/${post.book.isbn}`}>{post.book.title}</Link>
             </h2>
-            <p className="hover:underline text-xs">
+            <p className="hover:underline text-xs text-nowrap">
               <Link href={`/search?query=${post.book.author}`}>{post.book.author}</Link>
             </p>
           </div>
-          <time dateTime={post.created_at || ""}>{dayjs(post.created_at).format("YYYY-MM-DD")}</time>
+          <div className="flex gap-2 items-center">
+            <p className="text-xs">최근 수정일</p>
+            <time dateTime={post.updated_at || ""}>{dayjs(post.updated_at).format("YYYY-MM-DD")}</time>
+          </div>
         </div>
         <RatingViewer rating={post.rating!} />
         <p className="text-sm hover:underline mb-2">

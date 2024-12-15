@@ -1,6 +1,6 @@
 import { getUserProfiles } from "@/app/_lib/forGenerateStaticParams/getUserProfiles";
 import PaginationButtons from "@/app/manage/posts/_components/PaginationButtons";
-import ExapndedPostPreviewForManage from "@/app/manage/posts/_components/PostPreviewForManage";
+import ExapndedPostPreviewForManage from "@/app/manage/posts/_components/ExapndedPostPreviewForManage";
 import getProfile from "@/app/manage/posts/_lib/getProfile";
 import ProfileViewer from "@/app/manage/settings/profile/_components/ProfileViewer";
 import { Metadata } from "next";
