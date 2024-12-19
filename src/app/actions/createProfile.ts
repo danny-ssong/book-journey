@@ -27,7 +27,7 @@ export default async function createUserProfileIfNotExists() {
       username: getRandomUserName(),
       imageURL: undefined,
       bio: "",
-      favorite_authors: [],
+      mostRead_authors: [],
     });
 
     if (insertError) {
