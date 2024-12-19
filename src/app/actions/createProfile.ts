@@ -1,7 +1,7 @@
 "use server";
 import { createClient } from "@/utils/supabase/server";
 import getUserOnServer from "../_lib/getUserOnServer";
-
+import { CreateProfileDto, Profile } from "../_models/supabaseTypes";
 export default async function createUserProfileIfNotExists() {
   const supabase = createClient();
 
@@ -23,12 +23,13 @@ export default async function createUserProfileIfNotExists() {
 
   if (!profile) {
     // 프로필이 없으면 랜덤한 이름으로 insert
-    const { error: insertError } = await supabase.from("profile").insert({
+    const profile: CreateProfileDto = {
       username: getRandomUserName(),
-      imageURL: undefined,
+      imageURL: null,
       bio: "",
       mostRead_authors: [],
-    });
+    };
+    const { error: insertError } = await supabase.from("profile").insert(profile);
 
     if (insertError) {
       console.error("Error inserting profile:", insertError);

@@ -3,22 +3,19 @@
 import { createClient } from "@/utils/supabase/server";
 import { revalidateTag } from "next/cache";
 import getUserOnServer from "../_lib/getUserOnServer";
+import { CreateBookDto, CreatePostDto } from "../_models/supabaseTypes";
 
-export async function updatePost(
-  id: number,
-  book: SearchedBook,
-  content: string,
-  start_date: string,
-  end_date: string,
-  rating: number,
-  title: string,
-  is_private: boolean
-) {
+export async function updatePost(id: number, createBookDto: CreateBookDto, createPostDto: CreatePostDto) {
   const supabase = createClient();
   const user = await getUserOnServer();
 
-  const post = { content, start_date, end_date, isbn: book.isbn, rating, title, is_private };
-  const { data, error } = await supabase.from("post").update(post).eq("id", id).select();
+  const { data: result, error: resultError } = await supabase.from("book").upsert([createBookDto]).select();
+  const { data, error } = await supabase.from("post").update(createPostDto).eq("id", id).select();
+
+  if (resultError) {
+    console.error(`${resultError.details} \n${resultError.message}`);
+    return;
+  }
 
   if (error) {
     console.error(`${error.details} \n${error.message}`);
@@ -27,7 +24,7 @@ export async function updatePost(
 
   if (data) {
     revalidateTag(`posts-${id}`);
-    revalidateTag(`posts-${book.isbn}`);
+    revalidateTag(`posts-${createBookDto.isbn}`);
     return id;
   }
 

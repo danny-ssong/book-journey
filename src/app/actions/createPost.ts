@@ -3,28 +3,13 @@
 import { createClient } from "@/utils/supabase/server";
 import getUserOnServer from "../_lib/getUserOnServer";
 import { revalidateTag } from "next/cache";
+import { CreateBookDto, CreatePostDto } from "../_models/supabaseTypes";
 
-export async function createPost(
-  book: SearchedBook,
-  content: string,
-  start_date: string,
-  end_date: string,
-  rating: number,
-  title: string,
-  is_private: boolean
-) {
+export async function createPost(book: CreateBookDto, post: CreatePostDto) {
   const supabase = createClient();
   const user = await getUserOnServer();
-  const bookData = {
-    isbn: book.isbn,
-    title: book.title,
-    author: book.authors[0],
-    published_date: book.datetime,
-    thumbnail: book.thumbnail,
-  };
-  const { data: result, error: resultError } = await supabase.from("book").upsert([bookData]).select();
 
-  const post = { content, start_date, end_date, isbn: book.isbn, rating, title, is_private };
+  const { data: result, error: resultError } = await supabase.from("book").upsert([book]).select();
   const { data, error } = await supabase.from("post").insert([post]).select();
 
   if (resultError) {

@@ -5,7 +5,7 @@ import Rating from "./Rating";
 import { useRouter } from "next/navigation";
 import { createPost } from "@/app/actions/createPost";
 import { updatePost } from "@/app/actions/updatePost";
-import { Post } from "@/app/_models/supabaseTypes";
+import { CreateBookDto, CreatePostDto, Post } from "@/app/_models/supabaseTypes";
 import refreshProfileMostReadAuthors from "@/app/actions/refreshProfileMostReadAuthors";
 import Button from "@/app/_components/Button";
 import { useQueryClient } from "@tanstack/react-query";
@@ -35,10 +35,26 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
 
     let postId = undefined;
 
+    const createPostDto: CreatePostDto = {
+      title,
+      content,
+      rating,
+      start_date: startDate,
+      is_private: isPrivate,
+      isbn: book.isbn,
+    };
+    const createBookDto: CreateBookDto = {
+      author: book.authors[0],
+      isbn: book.isbn,
+      published_date: book.datetime,
+      title: book.title,
+      thumbnail: book.thumbnail,
+    };
+
     if (initPost) {
-      postId = await updatePost(initPost.id, book, content, startDate, startDate, rating, title, isPrivate);
+      postId = await updatePost(initPost.id, createBookDto, createPostDto);
     } else {
-      postId = await createPost(book, content, startDate, startDate, rating, title, isPrivate);
+      postId = await createPost(createBookDto, createPostDto);
     }
     refreshProfileMostReadAuthors();
     if (postId) {
@@ -46,6 +62,14 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
       router.push(`/posts/${postId}`);
     }
   };
+
+  // const bookData: CreateBookDto = {
+  //   isbn: book.isbn,
+  //   title: book.title,
+  //   author: book.authors[0],
+  //   published_date: book.datetime,
+  //   thumbnail: book.thumbnail,
+  // };
 
   return (
     <article>
