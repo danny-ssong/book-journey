@@ -13,7 +13,6 @@ export default async function NewPostPage({ searchParams }: Props) {
   const user = await getUserOnServer();
   if (!user) redirect("/login");
 
-  console.log(user);
   const isbn = searchParams.isbn;
 
   const response = await searchBooks(isbn);

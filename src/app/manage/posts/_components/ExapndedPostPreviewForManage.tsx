@@ -4,7 +4,7 @@ import PostActionButtons from "./PostPreviewButtons";
 import { PostWithBook } from "@/app/_models/supabaseTypes";
 import Image from "next/image";
 
-function ExapndedPostPreviewForManage({ post, isOwner }: { post: PostWithBook; isOwner: boolean }) {
+function ExpandedPostPreviewForManage({ post, isOwner }: { post: PostWithBook; isOwner: boolean }) {
   return (
     <article className="last:border-none border-b-2 h-[200px] px-4 py-4 flex gap-4 group">
       <figure className="flex justify-center items-center border">
@@ -40,4 +40,4 @@ function ExapndedPostPreviewForManage({ post, isOwner }: { post: PostWithBook; i
   );
 }
 
-export default ExapndedPostPreviewForManage;
+export default ExpandedPostPreviewForManage;

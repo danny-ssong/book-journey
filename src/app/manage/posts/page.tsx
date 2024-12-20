@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import ExapndedPostPreviewForManage from "./_components/ExapndedPostPreviewForManage";
+import ExpandedPostPreviewForManage from "./_components/ExapndedPostPreviewForManage";
 import PaginationForClient from "@/app/search/_components/Pagination";
 import { useEffect, useState } from "react";
 import CompactPostPreviewForManage from "./_components/CompactPostPreview";
@@ -65,7 +65,7 @@ export default function ManagePostsPage() {
         <ul className="min-h-[500px] bg-white border">
           {data?.posts.map((post) =>
             showExpanded ? (
-              <ExapndedPostPreviewForManage key={post.id} post={post} isOwner />
+              <ExpandedPostPreviewForManage key={post.id} post={post} isOwner />
             ) : (
               <CompactPostPreviewForManage key={post.id} post={post} isOwner />
             )

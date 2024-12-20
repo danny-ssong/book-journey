@@ -7,7 +7,7 @@ export default async function getPosts(
   size: number,
   page: number = 1,
   userId?: string,
-  isContainPrivate: boolean = false
+  isIncludePrivate: boolean = false
 ): Promise<{ posts: PostWithUserProfileAndBook[]; isLastPage: boolean }> {
   const supabase = createClient();
 
@@ -27,7 +27,7 @@ export default async function getPosts(
     postTotalCountQuery = postTotalCountQuery.eq("user_id", userId);
   }
 
-  if (!isContainPrivate) {
+  if (!isIncludePrivate) {
     postQuery = postQuery.eq("is_private", false);
     postTotalCountQuery = postTotalCountQuery.eq("is_private", false);
   }
@@ -38,7 +38,6 @@ export default async function getPosts(
   const { count: postCount, error: countError } = await postTotalCountQuery;
   if (countError) return { posts: [], isLastPage: false };
 
-  const isLastPage = end >= (postCount ?? 0);
-
+  const isLastPage = end >= (postCount ?? 0) - 1;
   return { posts, isLastPage };
 }

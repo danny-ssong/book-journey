@@ -1,6 +1,6 @@
 import { getUserProfiles } from "@/app/_lib/forGenerateStaticParams/getUserProfiles";
 import PaginationButtons from "@/app/manage/posts/_components/PaginationButtons";
-import ExapndedPostPreviewForManage from "@/app/manage/posts/_components/ExapndedPostPreviewForManage";
+import ExpandedPostPreviewForManage from "@/app/manage/posts/_components/ExapndedPostPreviewForManage";
 import getProfile from "@/app/manage/posts/_lib/getProfile";
 import ProfileViewer from "@/app/manage/settings/profile/_components/ProfileViewer";
 import { Metadata } from "next";
@@ -29,13 +29,13 @@ export default async function UserProfilePage({ params, searchParams }: Props) {
   const { posts, isLastPage } = await getPosts(size, page, userId);
 
   return (
-    <div className="ml-5 w-[600px]">
+    <div className=" w-[800px]">
       <ProfileViewer profile={profile} />
       <div>
         <h1 className="px-2 text-lg my-4">최근 작성한 글</h1>
         <ul className="bg-white">
           {posts.map((post) => (
-            <ExapndedPostPreviewForManage key={post.id} post={post} isOwner={userId === post.user_id} />
+            <ExpandedPostPreviewForManage key={post.id} post={post} isOwner={userId === post.user_id} />
           ))}
         </ul>
       </div>
