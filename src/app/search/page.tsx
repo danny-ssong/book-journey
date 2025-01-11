@@ -8,7 +8,7 @@ import Link from "next/link";
 import PaginationButtons from "../manage/posts/_components/PaginationButtons";
 import Image from "next/image";
 import BookItem from "./_components/BookItem";
-import PaginationForClient from "./_components/Pagination";
+import PaginationButtonsForClient from "../_components/PaginationButtonsForClient";
 
 //author로 redirect하는 경우 나중에 searchPage가 아니라 authorPage를 만들어서 next에서 캐싱해놔도 될 듯z
 // export default function Page({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
@@ -49,8 +49,8 @@ export default function Page() {
 
   return (
     <div className="px-10">
-      <div className="space-y-4 min-h-[400px]">
-        <h1 className=" pl-4 text-2xl font-semibold">검색 결과</h1>
+      <div className="min-h-[400px] space-y-4">
+        <h1 className="pl-4 text-2xl font-semibold">검색 결과</h1>
         {books && books.length > 0 ? (
           <ul>
             {books?.map((book: SearchedBook) => (
@@ -63,7 +63,11 @@ export default function Page() {
           <p>검색된 결과가 없습니다.</p>
         )}
       </div>
-      <PaginationForClient page={page} isLastPage={isLastPage} onPageChange={setPage} />
+      <PaginationButtonsForClient
+        page={page}
+        isLastPage={isLastPage}
+        onPageChange={setPage}
+      />
     </div>
   );
 }

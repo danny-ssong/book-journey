@@ -14,20 +14,20 @@ export default async function RootLayout({
   const user = await getUserOnServer();
   return (
     <html lang="en">
-      <body className="w-full h-screen">
-        <div className="w-full h-full flex flex-col">
-          <header className="w-full min-h-[64px] flex bg-white justify-between items-center fixed px-10 border">
-            <div className="flex justify-between items-center w-[800px]">
-              <div>Book-Journey Logo</div>
+      <body className="h-screen w-screen bg-slate-50">
+        <div className="flex h-full w-full">
+          <header className="fixed flex min-h-16 w-full items-center justify-between border bg-white px-10">
+            <div className="flex items-center gap-10">
+              <p>Book-Journey Logo</p>
               <HeaderNavLinks />
-              <BookSearchArea />
             </div>
+            <BookSearchArea />
             <UserLoginStatus user={user} />
           </header>
-          <div className="px-10 mt-[64px] pt-10 bg-slate-50 flex flex-1 ">
+          <div className="mx-auto mt-16 flex px-10 py-10">
             <SidebarMenu user={user} />
             <ReactQueryProvider>
-              <main className="mx-auto px-4 md:px-10 lg:px-20">{children}</main>
+              <main className="ml-10 w-[850px]">{children}</main>
             </ReactQueryProvider>
           </div>
         </div>

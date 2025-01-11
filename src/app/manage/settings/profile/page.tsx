@@ -14,9 +14,9 @@ export default async function Page() {
   if (!profile) notFound();
 
   return (
-    <div className="mt-5 w-[600px]">
+    <div className="mx-auto w-[700px]">
       <ProfileViewer profile={profile} />
-      <div className="flex justify-end mt-5">
+      <div className="mt-5 flex justify-end">
         <Button>
           <Link href={`/manage/settings/profile/edit`}>수정</Link>
         </Button>
