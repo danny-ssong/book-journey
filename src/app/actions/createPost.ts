@@ -9,7 +9,10 @@ export async function createPost(book: CreateBookDto, post: CreatePostDto) {
   const supabase = createClient();
   const user = await getUserOnServer();
 
-  const { data: result, error: resultError } = await supabase.from("book").upsert([book]).select();
+  const { data: result, error: resultError } = await supabase
+    .from("book")
+    .upsert([book])
+    .select();
   const { data, error } = await supabase.from("post").insert([post]).select();
 
   if (resultError) {

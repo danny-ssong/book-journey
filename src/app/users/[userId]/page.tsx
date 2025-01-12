@@ -6,6 +6,8 @@ import ProfileViewer from "@/app/manage/settings/profile/_components/ProfileView
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import getPosts from "@/app/actions/getPosts";
+import { TabPanel, Tabs } from "@/app/_components/Tabs";
+import UserPostDashboard from "@/app/_components/UserPostDashboard";
 
 type Props = {
   params: {
@@ -29,17 +31,29 @@ export default async function UserProfilePage({ params, searchParams }: Props) {
   const { posts, isLastPage } = await getPosts(size, page, userId);
 
   return (
-    <div className=" w-[800px]">
+    <div className="flex flex-col gap-4">
       <ProfileViewer profile={profile} />
-      <div>
-        <h1 className="px-2 text-lg my-4">최근 작성한 글</h1>
-        <ul className="bg-white">
-          {posts.map((post) => (
-            <ExpandedPostPreviewForManage key={post.id} post={post} isOwner={userId === post.user_id} />
-          ))}
-        </ul>
-      </div>
-      <PaginationButtons baseURL={`/users/${userId}`} currentPage={page} isLastPage={isLastPage} />
+      <Tabs defaultActiveTab="staticstics">
+        <TabPanel tabId="recentPosts" label="최근 작성한 글">
+          <ul className="bg-white">
+            {posts.map((post) => (
+              <ExpandedPostPreviewForManage
+                key={post.id}
+                post={post}
+                isOwner={userId === post.user_id}
+              />
+            ))}
+          </ul>
+          <PaginationButtons
+            baseURL={`/users/${userId}`}
+            currentPage={page}
+            isLastPage={isLastPage}
+          />
+        </TabPanel>
+        <TabPanel tabId="staticstics" label="독서 통계">
+          <UserPostDashboard userId={userId} />
+        </TabPanel>
+      </Tabs>
     </div>
   );
 }

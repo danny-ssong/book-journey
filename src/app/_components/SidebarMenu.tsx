@@ -3,8 +3,8 @@ import Link from "next/link";
 
 export default function SidebarMenu({ user }: { user: User | null }) {
   return (
-    <aside className="w-[200px] bg-white px-5 py-6 border h-full">
-      <div className="mb-5 border bg-slate-800 text-white px-4 py-2 w-full text-center">
+    <aside className="h-full w-[200px] border bg-white px-5 py-6">
+      <div className="mb-5 w-full border bg-slate-800 px-4 py-2 text-center text-white">
         <Link href={!!user ? `/posts/new` : "/login"}>글쓰기</Link>
       </div>
       {!!user && (
@@ -14,6 +14,9 @@ export default function SidebarMenu({ user }: { user: User | null }) {
           </li>
           <li>
             <Link href={`/manage/settings/profile`}>프로필 관리</Link>
+          </li>
+          <li>
+            <Link href={`/manage/statistics`}>독서 통계</Link>
           </li>
         </ul>
       )}

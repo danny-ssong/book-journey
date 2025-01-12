@@ -14,7 +14,7 @@ export default async function RootLayout({
   const user = await getUserOnServer();
   return (
     <html lang="en">
-      <body className="h-screen w-screen bg-slate-50">
+      <body className="h-screen w-screen overflow-y-scroll bg-slate-50">
         <div className="flex h-full w-full">
           <header className="fixed flex min-h-16 w-full items-center justify-between border bg-white px-10">
             <div className="flex items-center gap-10">

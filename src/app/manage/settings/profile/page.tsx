@@ -4,6 +4,7 @@ import getProfile from "../../posts/_lib/getProfile";
 import getUserOnServer from "@/app/_lib/getUserOnServer";
 import Link from "next/link";
 import Button from "@/app/_components/Button";
+import UserPostDashboard from "@/app/_components/UserPostDashboard";
 
 export default async function Page() {
   const user = await getUserOnServer();
@@ -14,9 +15,9 @@ export default async function Page() {
   if (!profile) notFound();
 
   return (
-    <div className="mx-auto w-[700px]">
+    <div className="">
       <ProfileViewer profile={profile} />
-      <div className="mt-5 flex justify-end">
+      <div className="my-4 flex justify-end">
         <Button>
           <Link href={`/manage/settings/profile/edit`}>수정</Link>
         </Button>
