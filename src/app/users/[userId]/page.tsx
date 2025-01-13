@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import getPosts from "@/app/actions/getPosts";
 import { TabPanel, Tabs } from "@/app/_components/Tabs";
 import UserPostDashboard from "@/app/_components/UserPostDashboard";
+import PostPreview from "@/app/(home)/_components/PostPreivew";
 
 type Props = {
   params: {
@@ -33,15 +34,11 @@ export default async function UserProfilePage({ params, searchParams }: Props) {
   return (
     <div className="flex flex-col gap-4">
       <ProfileViewer profile={profile} />
-      <Tabs defaultActiveTab="staticstics">
+      <Tabs defaultActiveTab="recentPosts">
         <TabPanel tabId="recentPosts" label="최근 작성한 글">
           <ul className="bg-white">
             {posts.map((post) => (
-              <ExpandedPostPreviewForManage
-                key={post.id}
-                post={post}
-                isOwner={userId === post.user_id}
-              />
+              <PostPreview key={post.id} post={post} />
             ))}
           </ul>
           <PaginationButtons
