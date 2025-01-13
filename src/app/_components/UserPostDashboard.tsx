@@ -5,7 +5,7 @@ import {
   getGroupByAuthor,
   getGroupByMonth,
   getGroupByYear,
-} from "../_lib/postsGroupBy";
+} from "../_lib/getPostsGroupBy";
 
 export default async function UserPostDashboard({
   userId,
@@ -14,18 +14,18 @@ export default async function UserPostDashboard({
 }) {
   const posts = await getUserAllPosts(userId, true);
 
-  const postCountGroupByAuthor = getGroupByAuthor(posts);
-  const postCountGroupByMonth = getGroupByMonth(posts);
-  const postCountGroupByYear = getGroupByYear(posts);
+  const postsGroupByAuthor = getGroupByAuthor(posts);
+  const postsGroupByMonth = getGroupByMonth(posts);
+  const postsGroupByYear = getGroupByYear(posts);
 
   const today = new Date();
   const thisYear = today.getFullYear();
 
-  const postCountThisYear = postCountGroupByYear.find(
+  const thisYearPosts = postsGroupByYear.find(
     (obj) => obj.year === thisYear.toString(),
   );
 
-  const postCountLastYear = postCountGroupByYear.find(
+  const lastYearPosts = postsGroupByYear.find(
     (obj) => obj.year === (thisYear - 1).toString(),
   );
 
@@ -40,13 +40,13 @@ export default async function UserPostDashboard({
           <div>
             <p className="text-sm text-gray-500">올해 읽은 책</p>
             <p className="text-lg font-bold text-green-600">
-              {postCountThisYear?.count || 0}
+              {thisYearPosts?.posts.length || 0}
             </p>
           </div>
           <div>
             <p className="text-sm text-gray-500">작년에 읽은 책</p>
             <p className="text-lg font-bold text-red-600">
-              {postCountLastYear?.count || 0}
+              {lastYearPosts?.posts.length || 0}
             </p>
           </div>
         </div>
@@ -56,14 +56,14 @@ export default async function UserPostDashboard({
         <h3 className="mb-4 text-xl font-semibold text-gray-800">
           작가별 독서 통계
         </h3>
-        <AuthorChart data={postCountGroupByAuthor} />
+        <AuthorChart data={postsGroupByAuthor} />
       </div>
 
       <div>
         <h3 className="mb-4 text-xl font-semibold text-gray-800">
           월별 독서 통계
         </h3>
-        <BookChartPerMonth data={postCountGroupByMonth} />
+        <BookChartPerMonth data={postsGroupByMonth} />
       </div>
     </section>
   );

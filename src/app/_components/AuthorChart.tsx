@@ -13,6 +13,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import { PostWithBook } from "../_models/supabaseTypes";
 
 ChartJS.register(
   CategoryScale,
@@ -33,7 +34,30 @@ const options: ChartOptions<"bar"> = {
       display: false,
     },
     tooltip: {
-      enabled: false,
+      enabled: true,
+      callbacks: {
+        title: function () {
+          return "";
+        },
+        label: function (context) {
+          const dataIndex = context.dataIndex;
+          const posts =
+            (context.dataset as CustomBarChartDataset).customData?.[
+              dataIndex
+            ] || [];
+          if (posts.length > 1) {
+            const bookTitles = posts.map(
+              (post: PostWithBook) => `- ${post.book.title}`,
+            );
+            return bookTitles;
+          } else if (posts.length === 1) {
+            return posts[0].book.title;
+          } else {
+            return "No posts";
+          }
+        },
+      },
+      displayColors: false,
     },
     datalabels: {
       anchor: "end",
@@ -70,23 +94,28 @@ const options: ChartOptions<"bar"> = {
 };
 
 interface Props {
-  data: { author: string; count: number }[];
+  data: { author: string; posts: PostWithBook[] }[];
 }
 
+type CustomBarChartDataset = ChartDataset<"bar"> & {
+  customData: PostWithBook[][];
+};
+
 export default function AuthorChart({ data }: Props) {
-  data.sort((a, b) => b.count - a.count);
+  data.sort((a, b) => b.posts.length - a.posts.length);
   const labels = data.map((d) => d.author);
-  const values = data.map((d) => d.count);
-  options.scales!.x!.suggestedMax = Math.max(...values) * 1.1;
+  const postCount = data.map((d) => d.posts.length);
+  options.scales!.x!.suggestedMax = Math.max(...postCount) * 1.1;
 
   const categoryPercentage = data.length > 3 ? 0.6 : 0.2;
 
-  const dataset: ChartDataset<"bar"> = {
-    data: values,
+  const dataset: CustomBarChartDataset = {
+    data: postCount,
     categoryPercentage: categoryPercentage,
     borderWidth: 1,
     borderColor: "#7FC4F2",
     backgroundColor: "#D7ECFB",
+    customData: data.map((d) => d.posts),
   };
 
   const barData = {

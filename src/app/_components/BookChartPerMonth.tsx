@@ -14,6 +14,7 @@ import {
 import { Bar } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import dayjs from "dayjs";
+import { PostWithBook } from "../_models/supabaseTypes";
 
 ChartJS.register(
   CategoryScale,
@@ -33,7 +34,30 @@ const options: ChartOptions<"bar"> = {
       display: false,
     },
     tooltip: {
-      enabled: false,
+      enabled: true,
+      callbacks: {
+        title: function () {
+          return "";
+        },
+        label: function (context) {
+          const dataIndex = context.dataIndex;
+          const posts =
+            (context.dataset as CustomBarChartDataset).postsPerMonth?.[
+              dataIndex
+            ] || [];
+          if (posts.length > 1) {
+            const bookTitles = posts.map(
+              (post: PostWithBook) => `- ${post.book.title}`,
+            );
+            return bookTitles;
+          } else if (posts.length === 1) {
+            return posts[0].book.title;
+          } else {
+            return "No posts";
+          }
+        },
+      },
+      displayColors: false,
     },
     datalabels: {
       anchor: "end",
@@ -65,10 +89,6 @@ const options: ChartOptions<"bar"> = {
   },
 };
 
-interface Props {
-  data: { month: string; count: number }[];
-}
-
 const generateMonthRange = (startDate: string, endDate: string) => {
   const result = [];
   let current = dayjs(startDate).startOf("month");
@@ -80,6 +100,14 @@ const generateMonthRange = (startDate: string, endDate: string) => {
   }
 
   return result;
+};
+
+interface Props {
+  data: { month: string; posts: PostWithBook[] }[];
+}
+
+type CustomBarChartDataset = ChartDataset<"bar"> & {
+  postsPerMonth: PostWithBook[][];
 };
 
 export default function BookChartPerMonth({ data }: Props) {
@@ -95,25 +123,30 @@ export default function BookChartPerMonth({ data }: Props) {
   const endDate = sortedDates[sortedDates.length - 1].month;
   const months = generateMonthRange(startDate, endDate);
   const monthFromDates = data.map((d) => dayjs(d.month).format("YYYY-MM"));
-  const postCountsPerMonth = [];
+  const postCountPerMonth = [];
+  const postsPerMonth = [];
   for (let i = 0; i < months.length; i++) {
     if (monthFromDates.includes(months[i])) {
       const index = monthFromDates.indexOf(months[i]);
-      postCountsPerMonth.push(data[index].count);
+      postsPerMonth.push(data[index].posts);
+      postCountPerMonth.push(data[index].posts.length);
     } else {
-      postCountsPerMonth.push(0);
+      postsPerMonth.push([]);
+      postCountPerMonth.push(0);
     }
   }
-  options.scales!.y!.suggestedMax = Math.max(...postCountsPerMonth) * 1.1;
 
-  const categoryPercentage = data.length > 5 ? 0.3 : 0.1;
+  options.scales!.y!.suggestedMax = Math.max(...postCountPerMonth) * 1.1;
 
-  const dataset: ChartDataset<"bar"> = {
-    data: postCountsPerMonth,
+  const categoryPercentage = data.length > 5 ? 0.3 : 0.2;
+
+  const dataset: CustomBarChartDataset = {
+    data: postCountPerMonth,
     categoryPercentage: categoryPercentage,
     borderWidth: 1,
     borderColor: "#7FC4F2",
     backgroundColor: "#D7ECFB",
+    postsPerMonth: postsPerMonth,
   };
 
   const barData = {
@@ -131,7 +164,12 @@ export default function BookChartPerMonth({ data }: Props) {
   return (
     <div className="rounded-lg shadow">
       <div ref={scrollContainerRef} className="overflow-x-auto">
-        <div style={{ width: `${months.length * 60}px`, height: "300px" }}>
+        <div
+          style={{
+            width: `${months.length > 5 ? months.length * 60 : 300}px`,
+            height: "300px",
+          }}
+        >
           <Bar options={options} data={barData} />
         </div>
       </div>
