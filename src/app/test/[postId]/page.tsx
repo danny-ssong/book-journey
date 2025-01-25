@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { notFound } from "next/navigation";
-import getPost from "./_lib/getPostWithBook";
-import PostViewer from "../_components/PostViewer";
+import getPost from "@/app/posts/[postId]/_lib/getPostWithBook";
+import PostViewer from "@/app/posts/_components/PostViewer";
 import { getAllPosts } from "@/app/_lib/forGenerateStaticParams/getAllPosts";
 import { Metadata } from "next";
 

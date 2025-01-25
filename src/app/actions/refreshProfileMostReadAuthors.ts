@@ -22,12 +22,19 @@ export default async function refreshProfileMostReadAuthors() {
     .from("profile")
     .update({ mostRead_authors: mostReadAuthors })
     .eq("user_id", user.id);
+
+  if (error) {
+    console.error("when update most read authors  ", error);
+  }
 }
 
 async function calcMostReadAuthors(user_id: string) {
   const supabase = createClient();
 
-  const { data: postsWithBook, error } = await supabase.from("post").select(`*, book(author)`).eq("user_id", user_id);
+  const { data: postsWithBook, error } = await supabase
+    .from("post")
+    .select(`*, book(author)`)
+    .eq("user_id", user_id);
 
   if (error) return null;
 

@@ -17,9 +17,5 @@ export default async function Page({ params }: { params: { postId: string } }) {
   const response = await searchBooks(postWithBook.isbn, 5, 1);
   const book = response?.documents[0];
 
-  return (
-    <div className="mt-5">
-      <PostForm initBook={book} initPost={postWithBook} />
-    </div>
-  );
+  return <PostForm initBook={book} initPost={postWithBook} />;
 }
