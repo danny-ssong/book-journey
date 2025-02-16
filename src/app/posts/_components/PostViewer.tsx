@@ -1,10 +1,8 @@
-import { createClient } from "@/utils/supabase/server";
 import dayjs from "dayjs";
 import RatingViewer from "../../_components/RatingViewer";
 import Link from "next/link";
 import { PostWithUserProfileAndBook } from "@/app/_models/supabaseTypes";
 import getUserOnServer from "@/app/_lib/getUserOnServer";
-import Button from "@/app/_components/Button";
 import EditIcon from "@/app/_components/_icons/EditIcon";
 
 export default async function PostViewer({
@@ -18,7 +16,7 @@ export default async function PostViewer({
   return (
     <div className="h-full w-[800px]">
       <article className="flex h-full flex-col">
-        <header className="mb-5 flex flex-col border bg-white px-4 py-4">
+        <header className="mb-5 flex flex-col rounded-lg border bg-white px-4 py-4">
           <div className="mb-1 flex items-center justify-between">
             <div className="flex items-end gap-2">
               <h2 className="text-2xl">{post.book.title}</h2>
@@ -32,7 +30,7 @@ export default async function PostViewer({
           <p className="mt-2">{post.profile.username}</p>
           <RatingViewer rating={post.rating!} />
         </header>
-        <div className="flex flex-1 flex-col border bg-white px-4 py-4">
+        <div className="flex flex-1 flex-col rounded-lg border bg-white px-4 py-4">
           <main className="flex-1">
             <h1 className="mb-5 text-xl">{post.title}</h1>
             <p className="w-full whitespace-pre-line">{post.content}</p>

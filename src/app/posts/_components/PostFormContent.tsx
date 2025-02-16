@@ -34,7 +34,7 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
     initPost?.is_private ?? false,
   );
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const createOrUpdatePost = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!book) {
       alert("책을 선택해주세요");
@@ -70,21 +70,38 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
       router.push(`/posts/${postId}`);
     }
   };
-
-  // const bookData: CreateBookDto = {
-  //   isbn: book.isbn,
-  //   title: book.title,
-  //   author: book.authors[0],
-  //   published_date: book.datetime,
-  //   thumbnail: book.thumbnail,
-  // };
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    // 인용구: Ctrl + 3
+    if (e.ctrlKey && e.key === "3") {
+      e.preventDefault();
+      const target = e.target as HTMLTextAreaElement;
+      const { selectionStart: start, selectionEnd: end } = target;
+      if (start === end) return;
+      const selectedText = content.substring(start, end);
+      const formattedText = selectedText
+        .split("\n")
+        .map((line) => `> ${line}`)
+        .join("\n");
+      setContent(content.slice(0, start) + formattedText + content.slice(end));
+    }
+    // 굵은 강조: Ctrl + B
+    else if (e.ctrlKey && (e.key === "b" || e.key === "B")) {
+      e.preventDefault();
+      const target = e.target as HTMLTextAreaElement;
+      const { selectionStart: start, selectionEnd: end } = target;
+      if (start === end) return;
+      const selectedText = content.substring(start, end);
+      const formattedText = `**${selectedText}**`;
+      setContent(content.slice(0, start) + formattedText + content.slice(end));
+    }
+  };
 
   return (
     <div className="h-full">
       <article className="h-full">
         <form
           id="postForm"
-          onSubmit={handleSubmit}
+          onSubmit={createOrUpdatePost}
           className="flex h-full flex-col gap-4"
         >
           <div className="flex justify-end">
@@ -98,16 +115,17 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
             </div>
           </div>
           <input
-            className="h-12 w-full resize-none overflow-hidden border px-2 py-2 text-2xl font-semibold text-black placeholder:text-2xl placeholder:text-gray-400"
+            className="h-12 w-full resize-none overflow-hidden rounded-lg border px-2 py-2 text-2xl font-semibold text-black placeholder:text-2xl placeholder:text-gray-400"
             placeholder="제목을 입력하세요"
             onChange={(e) => setTitle(e.target.value)}
             value={title}
           />
           <textarea
-            className="w-full flex-1 resize-none border px-2 py-2 text-black placeholder:text-gray-200"
+            className="w-full flex-1 resize-none rounded-lg border px-2 py-2 text-black placeholder:text-gray-200"
             placeholder="감상을 작성해보세요"
             value={content}
             onChange={(e) => setContent(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
         </form>
       </article>

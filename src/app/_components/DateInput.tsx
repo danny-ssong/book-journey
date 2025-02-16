@@ -13,14 +13,12 @@ export default function DateInput({ date, setDate }: Props) {
   };
 
   return (
-    <div className="flex gap-4">
-      <input
-        className="px-4 py-1 border"
-        type="month"
-        value={dateYYYYMM}
-        onChange={(e) => handleChange(e.target.value)}
-        required
-      />
-    </div>
+    <input
+      className="rounded-lg border px-4 py-1"
+      type="month"
+      value={dateYYYYMM}
+      onChange={(e) => handleChange(e.target.value)}
+      required
+    />
   );
 }
