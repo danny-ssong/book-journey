@@ -16,11 +16,10 @@ export default async function NewPostPage({ searchParams }: Props) {
   const isbn = searchParams.isbn;
 
   const response = await searchBooks(isbn);
-  const initBook = response?.documents && response?.documents?.length > 0 ? response.documents[0] : undefined;
+  const initBook =
+    response?.documents && response?.documents?.length > 0
+      ? response.documents[0]
+      : undefined;
 
-  return (
-    <div className="w-[800px] mt-5">
-      <PostForm initBook={initBook} />
-    </div>
-  );
+  return <PostForm initBook={initBook} />;
 }
