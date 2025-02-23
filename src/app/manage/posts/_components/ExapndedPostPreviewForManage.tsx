@@ -12,14 +12,13 @@ function ExpandedPostPreviewForManage({
   isOwner: boolean;
 }) {
   return (
-    <article className="group flex h-44 gap-4 border-b-2 px-4 py-4 last:border-none">
-      <figure className="flex items-center justify-center border">
+    <article className="group flex gap-4 border-b-2 px-4 py-4 last:border-none">
+      <figure className="relative aspect-[3/4] w-[120px] overflow-hidden rounded-md border">
         <Image
           src={post.book.thumbnail || ""}
           alt={post.book.title}
-          width={120}
-          height={160}
-          className="h-[160px] w-[120px]"
+          fill
+          className="object-fill"
         />
       </figure>
       <div className="flex w-full flex-col">
@@ -28,7 +27,9 @@ function ExpandedPostPreviewForManage({
             <h2 className="text-md line-clamp-1 font-semibold">
               {post.book.title}
             </h2>
-            <p className="text-nowrap text-xs">{post.book.author}</p>
+            <p className="text-muted-foreground text-nowrap text-xs">
+              {post.book.author}
+            </p>
           </div>
           <div className="flex items-center gap-2">
             <p className="text-xs">최근 수정일</p>
@@ -38,13 +39,13 @@ function ExpandedPostPreviewForManage({
           </div>
         </div>
         <div className="flex items-center justify-between py-1">
-          <div>
+          <div className="mb-2">
             <RatingViewer rating={post.rating!} />
-            <h1>{post.title}</h1>
+            <h1 className="mt-2 line-clamp-1">{post.title || "\u00A0"}</h1>
           </div>
           {isOwner && <PostActionButtons postId={post.id} />}
         </div>
-        <p className="line-clamp-3 w-full overflow-hidden text-ellipsis text-sm">
+        <p className="line-clamp-3 min-h-[3.75rem] w-full overflow-hidden text-ellipsis text-sm">
           {post.content}
         </p>
       </div>

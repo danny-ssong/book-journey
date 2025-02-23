@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -14,6 +14,7 @@ import {
 import { Bar } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { PostWithBook } from "../_models/supabaseTypes";
+import { usePrimaryColorHsl } from "../_hooks/usePrimaryColorHsl";
 
 ChartJS.register(
   CategoryScale,
@@ -102,6 +103,8 @@ type CustomBarChartDataset = ChartDataset<"bar"> & {
 };
 
 export default function AuthorChart({ data }: Props) {
+  const { primaryColor, darkerPrimaryColor } = usePrimaryColorHsl();
+
   data.sort((a, b) => b.posts.length - a.posts.length);
   const labels = data.map((d) => d.author);
   const postCount = data.map((d) => d.posts.length);
@@ -113,8 +116,8 @@ export default function AuthorChart({ data }: Props) {
     data: postCount,
     categoryPercentage: categoryPercentage,
     borderWidth: 1,
-    borderColor: "#7FC4F2",
-    backgroundColor: "#D7ECFB",
+    borderColor: darkerPrimaryColor,
+    backgroundColor: primaryColor,
     customData: data.map((d) => d.posts),
   };
 

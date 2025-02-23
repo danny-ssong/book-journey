@@ -1,10 +1,11 @@
 "use client";
-import Button from "@/app/_components/Button";
+import { Button } from "@/components/ui/button";
 import getUserOnClient from "@/app/_lib/getUserOnClient";
 import updateProfile from "@/app/actions/updateProfile";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
 
 function Profile({ profile }: { profile: any }) {
   const [username, setUsername] = useState<string>(profile.username);
@@ -33,25 +34,33 @@ function Profile({ profile }: { profile: any }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className=" flex flex-col border w-[600px] bg-white">
-        <div className="flex items-center px-4 py-2 border-b">
-          <div className=" rounded-full w-24 h-24 overflow-hidden">
-            {/* <img className="object-contain" src={"https://picsum.photos/200/300"} alt="user img" /> */}
+      <Card>
+        <CardContent className="p-4">
+          <div className="flex flex-col">
+            <div className="flex items-center border-b">
+              <div className="h-24 w-24 overflow-hidden rounded-full">
+                {/* <img className="object-contain" src={"https://picsum.photos/200/300"} alt="user img" /> */}
+              </div>
+              <div className="flex flex-1 justify-center">
+                <label className="mr-4 text-xl">닉네임</label>
+                <input
+                  className="border text-xl"
+                  value={username}
+                  onChange={handleUsernameChange}
+                />
+              </div>
+            </div>
+            <textarea
+              className="min-h-[300px] w-full flex-1 resize-none border px-2 py-2"
+              value={bio}
+              onChange={handleBioChange}
+            />
           </div>
-          <div className="flex flex-1 justify-center">
-            <label className="text-xl mr-4">닉네임</label>
-            <input className="text-xl border " value={username} onChange={handleUsernameChange} />
+          <div className="mt-5 flex justify-end">
+            <Button>저장</Button>
           </div>
-        </div>
-        <textarea
-          className="px-2 py-2 w-full flex-1 resize-none border min-h-[300px]"
-          value={bio}
-          onChange={handleBioChange}
-        />
-      </div>
-      <div className="flex justify-end mt-5">
-        <Button>저장</Button>
-      </div>
+        </CardContent>
+      </Card>
     </form>
   );
 }

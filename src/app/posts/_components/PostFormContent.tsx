@@ -11,9 +11,9 @@ import {
   Post,
 } from "@/app/_models/supabaseTypes";
 import refreshProfileMostReadAuthors from "@/app/actions/refreshProfileMostReadAuthors";
-import Button from "@/app/_components/Button";
+import { Button } from "@/components/ui/button";
 import { useQueryClient } from "@tanstack/react-query";
-import DateInput from "../../_components/DateInput";
+import MonthPicker from "../../_components/DateInput";
 import SelectPrivacy from "./SelectPrivacy";
 
 type Props = {
@@ -70,31 +70,6 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
       router.push(`/posts/${postId}`);
     }
   };
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    // 인용구: Ctrl + 3
-    if (e.ctrlKey && e.key === "3") {
-      e.preventDefault();
-      const target = e.target as HTMLTextAreaElement;
-      const { selectionStart: start, selectionEnd: end } = target;
-      if (start === end) return;
-      const selectedText = content.substring(start, end);
-      const formattedText = selectedText
-        .split("\n")
-        .map((line) => `> ${line}`)
-        .join("\n");
-      setContent(content.slice(0, start) + formattedText + content.slice(end));
-    }
-    // 굵은 강조: Ctrl + B
-    else if (e.ctrlKey && (e.key === "b" || e.key === "B")) {
-      e.preventDefault();
-      const target = e.target as HTMLTextAreaElement;
-      const { selectionStart: start, selectionEnd: end } = target;
-      if (start === end) return;
-      const selectedText = content.substring(start, end);
-      const formattedText = `**${selectedText}**`;
-      setContent(content.slice(0, start) + formattedText + content.slice(end));
-    }
-  };
 
   return (
     <div className="h-full">
@@ -111,28 +86,27 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
             <Rating rating={rating} onClickStar={setRating} />
             <div className="flex items-center gap-2">
               <p className="text-sm">읽은 날짜</p>
-              <DateInput date={startDate} setDate={setStartDate} />
+              <MonthPicker date={startDate} setDate={setStartDate} />
             </div>
           </div>
           <input
-            className="h-12 w-full resize-none overflow-hidden rounded-lg border px-2 py-2 text-2xl font-semibold text-black placeholder:text-2xl placeholder:text-gray-400"
+            className="h-12 w-full resize-none overflow-hidden rounded-lg border p-4 text-2xl font-semibold placeholder:text-2xl"
             placeholder="제목을 입력하세요"
             onChange={(e) => setTitle(e.target.value)}
             value={title}
           />
           <textarea
-            className="w-full flex-1 resize-none rounded-lg border px-2 py-2 text-black placeholder:text-gray-200"
+            className="w-full flex-1 resize-none rounded-lg border p-4"
             placeholder="감상을 작성해보세요"
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            onKeyDown={handleKeyDown}
           />
         </form>
       </article>
-      <footer className="fixed bottom-0 left-0 w-full bg-slate-200 p-4">
-        <div className="flex w-full items-center justify-end">
-          <Button type="submit" form="postForm" color="black">
-            완료
+      <footer className="bg-secondary fixed bottom-0 left-0 w-full p-4">
+        <div className="flex w-full items-center justify-end px-5">
+          <Button type="submit" form="postForm" className="w-24 rounded-full">
+            {initPost ? "수정" : "완료"}
           </Button>
         </div>
       </footer>

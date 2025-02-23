@@ -3,7 +3,7 @@ import ProfileViewer from "./_components/ProfileViewer";
 import getProfile from "../../posts/_lib/getProfile";
 import getUserOnServer from "@/app/_lib/getUserOnServer";
 import Link from "next/link";
-import Button from "@/app/_components/Button";
+import { Button } from "@/components/ui/button";
 import UserPostDashboard from "@/app/_components/UserPostDashboard";
 
 export default async function Page() {
@@ -15,10 +15,10 @@ export default async function Page() {
   if (!profile) notFound();
 
   return (
-    <div className="">
+    <div>
       <ProfileViewer profile={profile} />
       <div className="my-4 flex justify-end">
-        <Button>
+        <Button className="px-4 py-2">
           <Link href={`/manage/settings/profile/edit`}>수정</Link>
         </Button>
       </div>

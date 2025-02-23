@@ -8,6 +8,7 @@ import CompactPostPreviewForManage from "./_components/CompactPostPreview";
 import getPosts from "@/app/actions/getPosts";
 import { User } from "@supabase/supabase-js";
 import getUserOnClient from "@/app/_lib/getUserOnClient";
+import { Button } from "@/components/ui/button";
 
 export default function ManagePostsPage() {
   const queryClient = useQueryClient();
@@ -53,23 +54,28 @@ export default function ManagePostsPage() {
       <header className="flex items-center justify-between px-4">
         <h1 className="mb-5 text-xl">글 관리</h1>
         <div className="flex">
-          <button
-            className={`p-1 hover:bg-slate-300 ${!showExpanded && "bg-slate-200"}`}
-            onClick={() => setShowExpanded(false)}
+          <Button
+            className={`p-2 ${showExpanded && "bg-secondary"}`}
+            onClick={() => {
+              setShowExpanded(false);
+              setCurrentPage(1);
+            }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              height="24px"
               viewBox="0 -960 960 960"
-              width="24px"
               fill="#5f6368"
+              className="h-6 w-6"
             >
               <path d="M440-440v240h-80v-160H200v-80h240Zm160-320v160h160v80H520v-240h80Z" />
             </svg>
-          </button>
-          <button
-            className={`p-1 hover:bg-slate-300 ${showExpanded && "bg-slate-200"}`}
-            onClick={() => setShowExpanded(true)}
+          </Button>
+          <Button
+            className={`p-2 ${!showExpanded && "bg-secondary"}`}
+            onClick={() => {
+              setShowExpanded(true);
+              setCurrentPage(1);
+            }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -80,11 +86,11 @@ export default function ManagePostsPage() {
             >
               <path d="M200-200v-240h80v160h160v80H200Zm480-320v-160H520v-80h240v240h-80Z" />
             </svg>
-          </button>
+          </Button>
         </div>
       </header>
       <div>
-        <ul className="min-h-[500px] border bg-white">
+        <ul className="min-h-[500px] border">
           {data?.posts.map((post) =>
             showExpanded ? (
               <ExpandedPostPreviewForManage key={post.id} post={post} isOwner />

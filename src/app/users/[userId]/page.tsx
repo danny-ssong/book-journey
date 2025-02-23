@@ -1,5 +1,5 @@
 import { getUserProfiles } from "@/app/_lib/forGenerateStaticParams/getUserProfiles";
-import PaginationButtons from "@/app/manage/posts/_components/PaginationButtons";
+import PaginationButtons from "@/app/_components/PaginationButtons";
 import ExpandedPostPreviewForManage from "@/app/manage/posts/_components/ExapndedPostPreviewForManage";
 import getProfile from "@/app/manage/posts/_lib/getProfile";
 import ProfileViewer from "@/app/manage/settings/profile/_components/ProfileViewer";
@@ -8,7 +8,7 @@ import { notFound } from "next/navigation";
 import getPosts from "@/app/actions/getPosts";
 import { TabPanel, Tabs } from "@/app/_components/Tabs";
 import UserPostDashboard from "@/app/_components/UserPostDashboard";
-import PostPreview from "@/app/(home)/_components/PostPreivew";
+import PostPreview from "@/app/(home)/_components/PostPreview";
 
 type Props = {
   params: {
@@ -36,7 +36,7 @@ export default async function UserProfilePage({ params, searchParams }: Props) {
       <ProfileViewer profile={profile} />
       <Tabs defaultActiveTab="recentPosts">
         <TabPanel tabId="recentPosts" label="최근 작성한 글">
-          <ul className="bg-white">
+          <ul className="">
             {posts.map((post) => (
               <PostPreview key={post.id} post={post} />
             ))}

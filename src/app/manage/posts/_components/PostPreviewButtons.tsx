@@ -3,6 +3,7 @@ import React from "react";
 import deletePost from "@/app/actions/deletePost";
 import Link from "next/link";
 import { useQueryClient } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
 
 function PostActionButtons({ postId }: { postId: number }) {
   const queryClient = useQueryClient();
@@ -17,12 +18,14 @@ function PostActionButtons({ postId }: { postId: number }) {
 
   return (
     <div className="flex gap-2 opacity-0 group-hover:opacity-100">
-      <div className="px-4 py-1 border-2">
+      {/* <div className="px-4 py-1 border-2"> */}
+      <Button>
         <Link href={`/posts/edit/${postId}`}>수정</Link>
-      </div>
-      <button onClick={handleDelete} className="px-4 py-1 border-2">
+      </Button>
+      {/* </div> */}
+      <Button variant="destructive" onClick={handleDelete}>
         삭제
-      </button>
+      </Button>
     </div>
   );
 }

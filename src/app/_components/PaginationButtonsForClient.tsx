@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+
 interface PaginationProps {
   page: number;
   isLastPage: boolean;
@@ -14,22 +16,22 @@ export default function PaginationButtonsForClient({
       className="mt-4 flex justify-center gap-10"
       aria-label="페이지 네비게이션"
     >
-      <button
-        className={`bg-gray-200 px-4 py-2 ${page === 1 && "opacity-50"}`}
+      <Button
+        className={`px-4 py-2 ${page === 1 && "opacity-50"}`}
         onClick={() => onPageChange(Math.max(page - 1, 1))}
         disabled={page === 1}
         aria-label="이전 페이지"
       >
         {"<"}
-      </button>
-      <button
-        className={`bg-gray-200 px-4 py-2 ${isLastPage && "opacity-50"}`}
+      </Button>
+      <Button
+        className={`px-4 py-2 ${isLastPage && "opacity-50"}`}
         onClick={() => onPageChange(page + 1)}
         disabled={isLastPage}
         aria-label="다음 페이지"
       >
         {">"}
-      </button>
+      </Button>
     </nav>
   );
 }

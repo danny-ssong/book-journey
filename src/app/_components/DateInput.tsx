@@ -4,7 +4,7 @@ type Props = {
   date: string;
   setDate: (date: string) => void;
 };
-export default function DateInput({ date, setDate }: Props) {
+export default function MonthPicker({ date, setDate }: Props) {
   const dateYYYYMM = dayjs(date).format("YYYY-MM");
 
   const handleChange = (date: string) => {

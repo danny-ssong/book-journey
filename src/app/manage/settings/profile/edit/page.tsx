@@ -13,9 +13,5 @@ export default async function Page() {
   const profile = await getProfile(user?.id);
   if (!profile) notFound();
 
-  return (
-    <div className="mt-5">
-      <Profile profile={profile} />
-    </div>
-  );
+  return <Profile profile={profile} />;
 }

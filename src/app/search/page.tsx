@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import PaginationButtons from "../manage/posts/_components/PaginationButtons";
+import PaginationButtons from "../_components/PaginationButtons";
 import Image from "next/image";
 import BookItem from "./_components/BookItem";
 import PaginationButtonsForClient from "../_components/PaginationButtonsForClient";

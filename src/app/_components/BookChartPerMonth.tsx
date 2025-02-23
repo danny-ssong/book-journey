@@ -15,6 +15,7 @@ import { Bar } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import dayjs from "dayjs";
 import { PostWithBook } from "../_models/supabaseTypes";
+import { usePrimaryColorHsl } from "../_hooks/usePrimaryColorHsl";
 
 ChartJS.register(
   CategoryScale,
@@ -90,10 +91,18 @@ const options: ChartOptions<"bar"> = {
 };
 
 const generateMonthRange = (startDate: string, endDate: string) => {
-  const result = [];
-  let current = dayjs(startDate).startOf("month");
+  //시작날과 1년전을 비교해서 작은 날짜로 시작
+  //최소 1년은 보여주기 위해서
+  const oneYearAgo = new Date();
+  oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+  oneYearAgo.setMonth(oneYearAgo.getMonth() + 1);
+  const start = new Date(startDate);
+  const minDate = Math.min(start.getTime(), oneYearAgo.getTime());
+
+  let current = dayjs(minDate).startOf("month");
   const end = dayjs(endDate).startOf("month");
 
+  const result = [];
   while (current.isBefore(end) || current.isSame(end)) {
     result.push(current.format("YYYY-MM"));
     current = current.add(1, "month");
@@ -111,6 +120,8 @@ type CustomBarChartDataset = ChartDataset<"bar"> & {
 };
 
 export default function BookChartPerMonth({ data }: Props) {
+  const { primaryColor, darkerPrimaryColor } = usePrimaryColorHsl();
+
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const sortedDates = data.sort((a, b) => {
@@ -144,8 +155,8 @@ export default function BookChartPerMonth({ data }: Props) {
     data: postCountPerMonth,
     categoryPercentage: categoryPercentage,
     borderWidth: 1,
-    borderColor: "#7FC4F2",
-    backgroundColor: "#D7ECFB",
+    borderColor: darkerPrimaryColor,
+    backgroundColor: primaryColor,
     postsPerMonth: postsPerMonth,
   };
 
