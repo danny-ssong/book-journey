@@ -30,8 +30,10 @@ export default async function RootLayout({
                 <HeaderNavLinks />
               </div>
               <BookSearchArea />
-              <UserLoginStatus user={user} />
-              <ModeToggle />
+              <div className="flex items-center gap-6">
+                <UserLoginStatus user={user} />
+                <ModeToggle />
+              </div>
             </header>
             <div className="mx-auto mt-16 flex px-10 py-10">
               <SidebarMenu user={user} />
