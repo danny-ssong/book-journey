@@ -6,9 +6,9 @@ import PaginationButtonsForClient from "@/app/_components/PaginationButtonsForCl
 import { useEffect, useState } from "react";
 import CompactPostPreviewForManage from "./_components/CompactPostPreview";
 import getPosts from "@/app/actions/getPosts";
-import { User } from "@supabase/supabase-js";
 import getUserOnClient from "@/app/_lib/getUserOnClient";
 import { Button } from "@/components/ui/button";
+import useUserOnClient from "@/app/_hooks/useCurrentUser";
 
 export default function ManagePostsPage() {
   const queryClient = useQueryClient();
@@ -16,30 +16,25 @@ export default function ManagePostsPage() {
   const [showExpanded, setShowExpanded] = useState<boolean>(true);
   const size = showExpanded ? 5 : 8;
 
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    async function getUser() {
-      const user = await getUserOnClient();
-      setUser(user);
-    }
-    getUser();
-  }, []);
+  const user = useUserOnClient();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["userOwnPosts", currentPage, size],
-    queryFn: () => getPosts(size, currentPage, user?.id, true),
-    enabled: !!user,
+    queryFn: () => {
+      if (!user?.id) throw new Error("User not found");
+      return getPosts(size, currentPage, user.id, true);
+    },
+    enabled: !!user?.id,
   });
 
   useEffect(() => {
-    if (!data?.isLastPage) {
+    if (!data?.isLastPage && user?.id) {
       queryClient.prefetchQuery({
         queryKey: ["userOwnPosts", currentPage + 1, size],
         queryFn: () => getPosts(size, currentPage + 1, user?.id, true),
       });
     }
-  }, [currentPage, queryClient, size]);
+  }, [currentPage, queryClient, size, data, user]);
 
   if (isLoading) {
     return <div>로딩중...</div>;
