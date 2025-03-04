@@ -9,7 +9,7 @@ export const cacheWithLogging = async <T>(
   fn: () => Promise<T>,
   cacheKey: string[],
   functionName: string,
-  options?: CacheOptions
+  options?: CacheOptions,
 ) => {
   let isCacheHit = true;
 
@@ -31,10 +31,15 @@ export const cacheWithLogging = async <T>(
     const result = await unstable_cache(wrappedFn, cacheKey, options)();
     const totalTime = Date.now() - startTime;
 
-    console.log(`[Cache ${isCacheHit ? "HIT" : "MISS"}] Total time: ${totalTime}ms  ${functionName}`);
+    console.log(
+      `[Cache ${isCacheHit ? "HIT" : "MISS"}] Total time: ${totalTime}ms  ${functionName}`,
+    );
     return result;
   } catch (error) {
-    console.error(`[Cache Error] Key: ${cacheKey.join(":")}: ${functionName}`, error);
+    console.error(
+      `[Cache Error] Key: ${cacheKey.join(":")}: ${functionName}`,
+      error,
+    );
     throw error;
   }
 };

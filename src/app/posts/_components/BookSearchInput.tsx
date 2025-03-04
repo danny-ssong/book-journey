@@ -76,7 +76,7 @@ export default function BookSearchInput({ selectedBook, onSelectBook }: Props) {
   };
 
   return (
-    <div>
+    <div className="relative">
       <form
         className="flex h-10 w-[400px] items-center justify-between rounded-lg border pl-4 pr-2 focus-within:ring-1 focus-within:ring-black"
         onSubmit={(e) => e.preventDefault()}
@@ -99,12 +99,12 @@ export default function BookSearchInput({ selectedBook, onSelectBook }: Props) {
           <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
         </svg>
       </form>
-      <ul className="absolute min-w-[400px] max-w-[600px] bg-white">
+      <ul className="absolute min-w-[400px] max-w-[600px] bg-background">
         {showDropDown &&
           searchedBooks?.map((book: SearchedBook) => (
             <li
               key={book.isbn}
-              className="flex cursor-pointer justify-between gap-4 px-4 py-2"
+              className="flex cursor-pointer justify-between gap-4 px-4 py-2 hover:bg-secondary"
               onClick={() => handleSelectBook(book)}
             >
               <span className="h-18 w-12 truncate">

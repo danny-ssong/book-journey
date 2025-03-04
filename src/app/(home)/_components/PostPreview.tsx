@@ -14,7 +14,7 @@ export default function PostPreview({
     <article>
       <Card>
         <CardContent className="flex p-4">
-          <div className="relative mr-6 aspect-[3/4] w-[180px] overflow-hidden rounded-md border">
+          <div className="relative z-0 mr-6 aspect-[3/4] w-[180px] overflow-hidden rounded-md border">
             <Image
               src={post.book.thumbnail || ""}
               alt={post.book.title}
@@ -30,14 +30,14 @@ export default function PostPreview({
                     {post.book.title}
                   </Link>
                 </h2>
-                <p className="text-muted-foreground text-nowrap text-xs hover:underline">
+                <p className="text-nowrap text-xs text-muted-foreground hover:underline">
                   <Link href={`/search?query=${post.book.author}`}>
                     {post.book.author}
                   </Link>
                 </p>
               </div>
-              <div className="text-muted-foreground flex items-center">
-                <p className="text-muted-foreground mr-2 text-xs">
+              <div className="flex items-center text-muted-foreground">
+                <p className="mr-2 text-xs text-muted-foreground">
                   최근 수정일
                 </p>
                 <time dateTime={post.updated_at || ""}>
@@ -49,7 +49,7 @@ export default function PostPreview({
               <Link href={`/posts/${post.id}`}>{post.title || " "}</Link>
             </h1>
             <div className="mt-3 flex items-center gap-2">
-              <p className="text-muted-foreground text-sm hover:underline">
+              <p className="text-sm text-muted-foreground hover:underline">
                 <Link href={`/users/${post.user_id}`}>
                   {post.profile.username}
                 </Link>

@@ -9,6 +9,7 @@ import BookDetail from "./_components/BookDetail";
 import { getBooks } from "@/app/_lib/forGenerateStaticParams/getBooks";
 import { getBook } from "@/app/_lib/forGenerateStaticParams/getBook";
 import { Metadata } from "next";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   params: {
@@ -26,17 +27,20 @@ export default async function Page({ params }: Props) {
   const postWithProfiles = await getPostsByISBN(isbn);
 
   return (
-    <div className="w-[800px] bg-white border">
+    <div className="w-[800px] border bg-background">
       <BookDetail book={book} />
-      <div className="flex justify-end items-center my-2 mx-2">
-        <div className="px-4 py-2 rounded-xl border hover:bg-slate-100">
+      <div className="mx-2 my-2 flex items-center justify-end">
+        <Button>
           <Link href={`/posts/new?isbn=${isbn}`}>글 쓰기</Link>
-        </div>
+        </Button>
       </div>
       <div className="border-t-2">
         <ul>
           {postWithProfiles?.map((postWithProfile) => (
-            <PostPreviewForBook key={postWithProfile.id} postWithProfile={postWithProfile} />
+            <PostPreviewForBook
+              key={postWithProfile.id}
+              postWithProfile={postWithProfile}
+            />
           ))}
         </ul>
       </div>
