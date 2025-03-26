@@ -13,12 +13,13 @@ function ExpandedPostPreviewForManage({
 }) {
   return (
     <article className="group flex gap-4 border-b-2 px-4 py-4 last:border-none">
-      <figure className="relative aspect-[3/4] w-[120px] overflow-hidden rounded-md border">
+      <figure className="overflow-hidden rounded-md border">
         <Image
           src={post.book.thumbnail || ""}
           alt={post.book.title}
-          fill
-          className="object-fill"
+          width={120}
+          height={174}
+          className="h-full"
         />
       </figure>
       <div className="flex w-full flex-col">
@@ -27,7 +28,7 @@ function ExpandedPostPreviewForManage({
             <h2 className="text-md line-clamp-1 font-semibold">
               {post.book.title}
             </h2>
-            <p className="text-muted-foreground text-nowrap text-xs">
+            <p className="text-nowrap text-xs text-muted-foreground">
               {post.book.author}
             </p>
           </div>

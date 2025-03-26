@@ -14,12 +14,13 @@ export default function PostPreview({
     <article>
       <Card>
         <CardContent className="flex p-4">
-          <div className="relative z-0 mr-6 aspect-[3/4] w-[180px] overflow-hidden rounded-md border">
+          <div className="mr-6 overflow-hidden rounded-md border">
             <Image
               src={post.book.thumbnail || ""}
               alt={post.book.title}
-              fill
-              className="object-cover"
+              width={120}
+              height={174}
+              className="h-full"
             />
           </div>
           <div className="flex w-full flex-col">
@@ -45,8 +46,8 @@ export default function PostPreview({
                 </time>
               </div>
             </div>
-            <h1 className="mt-1 min-h-[1em] text-lg font-semibold hover:underline">
-              <Link href={`/posts/${post.id}`}>{post.title || " "}</Link>
+            <h1 className="mt-1 line-clamp-1 text-lg font-semibold hover:underline">
+              <Link href={`/posts/${post.id}`}>{post.title || "\u00A0"}</Link>
             </h1>
             <div className="mt-3 flex items-center gap-2">
               <p className="text-sm text-muted-foreground hover:underline">
@@ -57,7 +58,7 @@ export default function PostPreview({
               <RatingViewer rating={post.rating!} />
             </div>
             <Link href={`/posts/${post.id}`} className="mb-4 mt-auto">
-              <p className="line-clamp-3 w-full flex-1 overflow-hidden text-ellipsis text-sm hover:underline">
+              <p className="line-clamp-3 min-h-[3.75rem] w-full flex-1 overflow-hidden text-ellipsis text-sm hover:underline">
                 {post.content}
               </p>
             </Link>
