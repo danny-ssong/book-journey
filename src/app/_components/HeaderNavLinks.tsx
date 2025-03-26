@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function HeaderNavLinks() {
   return (
     <nav>
-      <ul className="flex gap-10">
+      <ul className="flex gap-10 text-nowrap">
         <li>
           <Link href="/">홈</Link>
         </li>

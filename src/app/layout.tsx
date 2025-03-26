@@ -19,30 +19,30 @@ export default async function RootLayout({
       <body className="h-screen w-screen overflow-x-hidden overflow-y-scroll">
         <ThemeProvider
           attribute="class"
-          // defaultTheme="system"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          <div className="flex h-full w-full">
-            <header className="fixed flex min-h-16 w-full items-center justify-between border px-10">
-              <div className="flex items-center gap-10">
-                <p>Book-Journey Logo</p>
-                <HeaderNavLinks />
-              </div>
-              <BookSearchArea />
-              <div className="flex items-center gap-6">
-                <UserLoginStatus user={user} />
-                <ModeToggle />
-              </div>
-            </header>
-            <div className="mx-auto mt-16 flex px-10 py-10">
-              <SidebarMenu user={user} />
+          <ReactQueryProvider>
+            <div className="flex h-full w-full">
+              <header className="fixed flex min-h-16 w-full items-center justify-between border bg-background px-10">
+                <div className="flex items-center gap-10">
+                  <p className="text-nowrap">Book-Journey Logo</p>
+                  <HeaderNavLinks />
+                </div>
+                <BookSearchArea />
+                <div className="flex items-center gap-6">
+                  <UserLoginStatus user={user} />
+                  <ModeToggle />
+                </div>
+              </header>
+              <div className="mx-auto mt-16 flex px-10 py-10">
+                <SidebarMenu user={user} />
 
-              <ReactQueryProvider>
                 <main className="ml-10 w-[850px]">{children}</main>
-              </ReactQueryProvider>
+              </div>
             </div>
-          </div>
+          </ReactQueryProvider>
         </ThemeProvider>
       </body>
     </html>
