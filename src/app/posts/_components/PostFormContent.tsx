@@ -33,6 +33,7 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
   const [isPrivate, setIsPrivate] = useState<boolean>(
     initPost?.is_private ?? false,
   );
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const createOrUpdatePost = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,6 +43,7 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
     }
 
     let postId = undefined;
+    setIsSubmitting(true);
 
     const createPostDto: CreatePostDto = {
       title,
@@ -69,6 +71,7 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
       queryClient.invalidateQueries({ queryKey: ["userOwnPosts"] });
       router.push(`/posts/${postId}`);
     }
+    setIsSubmitting(false);
   };
 
   return (
@@ -103,10 +106,15 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
           />
         </form>
       </article>
-      <footer className="bg-secondary fixed bottom-0 left-0 w-full p-4">
+      <footer className="fixed bottom-0 left-0 w-full bg-secondary p-4">
         <div className="flex w-full items-center justify-end px-5">
-          <Button type="submit" form="postForm" className="w-24 rounded-full">
-            {initPost ? "수정" : "완료"}
+          <Button
+            type="submit"
+            form="postForm"
+            className="w-24 rounded-full"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "저장중..." : "저장"}
           </Button>
         </div>
       </footer>

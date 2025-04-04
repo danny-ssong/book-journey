@@ -7,7 +7,6 @@ import { CreateBookDto, CreatePostDto } from "../_models/supabaseTypes";
 
 export async function createPost(book: CreateBookDto, post: CreatePostDto) {
   const supabase = createClient();
-  const user = await getUserOnServer();
 
   const { data: result, error: resultError } = await supabase
     .from("book")

@@ -6,7 +6,7 @@ import HeaderNavLinks from "./_components/HeaderNavLinks";
 import UserLoginStatus from "./_components/UserLoginStatus";
 import SidebarMenu from "./_components/SidebarMenu";
 import { ThemeProvider } from "./_components/theme-privider";
-import ModeToggle from "./_components/ModeToggle";
+import ThemeModeToggle from "./_components/ThemeModeToggle";
 
 export default async function RootLayout({
   children,
@@ -33,12 +33,11 @@ export default async function RootLayout({
                 <BookSearchArea />
                 <div className="flex items-center gap-6">
                   <UserLoginStatus user={user} />
-                  <ModeToggle />
+                  <ThemeModeToggle />
                 </div>
               </header>
               <div className="mx-auto mt-16 flex px-10 py-10">
                 <SidebarMenu user={user} />
-
                 <main className="ml-10 w-[850px]">{children}</main>
               </div>
             </div>

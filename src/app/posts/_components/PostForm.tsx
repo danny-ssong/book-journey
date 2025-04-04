@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import PostFormContent from "../_components/PostFormContent";
 import BookSearchInput from "../_components/BookSearchInput";
 import { Post } from "@/app/_models/supabaseTypes";
+import { useBeforeunload } from "../_hooks/useBeforeunload";
 
 function PostForm({
   initPost,
@@ -11,6 +12,8 @@ function PostForm({
   initPost?: Post;
   initBook?: SearchedBook;
 }) {
+  useBeforeunload();
+
   const [selectedBook, setSelectedBook] = useState<SearchedBook | undefined>(
     initBook,
   );
