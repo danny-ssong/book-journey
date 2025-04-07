@@ -70,8 +70,9 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
     if (postId) {
       queryClient.invalidateQueries({ queryKey: ["userOwnPosts"] });
       router.push(`/posts/${postId}`);
+    } else {
+      setIsSubmitting(false);
     }
-    setIsSubmitting(false);
   };
 
   return (
