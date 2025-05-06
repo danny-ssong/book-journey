@@ -3,46 +3,20 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import ExpandedPostPreviewForManage from "./_components/ExapndedPostPreviewForManage";
 import PaginationButtonsForClient from "@/app/_components/PaginationButtonsForClient";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import CompactPostPreviewForManage from "./_components/CompactPostPreview";
-import getPosts from "@/app/actions/getPosts";
 import getUserOnClient from "@/app/_lib/getUserOnClient";
 import { Button } from "@/components/ui/button";
 import useUserOnClient from "@/app/_hooks/useCurrentUser";
+import { useInfiniteMyPosts } from "@/app/_hooks/useInfiniteMyPosts";
+import InfiniteScroll from "@/app/_components/InfiniteScroll";
 
 export default function ManagePostsPage() {
-  const queryClient = useQueryClient();
+  const { posts, isLoading, error, fetchNextPage, hasNextPage } =
+    useInfiniteMyPosts(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [showExpanded, setShowExpanded] = useState<boolean>(true);
   const size = showExpanded ? 5 : 8;
-
-  const user = useUserOnClient();
-
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["userOwnPosts", currentPage, size],
-    queryFn: () => {
-      if (!user?.id) throw new Error("User not found");
-      return getPosts(size, currentPage, user.id, true);
-    },
-    enabled: !!user?.id,
-  });
-
-  useEffect(() => {
-    if (!data?.isLastPage && user?.id) {
-      queryClient.prefetchQuery({
-        queryKey: ["userOwnPosts", currentPage + 1, size],
-        queryFn: () => getPosts(size, currentPage + 1, user?.id, true),
-      });
-    }
-  }, [currentPage, queryClient, size, data, user]);
-
-  if (isLoading) {
-    return <div>로딩중...</div>;
-  }
-
-  if (error) {
-    return <div>에러가 발생했습니다</div>;
-  }
 
   return (
     <div>
@@ -84,22 +58,25 @@ export default function ManagePostsPage() {
           </Button>
         </div>
       </header>
-      <div>
-        <ul className="min-h-[500px] border">
-          {data?.posts.map((post) =>
-            showExpanded ? (
-              <ExpandedPostPreviewForManage key={post.id} post={post} isOwner />
-            ) : (
-              <CompactPostPreviewForManage key={post.id} post={post} isOwner />
-            ),
-          )}
-        </ul>
-        <PaginationButtonsForClient
-          page={currentPage}
-          isLastPage={data?.isLastPage ?? false}
-          onPageChange={(page: number) => setCurrentPage(page)}
-        />
-      </div>
+      <InfiniteScroll
+        fetchNextPage={fetchNextPage}
+        hasNextPage={hasNextPage}
+        isLoading={isLoading}
+      >
+        <div>
+          <ul className="min-h-[500px] border">
+            {posts.map((post) => (
+              <Fragment key={post.id}>
+                {showExpanded ? (
+                  <ExpandedPostPreviewForManage post={post} isOwner />
+                ) : (
+                  <CompactPostPreviewForManage post={post} isOwner />
+                )}
+              </Fragment>
+            ))}
+          </ul>
+        </div>
+      </InfiniteScroll>
     </div>
   );
 }

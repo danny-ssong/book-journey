@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { User } from "@supabase/supabase-js";
+import { User } from "@/types/user";
 import Link from "next/link";
 
 export default function SidebarMenu({ user }: { user: User | null }) {

@@ -1,22 +1,18 @@
 import RatingViewer from "@/app/_components/RatingViewer";
-import { PostWithUserProfileAndBook } from "@/app/_models/supabaseTypes";
+import { PostWithBook } from "@/types/post";
 import { Card, CardContent } from "@/components/ui/card";
 import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function PostPreview({
-  post,
-}: {
-  post: PostWithUserProfileAndBook;
-}) {
+export default function PostPreview({ post }: { post: PostWithBook }) {
   return (
     <article>
       <Card>
         <CardContent className="flex p-4">
           <div className="mr-6 overflow-hidden rounded-md border">
             <Image
-              src={post.book.thumbnail || ""}
+              src={post.book.thumbnailUrl || ""}
               alt={post.book.title}
               width={120}
               height={174}
@@ -32,8 +28,8 @@ export default function PostPreview({
                   </Link>
                 </h2>
                 <p className="text-nowrap text-xs text-muted-foreground hover:underline">
-                  <Link href={`/search?query=${post.book.author}`}>
-                    {post.book.author}
+                  <Link href={`/search?query=${post.book.author.name}`}>
+                    {post.book.author.name}
                   </Link>
                 </p>
               </div>
@@ -41,8 +37,8 @@ export default function PostPreview({
                 <p className="mr-2 text-xs text-muted-foreground">
                   최근 수정일
                 </p>
-                <time dateTime={post.updated_at || ""}>
-                  {dayjs(post.updated_at).format("YYYY-MM-DD")}
+                <time dateTime={post.updatedAt.toString()}>
+                  {dayjs(post.updatedAt).format("YYYY-MM-DD")}
                 </time>
               </div>
             </div>
@@ -51,8 +47,8 @@ export default function PostPreview({
             </h1>
             <div className="mt-3 flex items-center gap-2">
               <p className="text-sm text-muted-foreground hover:underline">
-                <Link href={`/users/${post.user_id}`}>
-                  {post.profile.username}
+                <Link href={`/users/${post.user.id}`}>
+                  {post.user.profile.nickname}
                 </Link>
               </p>
               <RatingViewer rating={post.rating!} />

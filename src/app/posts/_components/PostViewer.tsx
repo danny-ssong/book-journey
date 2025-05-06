@@ -1,19 +1,15 @@
 import dayjs from "dayjs";
 import RatingViewer from "../../_components/RatingViewer";
 import Link from "next/link";
-import { PostWithUserProfileAndBook } from "@/app/_models/supabaseTypes";
 import getUserOnServer from "@/app/_lib/getUserOnServer";
 import EditIcon from "@/app/_components/_icons/EditIcon";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { PostWithBook } from "@/types/post";
 
-export default async function PostViewer({
-  post,
-}: {
-  post: PostWithUserProfileAndBook;
-}) {
+export default async function PostViewer({ post }: { post: PostWithBook }) {
   const user = await getUserOnServer();
-  const isOwner = user?.id === post.user_id;
+  const isOwner = user?.id === post.user.id;
 
   return (
     <div className="h-full w-[800px]">
@@ -24,18 +20,20 @@ export default async function PostViewer({
               <div className="mb-1 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <h2 className="text-lg">{post.book.title}</h2>
-                  <p className="text-sm text-gray-600">{post.book.author}</p>
+                  <p className="text-sm text-gray-600">
+                    {post.book.author.name}
+                  </p>
                 </div>
-                <div className="text-muted-foreground flex items-center gap-2">
+                <div className="flex items-center gap-2 text-muted-foreground">
                   <p className="text-xs">읽은 날짜</p>
-                  <p>{`${dayjs(post.start_date).format("YYYY")}년 ${dayjs(post.start_date).format("MM")}월`}</p>
+                  <p>{`${dayjs(post.startDate).format("YYYY")}년 ${dayjs(post.startDate).format("MM")}월`}</p>
                 </div>
               </div>
               <div>
                 <RatingViewer rating={post.rating!} />
               </div>
               <div className="mt-3 flex items-center gap-3">
-                <p>{post.profile.username}</p>
+                <p>{post.user.profile.nickname}</p>
               </div>
             </header>
             <Separator className="my-4" />

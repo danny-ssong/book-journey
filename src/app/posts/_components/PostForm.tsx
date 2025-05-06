@@ -2,21 +2,20 @@
 import React, { useState } from "react";
 import PostFormContent from "../_components/PostFormContent";
 import BookSearchInput from "../_components/BookSearchInput";
-import { Post } from "@/app/_models/supabaseTypes";
+import { Post } from "@/types/post";
 import { useBeforeunload } from "../_hooks/useBeforeunload";
+import { Book } from "@/types/book";
 
 function PostForm({
   initPost,
   initBook,
 }: {
   initPost?: Post;
-  initBook?: SearchedBook;
+  initBook?: Book;
 }) {
   useBeforeunload();
 
-  const [selectedBook, setSelectedBook] = useState<SearchedBook | undefined>(
-    initBook,
-  );
+  const [selectedBook, setSelectedBook] = useState<Book | undefined>(initBook);
 
   return (
     <div className="flex h-full w-[800px] flex-col">

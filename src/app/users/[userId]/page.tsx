@@ -1,14 +1,11 @@
-import { getUserProfiles } from "@/app/_lib/forGenerateStaticParams/getUserProfiles";
-import PaginationButtons from "@/app/_components/PaginationButtons";
-import ExpandedPostPreviewForManage from "@/app/manage/posts/_components/ExapndedPostPreviewForManage";
-import getProfile from "@/app/manage/posts/_lib/getProfile";
+import { getUsers } from "@/app/_lib/forGenerateStaticParams/getUsers";
 import ProfileViewer from "@/app/manage/settings/profile/_components/ProfileViewer";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import getPosts from "@/app/actions/getPosts";
 import { TabPanel, Tabs } from "@/app/_components/Tabs";
 import UserPostDashboard from "@/app/_components/UserPostDashboard";
-import PostPreview from "@/app/(home)/_components/PostPreview";
+import UserPostList from "@/app/_components/UserPostList";
+import { getUser } from "./_lib/user";
 
 type Props = {
   params: {
@@ -22,30 +19,14 @@ type Props = {
 export default async function UserProfilePage({ params, searchParams }: Props) {
   const userId = params.userId;
 
-  let page = parseInt(searchParams.page || "1");
-  if (!page) page = 1;
-
-  const profile = await getProfile(userId);
-  if (!profile) notFound();
-
-  const size = 5;
-  const { posts, isLastPage } = await getPosts(size, page, userId);
+  const user = await getUser(userId);
 
   return (
     <div className="flex flex-col gap-4">
-      <ProfileViewer profile={profile} />
+      <ProfileViewer user={user} />
       <Tabs defaultActiveTab="recentPosts">
         <TabPanel tabId="recentPosts" label="최근 작성한 글">
-          <ul className="">
-            {posts.map((post) => (
-              <PostPreview key={post.id} post={post} />
-            ))}
-          </ul>
-          <PaginationButtons
-            baseURL={`/users/${userId}`}
-            currentPage={page}
-            isLastPage={isLastPage}
-          />
+          <UserPostList userId={userId} />
         </TabPanel>
         <TabPanel tabId="staticstics" label="독서 통계">
           <UserPostDashboard userId={userId} />
@@ -55,16 +36,16 @@ export default async function UserProfilePage({ params, searchParams }: Props) {
   );
 }
 
-export async function generateStaticParams() {
-  const profiles = await getUserProfiles();
-  if (!profiles) return [];
-  return profiles?.map((profile) => ({
-    userId: profile.user_id,
-  }));
-}
+// export async function generateStaticParams() {
+//   const profiles = await getUsers();
+//   if (!profiles) return [];
+//   return profiles?.map((profile) => ({
+//     userId: profile.user_id,
+//   }));
+// }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const profile = await getProfile(params.userId);
-  if (!profile) return { title: "User Not Found" };
-  return { title: `${profile.username}의 프로필` };
-}
+// export async function generateMetadata({ params }: Props): Promise<Metadata> {
+//   const profile = await getProfile(params.userId);
+//   if (!profile) return { title: "User Not Found" };
+//   return { title: `${profile.username}의 프로필` };
+// }

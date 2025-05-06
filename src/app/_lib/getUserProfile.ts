@@ -1,9 +1,13 @@
-import { createClient } from "@/utils/supabase/server";
-import { Profile } from "../_models/supabaseTypes";
+import { User } from "@/types/user";
 
-export default async function getUserProfile(userId: string): Promise<Profile | null> {
-  const supabase = createClient();
-  const { data, error } = await supabase.from("profile").select("*").eq("user_id", userId).single();
-  if (error) return null;
-  return data;
+export default async function getMe(): Promise<User | null> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/users/me`,
+    { credentials: "include" },
+  );
+
+  if (!res.ok) throw new Error("Failed to fetch user");
+
+  const user = await res.json();
+  return user;
 }

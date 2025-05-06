@@ -2,8 +2,8 @@ import { createClient } from "@/utils/supabase/server";
 import { notFound } from "next/navigation";
 import getPost from "./_lib/getPostWithBook";
 import PostViewer from "../_components/PostViewer";
-import { getAllPosts } from "@/app/_lib/forGenerateStaticParams/getAllPosts";
 import { Metadata } from "next";
+import { getPosts } from "../_lib/post";
 
 type Props = {
   params: {
@@ -18,14 +18,16 @@ export default async function Page({ params }: Props) {
   const post = await getPost(postId);
   if (!post) notFound();
 
+  console.log(post);
+
   return <PostViewer post={post} />;
 }
 
 export async function generateStaticParams() {
-  const posts = await getAllPosts();
+  const posts = await getPosts(999);
   if (!posts) return [];
 
-  return posts.map((post) => ({
+  return posts.data.map((post) => ({
     postId: String(post.id),
   }));
 }

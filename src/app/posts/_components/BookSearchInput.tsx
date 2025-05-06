@@ -1,22 +1,20 @@
-import { useEffect, useRef, useState } from "react";
-import searchBooks from "@/app/actions/searchBooks";
-import Image from "next/image";
+import { useEffect, useRef } from "react";
 import useBookSearch from "@/app/_hooks/useBookSearch";
 import SearchIcon from "@/components/ui/search-icon";
 import { useRouter } from "next/navigation";
-
+import { Book } from "@/types/book";
 type Props = {
-  selectedBook?: SearchedBook;
-  onSelectBook: (book: any) => void;
+  selectedBook?: Book;
+  onSelectBook: (book: Book | undefined) => void;
   placeholder?: string;
-  enableNavigateToBookSearchPage?: boolean;
+  enableNavigateToBookDetailPage?: boolean;
 };
 
 export default function BookSearchInput({
   selectedBook,
   onSelectBook,
   placeholder = "책 제목을 검색하세요...",
-  enableNavigateToBookSearchPage = false,
+  enableNavigateToBookDetailPage = false,
 }: Props) {
   const {
     searchQuery,
@@ -45,9 +43,10 @@ export default function BookSearchInput({
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;
     setSearchQuery(query);
+    onSelectBook(undefined);
   };
 
-  const handleSelectBook = (book: SearchedBook) => {
+  const handleSelectBook = (book: Book) => {
     onSelectBook(book);
     closeDropDown();
   };
@@ -58,7 +57,7 @@ export default function BookSearchInput({
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (enableNavigateToBookSearchPage) {
+    if (enableNavigateToBookDetailPage) {
       closeDropDown();
       router.push(`/search?query=${searchQuery}`);
     }
@@ -85,25 +84,20 @@ export default function BookSearchInput({
       </form>
       {showingDropDown && searchedBooks.length > 0 && (
         <ul className="absolute min-w-[400px] max-w-[600px] bg-background">
-          {searchedBooks.map((book: SearchedBook) => (
+          {searchedBooks.map((book: Book) => (
             <li
               key={book.isbn}
               className="flex cursor-pointer justify-between gap-4 px-4 py-2 hover:bg-secondary"
               onClick={() => handleSelectBook(book)}
             >
-              <span className="h-18 w-12 truncate">
-                <Image
-                  src={book.thumbnail}
-                  alt={book.title}
-                  width={48}
-                  height={64}
-                />
-              </span>
+              <figure className="h-18 w-12 truncate">
+                <img src={book.thumbnailUrl} alt={book.title} />
+              </figure>
               <span className="max-w-[350px] truncate text-nowrap">
                 {book.title}
               </span>
               <span className="max-w-[350px] truncate text-nowrap">
-                {book.authors[0]}
+                {book.author.name}
               </span>
             </li>
           ))}

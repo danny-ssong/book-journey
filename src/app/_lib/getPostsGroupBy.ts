@@ -1,13 +1,13 @@
 import dayjs from "dayjs";
-import { PostWithBook } from "../_models/supabaseTypes";
+import { PostWithBook } from "@/types/post";
 
 export function getGroupByAuthor(posts: PostWithBook[]) {
   const groupedByAuthor = posts.reduce(
     (acc: Record<string, PostWithBook[]>, post) => {
       const author = post.book.author || "Unknown";
 
-      if (!acc[author]) acc[author] = [];
-      acc[author].push(post);
+      if (!acc[author.name]) acc[author.name] = [];
+      acc[author.name].push(post);
 
       return acc;
     },
@@ -23,7 +23,7 @@ export function getGroupByAuthor(posts: PostWithBook[]) {
 export function getGroupByMonth(posts: PostWithBook[]) {
   const groupedByMonth = posts.reduce(
     (acc: Record<string, PostWithBook[]>, post) => {
-      const month = dayjs(post.start_date).format("YYYY-MM"); // 월은 0부터 시작하므로 +1
+      const month = dayjs(post.startDate).format("YYYY-MM"); // 월은 0부터 시작하므로 +1
       if (!acc[month]) acc[month] = [];
 
       acc[month].push(post);
@@ -41,7 +41,7 @@ export function getGroupByMonth(posts: PostWithBook[]) {
 export function getGroupByYear(posts: PostWithBook[]) {
   const groupedByYear = posts.reduce(
     (acc: Record<string, PostWithBook[]>, post) => {
-      const year = dayjs(post.start_date).format("YYYY");
+      const year = dayjs(post.startDate).format("YYYY");
       if (!acc[year]) acc[year] = [];
 
       acc[year].push(post);

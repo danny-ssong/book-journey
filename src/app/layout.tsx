@@ -14,6 +14,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const user = await getUserOnServer();
+
   return (
     <html lang="en">
       <body className="h-screen w-screen overflow-x-hidden overflow-y-scroll">

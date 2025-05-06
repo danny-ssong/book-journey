@@ -1,14 +1,20 @@
-import { PostWithUserProfileAndBook } from "@/app/_models/supabaseTypes";
-import { createClient } from "@/utils/supabase/server";
+import { PostWithBook } from "@/types/post";
+import { fetchWithAuth } from "@/utils/auth";
 
-export default async function getPost(postId: string): Promise<PostWithUserProfileAndBook | undefined> {
-  const supabse = createClient();
-  const { data, error } = await supabse.from("post").select(`*, book(*), profile(*)`).eq("id", postId);
+export default async function getPost(
+  postId: string,
+): Promise<PostWithBook | undefined> {
+  try {
+    const res = await fetchWithAuth(
+      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts/${postId}`,
+    );
 
-  if (error) console.error(error);
+    if (!res.ok) throw new Error("Failed to fetch post");
 
-  if (data) {
-    return data[0];
+    const post = await res.json();
+    return post;
+  } catch (error: any) {
+    console.error(`${error} \n${error.message}`);
+    return;
   }
-  return;
 }

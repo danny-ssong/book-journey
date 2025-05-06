@@ -1,6 +1,6 @@
 "use client";
 import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
-import searchBooks from "../actions/searchBooks";
+
 import dayjs from "dayjs";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -9,6 +9,7 @@ import PaginationButtons from "../_components/PaginationButtons";
 import Image from "next/image";
 import BookItem from "./_components/BookItem";
 import PaginationButtonsForClient from "../_components/PaginationButtonsForClient";
+import { searchBooks } from "../books/_lib/book";
 
 //author로 redirect하는 경우 나중에 searchPage가 아니라 authorPage를 만들어서 next에서 캐싱해놔도 될 듯z
 // export default function Page({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
@@ -17,13 +18,16 @@ export default function Page() {
   const [page, setPage] = useState(1);
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
-  const query = searchParams.get("query");
+  const query = searchParams.get("query") || "";
 
   const { data } = useQuery({
     queryKey: ["search", query, page],
     queryFn: () => searchBooks(query, 10, page),
     select: (response) => {
-      return { books: response?.documents, isLastPage: response?.meta.is_end };
+      return {
+        books: response?.documents,
+        isLastPage: response?.meta.is_end ?? true,
+      };
     },
   });
 
