@@ -1,7 +1,4 @@
-import { getUsers } from "@/app/_lib/forGenerateStaticParams/getUsers";
 import ProfileViewer from "@/app/manage/settings/profile/_components/ProfileViewer";
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { TabPanel, Tabs } from "@/app/_components/Tabs";
 import UserPostDashboard from "@/app/_components/UserPostDashboard";
 import UserPostList from "@/app/_components/UserPostList";

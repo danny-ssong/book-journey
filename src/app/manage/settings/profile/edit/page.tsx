@@ -1,17 +1,21 @@
-import { createClient } from "@/utils/supabase/server";
-import Profile from "../_components/Profile";
-import { notFound } from "next/navigation";
-import getUserOnServer from "@/app/_lib/getUserOnServer";
-import getProfile from "../../../posts/_lib/getProfile";
+"use client";
+import { useState, useEffect } from "react";
+import ProfileForm from "../_components/ProfileForm";
+import getMe from "@/app/_lib/getUserProfile";
+import { User } from "@/types/user";
 
-export default async function Page() {
-  const supabase = createClient();
-  const user = await getUserOnServer();
+export default function ProfileEditPage() {
+  const [user, setUser] = useState<User | null>(null);
 
-  if (!user) notFound();
+  useEffect(() => {
+    const fetchUser = async () => {
+      const user = await getMe();
+      setUser(user);
+    };
+    fetchUser();
+  }, []);
 
-  const profile = await getProfile(user?.id);
-  if (!profile) notFound();
+  if (!user) return <div>Loading...</div>;
 
-  return <Profile profile={profile} />;
+  return <ProfileForm profile={user.profile} />;
 }

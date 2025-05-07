@@ -48,29 +48,26 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
       rating,
       startDate: new Date(startDate),
       isPrivate,
-      isbn: book.isbn,
-    };
-    const createBookDto = {
-      author: {
-        name: book.author.name,
+      book: {
+        author: book.author.name,
+        isbn: book.isbn,
+        publishedAt: book.publishedAt,
+        title: book.title,
+        thumbnailUrl: book.thumbnailUrl,
+        contents: book.contents,
+        url: book.url,
+        publisher: book.publisher,
       },
-      isbn: book.isbn,
-      publishedAt: book.publishedAt,
-      title: book.title,
-      thumbnailUrl: book.thumbnailUrl,
-      contents: book.contents,
-      url: book.url,
-      publisher: book.publisher,
     };
 
     if (initPost) {
-      updatedPost = await updatePost(initPost.id, createBookDto, createPostDto);
+      updatedPost = await updatePost(initPost.id, createPostDto);
     } else {
-      updatedPost = await createPost(createBookDto, createPostDto);
+      updatedPost = await createPost(createPostDto);
     }
 
     if (updatedPost) {
-      // queryClient.invalidateQueries({ queryKey: ["userOwnPosts"] });
+      queryClient.invalidateQueries({ queryKey: ["my-posts"] });
       router.push(`/posts/${updatedPost.id}`);
     } else {
       setIsSubmitting(false);

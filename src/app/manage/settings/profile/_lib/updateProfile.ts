@@ -7,15 +7,22 @@ export default async function updateProfile(
 ) {
   try {
     const res = await fetchWithAuth(
-      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/profile`,
+      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/profiles/me`,
       {
-        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "PATCH",
         body: JSON.stringify({
           username: username,
           bio: bio,
         }),
       },
     );
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(`Failed to update profile: ${error.message}`);
+    }
     return res.json();
   } catch (error: any) {
     console.error(`${error} \n${error.message}`);

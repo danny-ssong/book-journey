@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import PostForm from "../_components/PostForm";
 import getUserOnServer from "@/app/_lib/getUserOnServer";
 import { searchBooks } from "@/app/books/_lib/book";

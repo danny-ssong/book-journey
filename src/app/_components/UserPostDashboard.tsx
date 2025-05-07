@@ -1,3 +1,4 @@
+"use client";
 import BookChartPerMonth from "./BookChartPerMonth";
 import AuthorChart from "./AuthorChart";
 import {
@@ -13,7 +14,7 @@ export default async function UserPostDashboard({
 }: {
   userId: string;
 }) {
-  const { data: posts } = await getUserPosts(500, userId);
+  const { data: posts } = await getUserPosts(999, userId);
 
   const postsGroupByAuthor = getGroupByAuthor(posts);
   const postsGroupByMonth = getGroupByMonth(posts);

@@ -1,22 +1,16 @@
 "use client";
 
-import { useQuery, useQueryClient } from "@tanstack/react-query";
 import ExpandedPostPreviewForManage from "./_components/ExapndedPostPreviewForManage";
-import PaginationButtonsForClient from "@/app/_components/PaginationButtonsForClient";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import CompactPostPreviewForManage from "./_components/CompactPostPreview";
-import getUserOnClient from "@/app/_lib/getUserOnClient";
 import { Button } from "@/components/ui/button";
-import useUserOnClient from "@/app/_hooks/useCurrentUser";
 import { useInfiniteMyPosts } from "@/app/_hooks/useInfiniteMyPosts";
 import InfiniteScroll from "@/app/_components/InfiniteScroll";
 
 export default function ManagePostsPage() {
   const { posts, isLoading, error, fetchNextPage, hasNextPage } =
     useInfiniteMyPosts(10);
-  const [currentPage, setCurrentPage] = useState<number>(1);
   const [showExpanded, setShowExpanded] = useState<boolean>(true);
-  const size = showExpanded ? 5 : 8;
 
   return (
     <div>
@@ -27,7 +21,6 @@ export default function ManagePostsPage() {
             className={`p-2 ${showExpanded && "bg-secondary"}`}
             onClick={() => {
               setShowExpanded(false);
-              setCurrentPage(1);
             }}
           >
             <svg
@@ -43,7 +36,6 @@ export default function ManagePostsPage() {
             className={`p-2 ${!showExpanded && "bg-secondary"}`}
             onClick={() => {
               setShowExpanded(true);
-              setCurrentPage(1);
             }}
           >
             <svg

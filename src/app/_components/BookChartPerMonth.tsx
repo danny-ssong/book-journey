@@ -14,9 +14,8 @@ import {
 import { Bar } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import dayjs from "dayjs";
-import { PostWithBook } from "../../types/supabaseTypes";
 import { usePrimaryColorHsl } from "../_hooks/usePrimaryColorHsl";
-
+import { PostWithBook } from "@/types/post";
 ChartJS.register(
   CategoryScale,
   LinearScale,

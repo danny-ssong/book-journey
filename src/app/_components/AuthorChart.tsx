@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,8 +13,8 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import { PostWithBook } from "../../types/supabaseTypes";
 import { usePrimaryColorHsl } from "../_hooks/usePrimaryColorHsl";
+import { PostWithBook } from "@/types/post";
 
 ChartJS.register(
   CategoryScale,
@@ -78,6 +78,8 @@ const options: ChartOptions<"bar"> = {
       },
       ticks: {
         autoSkip: true,
+        stepSize: 1,
+        precision: 0,
       },
     },
     y: {
@@ -104,6 +106,14 @@ type CustomBarChartDataset = ChartDataset<"bar"> & {
 
 export default function AuthorChart({ data }: Props) {
   const { primaryColor, darkerPrimaryColor } = usePrimaryColorHsl();
+  const chartContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (chartContainerRef.current) {
+      chartContainerRef.current.scrollTop =
+        chartContainerRef.current.scrollHeight;
+    }
+  }, []);
 
   data.sort((a, b) => b.posts.length - a.posts.length);
   const labels = data.map((d) => d.author);
@@ -128,7 +138,7 @@ export default function AuthorChart({ data }: Props) {
 
   return (
     <div className="rounded-lg px-5 py-4 shadow">
-      <div className="max-h-[300px] overflow-y-auto">
+      <div ref={chartContainerRef} className="max-h-[600px] overflow-y-auto">
         <div style={{ height: `${data.length * 45}px` }}>
           <Bar options={options} data={barData} />
         </div>

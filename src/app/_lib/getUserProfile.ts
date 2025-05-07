@@ -1,13 +1,19 @@
+"use client";
 import { User } from "@/types/user";
 
 export default async function getMe(): Promise<User | null> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/users/me`,
-    { credentials: "include" },
-  );
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/users/me`,
+      { credentials: "include" },
+    );
 
-  if (!res.ok) throw new Error("Failed to fetch user");
+    if (!res.ok) throw new Error("Failed to fetch user");
 
-  const user = await res.json();
-  return user;
+    const user = await res.json();
+    return user;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 }

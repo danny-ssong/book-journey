@@ -4,15 +4,29 @@ import { Post } from "@/types/post";
 import { PostWithBook } from "@/types/post";
 import { fetchWithAuth } from "@/utils/auth";
 
-export async function createPost(
-  book: Partial<Book>,
-  post: Partial<Post>,
-): Promise<PostWithBook | undefined> {
-  const createPostDto = {
-    ...post,
-    book,
-  };
+type CreatePostDto = {
+  title: string;
+  content: string;
+  rating: number;
+  startDate: Date;
+  isPrivate: boolean;
+  book: CreateBookDto;
+};
 
+type CreateBookDto = {
+  author: string;
+  isbn: string;
+  publishedAt: Date;
+  title: string;
+  thumbnailUrl: string;
+  contents: string;
+  url: string;
+  publisher: string;
+};
+
+export async function createPost(
+  createPostDto: CreatePostDto,
+): Promise<PostWithBook | undefined> {
   try {
     const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts`,
@@ -33,15 +47,7 @@ export async function createPost(
   }
 }
 
-export async function updatePost(
-  id: number,
-  book: Partial<Book>,
-  post: Partial<Post>,
-) {
-  const updatePostDto = {
-    ...post,
-    book,
-  };
+export async function updatePost(id: number, updatePostDto: CreatePostDto) {
   try {
     const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts/${id}`,
@@ -70,6 +76,8 @@ export async function deletePost(postId: number) {
         method: "DELETE",
       },
     );
+    if (!res.ok) throw new Error("Failed to delete post");
+
     return res.json();
   } catch (error: any) {
     console.error(`${error} \n${error.message}`);
@@ -86,6 +94,8 @@ export async function getUserPosts(
     const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts/user/${userId}?take=${take}&cursor=${cursor ?? ""}`,
     );
+    if (!res.ok) throw new Error("Failed to fetch user posts");
+
     return res.json();
   } catch (error: any) {
     console.error(`${error} \n${error.message}`);
@@ -100,6 +110,8 @@ export async function getPosts(
     const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts?take=${take}&cursor=${cursor ?? ""}`,
     );
+    if (!res.ok) throw new Error("Failed to fetch posts");
+
     return res.json();
   } catch (error: any) {
     console.error(`${error} \n${error.message}`);
@@ -115,9 +127,32 @@ export async function getMyPosts(
     const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts/user/me?take=${take}&cursor=${cursor ?? ""}`,
     );
+    if (!res.ok) throw new Error("Failed to fetch my posts");
+
     return res.json();
   } catch (error: any) {
     console.error(`${error} \n${error.message}`);
     throw error;
+  }
+}
+
+export async function getPost(
+  postId: string,
+): Promise<PostWithBook | undefined> {
+  try {
+    const res = await fetchWithAuth(
+      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts/${postId}`,
+    );
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(`[getPost] Failed to fetch post// ${errorData.message}`);
+    }
+
+    const post = await res.json();
+    return post;
+  } catch (error: any) {
+    console.error(error);
+    return;
   }
 }

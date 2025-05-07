@@ -18,6 +18,20 @@ export async function getBookWithPosts(
   }
 }
 
+export async function getBook(isbn: string): Promise<Book | undefined> {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/books/${isbn}`,
+    );
+    if (!res.ok) throw new Error("Failed to fetch book");
+    const book = await res.json();
+    return book;
+  } catch (error: any) {
+    console.error(`${error} \n${error.message}`);
+    return;
+  }
+}
+
 interface SearchBookResponse {
   documents: Book[];
   meta: { is_end: boolean; pageable_count: number; total_count: number };

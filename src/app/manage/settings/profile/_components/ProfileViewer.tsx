@@ -6,7 +6,7 @@ export default async function ProfileViewer({ user }: { user: User }) {
   return (
     <Card>
       <CardContent className="p-4">
-        <div className="flex flex-col">
+        <div className="flex h-[400px] flex-col">
           <div className="flex items-center justify-center">
             <div className="h-24 w-24 overflow-hidden rounded-full">
               {/* <img className="object-contain" src={"https://picsum.photos/200/300"} alt="user img" /> */}
@@ -16,9 +16,7 @@ export default async function ProfileViewer({ user }: { user: User }) {
             </div>
           </div>
           <Separator className="my-4" />
-          <div className="min-h-[200px] w-full flex-1 py-2 text-center">
-            {user.profile.bio}
-          </div>
+          <div className="flex-1 py-2 text-center">{user.profile.bio}</div>
           <ul className="mt-2 flex justify-end">
             {user.profile.mostReadAuthors?.map((author) => (
               <li key={author.name} className="px-2 py-2">

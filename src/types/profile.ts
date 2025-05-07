@@ -1,5 +1,5 @@
-import { User } from "@supabase/supabase-js";
-import { Author } from "next/dist/lib/metadata/types/metadata-types";
+import { Author } from "./author";
+import { User } from "./user";
 
 export interface Profile {
   id: number;

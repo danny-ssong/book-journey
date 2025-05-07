@@ -3,7 +3,6 @@ import ProfileViewer from "./_components/ProfileViewer";
 import getUserOnServer from "@/app/_lib/getUserOnServer";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import UserPostDashboard from "@/app/_components/UserPostDashboard";
 
 export default async function Page() {
   const user = await getUserOnServer();

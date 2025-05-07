@@ -3,10 +3,9 @@ import PostPreviewForBook from "../_components/PostPreviewForBook";
 import Link from "next/link";
 import BookDetail from "../_components/BookDetail";
 import { getBooks } from "@/app/_lib/forGenerateStaticParams/getBooks";
-import { getBook } from "@/app/_lib/forGenerateStaticParams/getBook";
 import { Metadata } from "next";
 import { Button } from "@/components/ui/button";
-import { getBookWithPosts, searchBooks } from "../_lib/book";
+import { getBook, getBookWithPosts, searchBooks } from "../_lib/book";
 
 type Props = {
   params: {
@@ -43,16 +42,16 @@ export default async function Page({ params }: Props) {
   );
 }
 
-export async function generateStaticParams() {
-  const books = await getBooks();
-  if (!books) return [];
-  return books?.map((book) => ({
-    isbn: book.isbn,
-  }));
-}
+// export async function generateStaticParams() {
+//   const books = await getBooks();
+//   if (!books) return [];
+//   return books?.map((book) => ({
+//     isbn: book.isbn,
+//   }));
+// }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const book = await getBook(params.isbn);
-  if (!book) return { title: "Book Not Found" };
-  return { title: `${book.title} 책 정보` };
-}
+// export async function generateMetadata({ params }: Props): Promise<Metadata> {
+//   const book = await getBook(params.isbn);
+//   if (!book) return { title: "Book Not Found" };
+//   return { title: `${book.title} 책 정보` };
+// }
