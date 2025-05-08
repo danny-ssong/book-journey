@@ -3,21 +3,18 @@ import { useState } from "react";
 import dayjs from "dayjs";
 import Rating from "./Rating";
 import { useRouter } from "next/navigation";
-import { createPost } from "@/app/actions/createPost";
-import { updatePost } from "@/app/actions/updatePost";
-import {
-  CreateBookDto,
-  CreatePostDto,
-  Post,
-} from "@/app/_models/supabaseTypes";
-import refreshProfileMostReadAuthors from "@/app/actions/refreshProfileMostReadAuthors";
+
 import { Button } from "@/components/ui/button";
 import { useQueryClient } from "@tanstack/react-query";
 import MonthPicker from "../../_components/DateInput";
 import SelectPrivacy from "./SelectPrivacy";
+import { Book } from "@/types/book";
+import { Post } from "@/types/post";
+import { updatePost } from "../_lib/post";
+import { createPost } from "../_lib/post";
 
 type Props = {
-  book: SearchedBook | undefined;
+  book: Book | undefined;
   initPost?: Post;
 };
 
@@ -27,11 +24,11 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
   const [title, setTitle] = useState(initPost?.title ?? "");
   const [content, setContent] = useState(initPost?.content ?? "");
   const [startDate, setStartDate] = useState<string>(
-    dayjs(initPost?.start_date ?? new Date()).format("YYYY-MM-DD"),
+    dayjs(initPost?.startDate ?? new Date()).format("YYYY-MM-DD"),
   );
   const [rating, setRating] = useState<number>(initPost?.rating ?? 5);
   const [isPrivate, setIsPrivate] = useState<boolean>(
-    initPost?.is_private ?? false,
+    initPost?.isPrivate ?? false,
   );
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
@@ -42,34 +39,36 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
       return;
     }
 
-    let postId = undefined;
+    let updatedPost = undefined;
     setIsSubmitting(true);
 
-    const createPostDto: CreatePostDto = {
+    const createPostDto = {
       title,
       content,
       rating,
-      start_date: startDate,
-      is_private: isPrivate,
-      isbn: book.isbn,
-    };
-    const createBookDto: CreateBookDto = {
-      author: book.authors[0],
-      isbn: book.isbn,
-      published_date: book.datetime,
-      title: book.title,
-      thumbnail: book.thumbnail,
+      startDate: new Date(startDate),
+      isPrivate,
+      book: {
+        author: book.author.name,
+        isbn: book.isbn,
+        publishedAt: book.publishedAt,
+        title: book.title,
+        thumbnailUrl: book.thumbnailUrl,
+        contents: book.contents,
+        url: book.url,
+        publisher: book.publisher,
+      },
     };
 
     if (initPost) {
-      postId = await updatePost(initPost.id, createBookDto, createPostDto);
+      updatedPost = await updatePost(initPost.id, createPostDto);
     } else {
-      postId = await createPost(createBookDto, createPostDto);
+      updatedPost = await createPost(createPostDto);
     }
-    refreshProfileMostReadAuthors();
-    if (postId) {
-      queryClient.invalidateQueries({ queryKey: ["userOwnPosts"] });
-      router.push(`/posts/${postId}`);
+
+    if (updatedPost) {
+      queryClient.invalidateQueries({ queryKey: ["my-posts"] });
+      router.push(`/posts/${updatedPost.id}`);
     } else {
       setIsSubmitting(false);
     }

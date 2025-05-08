@@ -1,21 +1,47 @@
+"use client";
+export const dynamic = "force-dynamic";
+
 import PostForm from "../../_components/PostForm";
-import { notFound } from "next/navigation";
-import getPost from "../../[postId]/_lib/getPostWithBook";
-import searchBooks from "@/app/actions/searchBooks";
-import getUserOnServer from "@/app/_lib/getUserOnServer";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { getPost } from "../../_lib/post";
+import { PostWithBook } from "@/types/post";
 
-export default async function Page({ params }: { params: { postId: string } }) {
-  const user = await getUserOnServer();
-  const postId = params?.postId;
-  if (!postId) notFound();
+export default function PostEditPage() {
+  const params = useParams();
+  const [postWithBook, setPostWithBook] = useState<PostWithBook | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const postWithBook = await getPost(postId);
-  if (!postWithBook) notFound();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const postId = params?.postId as string;
+        if (!postId) {
+          // router.push("/404");
+          return;
+        }
 
-  if (postWithBook.user_id !== user?.id) notFound();
+        const postData = await getPost(postId);
+        if (!postData) {
+          // router.push("/404");
+          console.log("postData not found");
+          return;
+        }
 
-  const response = await searchBooks(postWithBook.isbn, 5, 1);
-  const book = response?.documents[0];
+        setPostWithBook(postData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  return <PostForm initBook={book} initPost={postWithBook} />;
+    fetchData();
+  }, [params.postId]);
+
+  if (isLoading) return <div>로딩 중...</div>;
+  if (!postWithBook) return <div>접근 불가 페이지입니다.</div>;
+
+  return <PostForm initBook={postWithBook.book} initPost={postWithBook} />;
 }

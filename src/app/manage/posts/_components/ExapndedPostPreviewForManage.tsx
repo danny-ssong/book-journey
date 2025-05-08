@@ -1,8 +1,7 @@
 import dayjs from "dayjs";
 import RatingViewer from "../../../_components/RatingViewer";
 import PostActionButtons from "./PostPreviewButtons";
-import { PostWithBook } from "@/app/_models/supabaseTypes";
-import Image from "next/image";
+import { PostWithBook } from "@/types/post";
 
 function ExpandedPostPreviewForManage({
   post,
@@ -13,13 +12,11 @@ function ExpandedPostPreviewForManage({
 }) {
   return (
     <article className="group flex gap-4 border-b-2 px-4 py-4 last:border-none">
-      <figure className="overflow-hidden rounded-md border">
-        <Image
-          src={post.book.thumbnail || ""}
+      <figure className="h-[160px] w-[120px] overflow-hidden rounded-md border">
+        <img
+          src={post.book.thumbnailUrl || ""}
           alt={post.book.title}
-          width={120}
-          height={174}
-          className="h-full"
+          className="h-full w-full object-fill"
         />
       </figure>
       <div className="flex w-full flex-col">
@@ -29,13 +26,13 @@ function ExpandedPostPreviewForManage({
               {post.book.title}
             </h2>
             <p className="text-nowrap text-xs text-muted-foreground">
-              {post.book.author}
+              {post.book.author.name}
             </p>
           </div>
           <div className="flex items-center gap-2">
             <p className="text-xs">최근 수정일</p>
-            <time dateTime={post.updated_at || ""}>
-              {dayjs(post.updated_at).format("YYYY-MM-DD")}
+            <time dateTime={post.updatedAt.toString()}>
+              {dayjs(post.updatedAt).format("YYYY-MM-DD")}
             </time>
           </div>
         </div>

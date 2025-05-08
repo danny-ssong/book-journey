@@ -1,19 +1,40 @@
+"use client";
 import dayjs from "dayjs";
 import RatingViewer from "../../_components/RatingViewer";
 import Link from "next/link";
-import { PostWithUserProfileAndBook } from "@/app/_models/supabaseTypes";
-import getUserOnServer from "@/app/_lib/getUserOnServer";
 import EditIcon from "@/app/_components/_icons/EditIcon";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { PostWithBook } from "@/types/post";
+import { useEffect, useState } from "react";
+import { getPost } from "../_lib/post";
+import { notFound, useParams } from "next/navigation";
+import { useUser } from "@/app/_hooks/useUser";
 
-export default async function PostViewer({
-  post,
+export default function PostViewer({
+  initPost,
 }: {
-  post: PostWithUserProfileAndBook;
+  initPost: PostWithBook | undefined;
 }) {
-  const user = await getUserOnServer();
-  const isOwner = user?.id === post.user_id;
+  const { user } = useUser();
+  const [post, setPost] = useState<PostWithBook | undefined>(initPost);
+  const params = useParams();
+  const postId = params.postId as string;
+  if (!postId) notFound();
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      const post = await getPost(postId);
+      setPost(post);
+    };
+
+    if (initPost) setPost(initPost);
+    else fetchPost();
+  }, [initPost, postId]);
+
+  if (!post) return <div>접근 불가 페이지입니다...</div>;
+
+  const isOwner = post.user.id === user?.id;
 
   return (
     <div className="h-full w-[800px]">
@@ -24,18 +45,20 @@ export default async function PostViewer({
               <div className="mb-1 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <h2 className="text-lg">{post.book.title}</h2>
-                  <p className="text-sm text-gray-600">{post.book.author}</p>
+                  <p className="text-sm text-gray-600">
+                    {post.book.author.name}
+                  </p>
                 </div>
-                <div className="text-muted-foreground flex items-center gap-2">
+                <div className="flex items-center gap-2 text-muted-foreground">
                   <p className="text-xs">읽은 날짜</p>
-                  <p>{`${dayjs(post.start_date).format("YYYY")}년 ${dayjs(post.start_date).format("MM")}월`}</p>
+                  <p>{`${dayjs(post.startDate).format("YYYY")}년 ${dayjs(post.startDate).format("MM")}월`}</p>
                 </div>
               </div>
               <div>
                 <RatingViewer rating={post.rating!} />
               </div>
               <div className="mt-3 flex items-center gap-3">
-                <p>{post.profile.username}</p>
+                <p>{post.user.profile.nickname}</p>
               </div>
             </header>
             <Separator className="my-4" />

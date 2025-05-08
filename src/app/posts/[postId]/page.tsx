@@ -1,9 +1,7 @@
-import { createClient } from "@/utils/supabase/server";
 import { notFound } from "next/navigation";
-import getPost from "./_lib/getPostWithBook";
 import PostViewer from "../_components/PostViewer";
-import { getAllPosts } from "@/app/_lib/forGenerateStaticParams/getAllPosts";
 import { Metadata } from "next";
+import { getPosts, getPost } from "../_lib/post";
 
 type Props = {
   params: {
@@ -16,22 +14,21 @@ export default async function Page({ params }: Props) {
   if (!postId) notFound();
 
   const post = await getPost(postId);
-  if (!post) notFound();
 
-  return <PostViewer post={post} />;
+  return <PostViewer initPost={post} />;
 }
 
 export async function generateStaticParams() {
-  const posts = await getAllPosts();
+  const posts = await getPosts(999);
   if (!posts) return [];
 
-  return posts.map((post) => ({
+  return posts.data.map((post) => ({
     postId: String(post.id),
   }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = await getPost(params.postId);
-  if (!post) return { title: "Post Not Found" };
+  if (!post) return { title: "Book-journey" };
   return { title: `${post.title}` };
 }

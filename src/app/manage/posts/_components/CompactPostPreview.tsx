@@ -1,6 +1,5 @@
 import RatingViewer from "@/app/_components/RatingViewer";
-import getUserOnClient from "@/app/_lib/getUserOnClient";
-import { PostWithBook } from "@/app/_models/supabaseTypes";
+import { PostWithBook } from "@/types/post";
 import PostActionButtons from "./PostPreviewButtons";
 import dayjs from "dayjs";
 
@@ -17,18 +16,18 @@ export default function CompactPostPreviewForManage({
         <div className="flex w-full justify-between">
           <div className="flex items-center gap-2">
             <h2 className="text-md font-semibold">{post.book.title}</h2>
-            <p className="text-xs">{post.book.author}</p>
+            <p className="text-xs">{post.book.author.name}</p>
           </div>
           <div className="flex items-center gap-2">
             <p className="text-xs">최근 수정일</p>
-            <time dateTime={post.updated_at || ""}>
-              {dayjs(post.updated_at).format("YYYY-MM-DD")}
+            <time dateTime={post.updatedAt.toString()}>
+              {dayjs(post.updatedAt).format("YYYY-MM-DD")}
             </time>
           </div>
         </div>
         <div className="flex items-center justify-between">
           <div className="my-2">
-            <RatingViewer rating={post.rating!} />
+            <RatingViewer rating={post.rating} />
             <h1>{post.title || "\u00A0"}</h1>
           </div>
           {isOwner && <PostActionButtons postId={post.id} />}
