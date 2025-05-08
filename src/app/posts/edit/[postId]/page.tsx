@@ -10,7 +10,6 @@ import { PostWithBook } from "@/types/post";
 
 export default function PostEditPage() {
   const params = useParams();
-  const router = useRouter();
   const [postWithBook, setPostWithBook] = useState<PostWithBook | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 

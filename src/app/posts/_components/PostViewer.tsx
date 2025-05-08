@@ -1,15 +1,40 @@
+"use client";
 import dayjs from "dayjs";
 import RatingViewer from "../../_components/RatingViewer";
 import Link from "next/link";
-import getUserOnServer from "@/app/_lib/getUserOnServer";
 import EditIcon from "@/app/_components/_icons/EditIcon";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { PostWithBook } from "@/types/post";
+import { useEffect, useState } from "react";
+import { getPost } from "../_lib/post";
+import { notFound, useParams } from "next/navigation";
+import { useUser } from "@/app/_hooks/useUser";
 
-export default async function PostViewer({ post }: { post: PostWithBook }) {
-  const user = await getUserOnServer();
-  const isOwner = user?.id === post.user.id;
+export default function PostViewer({
+  initPost,
+}: {
+  initPost: PostWithBook | undefined;
+}) {
+  const { user } = useUser();
+  const [post, setPost] = useState<PostWithBook | undefined>(initPost);
+  const params = useParams();
+  const postId = params.postId as string;
+  if (!postId) notFound();
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      const post = await getPost(postId);
+      setPost(post);
+    };
+
+    if (initPost) setPost(initPost);
+    else fetchPost();
+  }, [initPost, postId]);
+
+  if (!post) return <div>접근 불가 페이지입니다...</div>;
+
+  const isOwner = post.user.id === user?.id;
 
   return (
     <div className="h-full w-[800px]">

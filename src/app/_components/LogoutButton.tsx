@@ -1,18 +1,10 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useUser } from "../_hooks/useUser";
 
 export default function LogoutButton() {
-  const router = useRouter();
+  const { logout } = useUser();
   return (
-    <form
-      onSubmit={() => {
-        fetch(`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/auth/logout`, {
-          method: "POST",
-          credentials: "include",
-        });
-        router.refresh();
-      }}
-    >
+    <form onSubmit={logout}>
       <button className="overflow-visible text-nowrap px-4 py-2">
         로그아웃
       </button>

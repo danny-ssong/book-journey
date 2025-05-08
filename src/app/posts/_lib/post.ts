@@ -102,6 +102,7 @@ export async function getUserPosts(
     throw error;
   }
 }
+
 export async function getPosts(
   take: number,
   cursor?: string,

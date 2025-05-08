@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "build": "next build --debug",
+    "start": "next start -p 3001",
     "lint": "next lint",
     "gen-types": "npx supabase gen types --lang=typescript --project-id frrbygkoxgqpkwhareqp --schema public > src/types/database.types.ts",
     "vercel-deploy": "next build && next export"

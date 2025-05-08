@@ -1,9 +1,22 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { User } from "@/types/user";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import getMe from "../_lib/getUserProfile";
 
-export default function SidebarMenu({ user }: { user: User | null }) {
+export default function SidebarMenu() {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const fetchMe = async () => {
+      const user = await getMe();
+      setUser(user);
+    };
+    fetchMe();
+  }, []);
+
   return (
     <aside>
       <Card className="h-full">

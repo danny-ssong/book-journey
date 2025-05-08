@@ -1,5 +1,6 @@
 import { PostWithBook } from "@/types/post";
 import { fetchWithAuth } from "@/utils/auth";
+import { cookies } from "next/headers";
 
 export default async function getPost(
   postId: string,
@@ -7,6 +8,11 @@ export default async function getPost(
   try {
     const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts/${postId}`,
+      {
+        headers: {
+          Cookie: cookies().toString(),
+        },
+      },
     );
 
     if (!res.ok) {
