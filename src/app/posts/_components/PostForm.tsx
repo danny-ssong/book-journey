@@ -14,7 +14,6 @@ function PostForm({
   initBook?: Book;
 }) {
   useBeforeunload();
-
   const [selectedBook, setSelectedBook] = useState<Book | undefined>(initBook);
 
   return (
