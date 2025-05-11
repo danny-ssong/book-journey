@@ -14,7 +14,7 @@ async function refreshAccessToken(): Promise<void> {
       if (!res.ok) throw new Error("리프레시 토큰 만료");
     } catch (error) {
       console.warn("refresh token expired");
-      window.location.href = "/login";
+      // window.location.href = "/login";
     } finally {
       refreshPromise = null;
     }
