@@ -68,7 +68,8 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
 
     if (updatedPost) {
       queryClient.invalidateQueries({ queryKey: ["my-posts"] });
-      router.push(`/posts/${updatedPost.id}`);
+      // router.push(`/posts/${updatedPost.id}`);
+      router.push("/manage/posts");
     } else {
       setIsSubmitting(false);
     }

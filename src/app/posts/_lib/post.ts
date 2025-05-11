@@ -3,7 +3,7 @@ import { PaginationResponse } from "@/types/pagination-response";
 import { Post } from "@/types/post";
 import { PostWithBook } from "@/types/post";
 import { fetchWithAuth } from "@/utils/auth";
-
+import { revalidatePath } from "@/app/_lib/revalidatePath";
 type CreatePostDto = {
   title: string;
   content: string;
@@ -61,6 +61,8 @@ export async function updatePost(id: number, updatePostDto: CreatePostDto) {
     );
     if (!res.ok) throw new Error("Failed to update post");
 
+    await revalidatePath(`/posts/${id}`);
+
     return res.json();
   } catch (error: any) {
     console.error(`${error} \n${error.message}`);
@@ -77,6 +79,8 @@ export async function deletePost(postId: number) {
       },
     );
     if (!res.ok) throw new Error("Failed to delete post");
+
+    await revalidatePath(`/posts/${postId}`);
 
     return res.json();
   } catch (error: any) {
@@ -109,7 +113,7 @@ export async function getPosts(
 ): Promise<PaginationResponse<PostWithBook>> {
   try {
     const res = await fetchWithAuth(
-      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts?take=${take}&cursor=${cursor ?? ""}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts?take=${take}&order=updatedAt_DESC&cursor=${cursor ?? ""}`,
     );
     if (!res.ok) throw new Error("Failed to fetch posts");
 
@@ -126,7 +130,7 @@ export async function getMyPosts(
 ): Promise<PaginationResponse<PostWithBook>> {
   try {
     const res = await fetchWithAuth(
-      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts/user/me?take=${take}&cursor=${cursor ?? ""}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts/user/me?take=${take}&order=updatedAt_DESC&cursor=${cursor ?? ""}`,
     );
     if (!res.ok) throw new Error("Failed to fetch my posts");
 

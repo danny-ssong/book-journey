@@ -6,6 +6,9 @@ export async function getBookWithPosts(
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts/book/${isbn}`,
+      {
+        cache: "no-store",
+      },
     );
 
     if (!res.ok) throw new Error("Failed to fetch book");
