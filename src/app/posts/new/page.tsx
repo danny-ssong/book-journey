@@ -1,31 +1,41 @@
-export const dynamic = "force-dynamic";
-
+"use client";
+import { useState, useEffect } from "react";
 import PostForm from "../_components/PostForm";
-import getUserOnServer from "@/app/_lib/getUserOnServer";
 import { searchBooks } from "@/app/books/_lib/book";
-import { redirect } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { Book } from "@/types/book";
 
-type Props = {
-  searchParams: {
-    isbn?: string;
-  };
-};
+export default function NewPostPage() {
+  const [initBook, setInitBook] = useState<Book | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState(true);
+  const params = useSearchParams();
+  const isbn = params.get("isbn");
 
-export default async function NewPostPage({ searchParams }: Props) {
-  const user = await getUserOnServer();
-  if (!user) redirect("/login");
+  useEffect(() => {
+    if (!isbn) {
+      setIsLoading(false);
+      return;
+    }
 
-  const isbn = searchParams.isbn;
+    const fetchInitBook = async () => {
+      try {
+        const response = await searchBooks(isbn, 1, 1);
+        const initBook =
+          response?.documents && response?.documents?.length > 0
+            ? response.documents[0]
+            : undefined;
+        setInitBook(initBook);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  if (!isbn) {
-    return <PostForm />;
+    fetchInitBook();
+  }, [isbn]);
+
+  if (isLoading) {
+    return <div>로딩중...</div>;
   }
-
-  const response = await searchBooks(isbn, 1, 1);
-  const initBook =
-    response?.documents && response?.documents?.length > 0
-      ? response.documents[0]
-      : undefined;
 
   return <PostForm initBook={initBook} />;
 }
