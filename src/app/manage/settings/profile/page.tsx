@@ -1,12 +1,12 @@
-import { notFound } from "next/navigation";
+"use client";
 import ProfileViewer from "./_components/ProfileViewer";
-import getUserOnServer from "@/app/_lib/getUserOnServer";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useUser } from "@/app/_hooks/useUser";
 
-export default async function Page() {
-  const user = await getUserOnServer();
-  if (!user) notFound();
+export default function Page() {
+  const { user } = useUser();
+  if (!user) return <div>로그인 후 이용해주세요.</div>;
 
   return (
     <div>

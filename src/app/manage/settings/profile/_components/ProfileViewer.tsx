@@ -1,8 +1,9 @@
-import { User } from "@/types/user";
+"use client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { User } from "@/types/user";
 
-export default async function ProfileViewer({ user }: { user: User }) {
+export default function ProfileViewer({ user }: { user: User }) {
   return (
     <Card>
       <CardContent className="p-4">

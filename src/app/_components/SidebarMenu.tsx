@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { User } from "@/types/user";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import getMe from "../_lib/getUserProfile";
+import getMe from "../_lib/getMe";
 
 export default function SidebarMenu() {
   const [user, setUser] = useState<User | null>(null);

@@ -1,8 +1,6 @@
 "use client";
-export const dynamic = "force-dynamic";
 
 import PostForm from "../../_components/PostForm";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { getPost } from "../../_lib/post";

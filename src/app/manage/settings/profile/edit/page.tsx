@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import ProfileForm from "../_components/ProfileForm";
-import getMe from "@/app/_lib/getUserProfile";
+import getMe from "@/app/_lib/getMe";
 import { User } from "@/types/user";
 
 export default function ProfileEditPage() {

@@ -2,10 +2,8 @@ import { notFound } from "next/navigation";
 import PostPreviewForBook from "../_components/PostPreviewForBook";
 import Link from "next/link";
 import BookDetail from "../_components/BookDetail";
-import { getBooks } from "@/app/_lib/forGenerateStaticParams/getBooks";
-import { Metadata } from "next";
 import { Button } from "@/components/ui/button";
-import { getBook, getBookWithPosts, searchBooks } from "../_lib/book";
+import { getBookWithPosts, searchBooks } from "../_lib/book";
 
 type Props = {
   params: {

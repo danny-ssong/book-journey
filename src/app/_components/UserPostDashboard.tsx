@@ -8,17 +8,23 @@ import {
 } from "../_lib/getPostsGroupBy";
 import { Card, CardContent } from "@/components/ui/card";
 import { getUserPosts } from "../posts/_lib/post";
+import { useQuery } from "@tanstack/react-query";
+import { User } from "@/types/user";
 
-export default async function UserPostDashboard({
-  userId,
-}: {
-  userId: string;
-}) {
-  const { data: posts } = await getUserPosts(999, userId);
+export default function UserPostDashboard({ user }: { user: User }) {
+  const { data: posts } = useQuery({
+    queryKey: ["all-posts", user.id],
+    queryFn: () => {
+      if (!user?.id) throw new Error("User ID is required");
+      return getUserPosts(999, user.id);
+    },
+  });
 
-  const postsGroupByAuthor = getGroupByAuthor(posts);
-  const postsGroupByMonth = getGroupByMonth(posts);
-  const postsGroupByYear = getGroupByYear(posts);
+  if (!posts?.data) return <div>Loading...</div>;
+
+  const postsGroupByAuthor = getGroupByAuthor(posts?.data);
+  const postsGroupByMonth = getGroupByMonth(posts?.data);
+  const postsGroupByYear = getGroupByYear(posts?.data);
 
   const today = new Date();
   const thisYear = today.getFullYear();
@@ -38,7 +44,9 @@ export default async function UserPostDashboard({
           <div className="text-center">
             <p className="mt-2 text-lg">
               총 읽은 책:{" "}
-              <span className="font-bold text-blue-600">{posts.length}</span>
+              <span className="font-bold text-blue-600">
+                {posts?.data.length}
+              </span>
             </p>
             <div className="mt-4 flex justify-center space-x-8">
               <div>

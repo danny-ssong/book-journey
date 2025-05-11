@@ -7,7 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import getMe from "../_lib/getUserProfile";
+import getMe from "../_lib/getMe";
 
 type UserContextType = {
   user: User | null;
@@ -41,7 +41,6 @@ export function UserProvider({ children }: { children: ReactNode }) {
         if (!user) throw new Error("사용자 정보를 불러오는데 실패했습니다");
 
         setUser(user);
-        console.log("set user", user);
       } catch (err) {
         console.error(err);
       }

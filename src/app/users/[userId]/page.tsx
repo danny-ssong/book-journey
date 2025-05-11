@@ -8,15 +8,12 @@ type Props = {
   params: {
     userId: string;
   };
-  searchParams: {
-    page: string;
-  };
 };
 
-export default async function UserProfilePage({ params, searchParams }: Props) {
+export default async function UserProfilePage({ params }: Props) {
   const userId = params.userId;
-
   const user = await getUser(userId);
+  if (!user) return <div>User not found</div>;
 
   return (
     <div className="flex flex-col gap-4">
@@ -26,7 +23,7 @@ export default async function UserProfilePage({ params, searchParams }: Props) {
           <UserPostList userId={userId} />
         </TabPanel>
         <TabPanel tabId="staticstics" label="독서 통계">
-          <UserPostDashboard userId={userId} />
+          <UserPostDashboard user={user} />
         </TabPanel>
       </Tabs>
     </div>

@@ -1,12 +1,10 @@
-export const dynamic = "force-dynamic";
-
+"use client";
 import UserPostDashboard from "@/app/_components/UserPostDashboard";
-import getUserOnServer from "@/app/_lib/getUserOnServer";
-import { notFound } from "next/navigation";
+import { useUser } from "@/app/_hooks/useUser";
 
-export default async function StaticsticsPage() {
-  const user = await getUserOnServer();
-  if (!user) notFound();
+export default function StaticsticsPage() {
+  const { user } = useUser();
+  if (!user) return <div>로그인 후 이용해주세요.</div>;
 
-  return <UserPostDashboard userId={user.id} />;
+  return <UserPostDashboard user={user} />;
 }
