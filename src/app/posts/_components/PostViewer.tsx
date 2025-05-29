@@ -2,7 +2,7 @@
 import dayjs from "dayjs";
 import RatingViewer from "../../_components/RatingViewer";
 import Link from "next/link";
-import EditIcon from "@/app/_components/_icons/EditIcon";
+import EditIcon from "@/app/_components/icons/EditIcon";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { PostWithBook } from "@/types/post";
@@ -37,7 +37,7 @@ export default function PostViewer({
   const isOwner = post.user.id === user?.id;
 
   return (
-    <div className="h-full w-[800px]">
+    <div className="h-full w-full">
       <article>
         <Card>
           <CardContent className="flex min-h-[60vh] flex-col p-6">

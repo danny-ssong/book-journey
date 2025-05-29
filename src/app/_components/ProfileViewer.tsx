@@ -2,9 +2,9 @@ import Image from "next/image";
 
 export default function ProfileViewer() {
   return (
-    <div className="border w-[600px] h-[800px]">
+    <div className="border">
       <div className="flex items-center">
-        <div className=" rounded-full w-24 h-24 overflow-hidden">
+        <div className="h-24 w-24 overflow-hidden rounded-full">
           {/* <Image
             className="object-contain"
             src="https://picsum.photos/200/300"
@@ -18,7 +18,8 @@ export default function ProfileViewer() {
         </div>
       </div>
       <p className="px-2 py-10">
-        소개글 sfssss소개글 sfssss소개글 sfssss소개글 sfssss소개글 sfssss소개글 sfssss 소개글 sfssss소개글 sfssss
+        소개글 sfssss소개글 sfssss소개글 sfssss소개글 sfssss소개글 sfssss소개글
+        sfssss 소개글 sfssss소개글 sfssss
       </p>
     </div>
   );

@@ -13,7 +13,7 @@ export default function ManagePostsPage() {
   const [showExpanded, setShowExpanded] = useState<boolean>(true);
 
   return (
-    <div>
+    <div className="w-full">
       <header className="flex items-center justify-between px-4">
         <h1 className="mb-5 text-xl">글 관리</h1>
         <div className="flex">
