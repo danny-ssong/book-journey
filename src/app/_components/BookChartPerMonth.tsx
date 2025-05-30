@@ -120,8 +120,14 @@ type CustomBarChartDataset = ChartDataset<"bar"> & {
 
 export default function BookChartPerMonth({ data }: Props) {
   const { primaryColor, darkerPrimaryColor } = usePrimaryColorHsl();
-
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollLeft =
+        scrollContainerRef.current.scrollWidth;
+    }
+  }, []);
 
   const sortedDates = data.sort((a, b) => {
     const dateA = dayjs(a.month);
@@ -163,13 +169,6 @@ export default function BookChartPerMonth({ data }: Props) {
     labels: months,
     datasets: [dataset],
   };
-
-  useEffect(() => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollLeft =
-        scrollContainerRef.current.scrollWidth;
-    }
-  }, []);
 
   return (
     <div className="rounded-lg shadow">

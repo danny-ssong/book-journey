@@ -25,7 +25,7 @@ export default function UserLoginStatus() {
   }
 
   return (
-    <div className="flex items-center justify-between py-2 pl-4">
+    <div className="flex items-center justify-between py-2">
       <p className="xs:block hidden text-nowrap text-xs">
         {user.profile.nickname}
       </p>

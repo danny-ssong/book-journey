@@ -1,12 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { User } from "@/types/user";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import getMe from "../_lib/getMe";
 
-export default function SidebarMenu() {
+export default function SidebarMenu({ onClose }: { onClose?: () => void }) {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -24,7 +23,7 @@ export default function SidebarMenu() {
           <Link href={!!user ? `/posts/new` : "/login"}>글쓰기</Link>
         </Button>
         {!!user && (
-          <ul className="flex flex-col gap-2">
+          <ul className="flex flex-col gap-2" onClick={onClose}>
             <li>
               <Link href={`/manage/posts`}>글 관리</Link>
             </li>

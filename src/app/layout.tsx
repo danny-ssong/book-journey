@@ -25,11 +25,13 @@ export default async function RootLayout({
               <div className="relative h-screen">
                 <Header />
                 <div className="flex h-full overflow-hidden pt-16">
-                  <div className="mr-4 hidden lg:block">
+                  <div className="mr-4 hidden border-r border-gray-200 lg:block">
                     <SidebarMenu />
                   </div>
                   <main className="flex-1 overflow-y-auto py-0 sm:py-8">
-                    <div className="mx-auto sm:w-[800px]">{children}</div>
+                    <div className="mx-auto h-full px-4 sm:w-[800px] sm:px-0">
+                      {children}
+                    </div>
                   </main>
                 </div>
               </div>

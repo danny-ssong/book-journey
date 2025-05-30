@@ -41,7 +41,7 @@ function ProfileForm({ profile }: { profile: Profile }) {
                 {/* <img className="object-contain" src={"https://picsum.photos/200/300"} alt="user img" /> */}
               </div>
               <div className="flex flex-1 justify-center">
-                <label className="mr-4 text-xl">닉네임</label>
+                <label className="mr-4 text-nowrap text-xl">닉네임</label>
                 <input
                   className="border border-gray-700 text-xl"
                   value={username}

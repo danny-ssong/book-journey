@@ -22,7 +22,7 @@ export default async function Page({ params }: Props) {
   const posts = bookWithPosts?.posts;
 
   return (
-    <div className="w-[800px] border bg-background">
+    <div className="border bg-background">
       <BookDetail book={book} />
       <div className="mx-2 my-2 flex items-center justify-end">
         <Button>

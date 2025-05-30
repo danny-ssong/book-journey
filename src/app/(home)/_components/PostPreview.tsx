@@ -27,7 +27,7 @@ export default function PostPreview({ post }: { post: PostWithBook }) {
                     {post.book.title}
                   </Link>
                 </h2>
-                <p className="text-xs text-muted-foreground hover:underline">
+                <p className="text-nowrap text-xs text-muted-foreground hover:underline">
                   <Link href={`/search?query=${post.book.author.name}`}>
                     {post.book.author.name}
                   </Link>

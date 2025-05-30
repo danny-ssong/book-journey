@@ -6,7 +6,7 @@ import { Post } from "@/types/post";
 import { useBeforeunload } from "../_hooks/useBeforeunload";
 import { Book } from "@/types/book";
 
-function PostForm({
+export default function PostForm({
   initPost,
   initBook,
 }: {
@@ -17,7 +17,7 @@ function PostForm({
   const [selectedBook, setSelectedBook] = useState<Book | undefined>(initBook);
 
   return (
-    <div className="flex h-full w-[800px] flex-col">
+    <div className="flex h-full flex-col">
       <BookSearchInput
         selectedBook={selectedBook}
         onSelectBook={setSelectedBook}
@@ -28,5 +28,3 @@ function PostForm({
     </div>
   );
 }
-
-export default PostForm;
