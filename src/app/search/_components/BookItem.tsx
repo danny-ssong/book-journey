@@ -3,18 +3,18 @@ import Link from "next/link";
 import { Book } from "@/types/book";
 export default function BookItem({ book }: { book: Book }) {
   return (
-    <article className="mb-6 flex gap-4 px-4 py-2">
+    <article className="mb-6 flex gap-4 overflow-hidden py-2">
       <Link href={`/books/${book.isbn}`}>
-        <figure className="h-[160px] w-[120px]">
+        <figure className="h-[172px] w-[120px]">
           <img
             src={book.thumbnailUrl}
             alt={book.title}
-            className="overflow-hidden border object-cover"
+            className="h-full w-full overflow-hidden border object-fill"
           />
         </figure>
       </Link>
       <div className="flex flex-1 flex-col gap-2">
-        <h2 className="text-lg font-semibold">
+        <h2 className="line-clamp-1 text-lg font-semibold">
           <Link href={`/books/${book.isbn}`} className="hover:underline">
             {book.title}
           </Link>

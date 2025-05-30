@@ -7,7 +7,7 @@ export default function ProfileViewer({ user }: { user: User }) {
   return (
     <Card>
       <CardContent className="p-4">
-        <div className="flex h-[400px] flex-col">
+        <div className="flex min-h-[200px] flex-col">
           <div className="flex items-center justify-center">
             <div className="h-24 w-24 overflow-hidden rounded-full">
               {/* <img className="object-contain" src={"https://picsum.photos/200/300"} alt="user img" /> */}

@@ -48,12 +48,12 @@ export default function SearchClient() {
   if (!query) return <div>검색어를 입력해주세요.</div>;
 
   return (
-    <div className="px-10">
+    <div className="">
       <div className="min-h-[400px] space-y-4">
-        <h1 className="pl-4 text-2xl font-semibold">검색 결과</h1>
+        <h1 className="text-2xl font-semibold">검색 결과</h1>
         {books && books.length > 0 ? (
           <ul>
-            {books?.map((book: Book) => (
+            {books.map((book: Book) => (
               <li key={book.isbn}>
                 <BookItem book={book} />
               </li>

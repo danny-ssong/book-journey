@@ -71,34 +71,38 @@ export default function BookSearchInput({
       >
         <input
           ref={inputRef}
-          className="h-full w-[360px] rounded-lg border px-4 py-2 focus:outline-none"
+          className="h-full w-full rounded-lg border px-4 py-1 focus:outline-none sm:w-[360px] sm:py-2"
           type="text"
           onChange={handleSearchInputChange}
           value={selectedBook ? selectedBook.title : searchQuery}
           onFocus={handleInputFocus}
           placeholder={placeholder}
         />
-        <div className="absolute right-2">
+        <div className="absolute right-2 hidden sm:block">
           <SearchIcon />
         </div>
       </form>
       {showingDropDown && searchedBooks.length > 0 && (
-        <ul className="absolute min-w-[400px] max-w-[600px] bg-background">
+        <ul className="absolute w-80 bg-background sm:w-fit sm:max-w-[600px]">
           {searchedBooks.map((book: Book) => (
             <li
               key={book.isbn}
-              className="flex cursor-pointer justify-between gap-4 px-4 py-2 hover:bg-secondary"
+              className="flex cursor-pointer items-center gap-4 px-4 py-2 hover:bg-secondary"
               onClick={() => handleSelectBook(book)}
             >
-              <figure className="h-18 w-12 truncate">
-                <img src={book.thumbnailUrl} alt={book.title} />
+              <figure className="sm:h-18 h-16 w-12 shrink-0 sm:w-12">
+                <img
+                  src={book.thumbnailUrl}
+                  alt={book.title}
+                  className="h-full w-full object-cover"
+                />
               </figure>
-              <span className="max-w-[350px] truncate text-nowrap">
-                {book.title}
-              </span>
-              <span className="max-w-[350px] truncate text-nowrap">
-                {book.author.name}
-              </span>
+              <div className="flex flex-1 flex-col truncate sm:flex-row sm:items-center sm:gap-4">
+                <p className="truncate">{book.title}</p>
+                <p className="truncate text-nowrap text-sm text-muted-foreground sm:text-base">
+                  {book.author.name}
+                </p>
+              </div>
             </li>
           ))}
         </ul>

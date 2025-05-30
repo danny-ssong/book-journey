@@ -64,15 +64,21 @@ export default function UserPostDashboard({ user }: { user: User }) {
             </div>
           </div>
 
-          <div>
-            <h3 className="mb-4 text-xl font-semibold">작가별 독서 통계</h3>
-            <AuthorChart data={postsGroupByAuthor} />
-          </div>
+          {postsGroupByAuthor.length === 0 ? (
+            <div className="text-center">독서 데이터가 없습니다.</div>
+          ) : (
+            <>
+              <div>
+                <h3 className="mb-4 text-xl font-semibold">작가별 독서 통계</h3>
+                <AuthorChart data={postsGroupByAuthor} />
+              </div>
 
-          <div>
-            <h3 className="mb-4 text-xl font-semibold">월별 독서 통계</h3>
-            <BookChartPerMonth data={postsGroupByMonth} />
-          </div>
+              <div>
+                <h3 className="mb-4 text-xl font-semibold">월별 독서 통계</h3>
+                <BookChartPerMonth data={postsGroupByMonth} />
+              </div>
+            </>
+          )}
         </CardContent>
       </Card>
     </section>
