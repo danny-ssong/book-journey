@@ -14,7 +14,7 @@ export default function MonthPicker({ date, setDate }: Props) {
 
   return (
     <input
-      className="rounded-lg border px-4 py-1"
+      className="rounded-lg border px-2 py-1"
       type="month"
       value={dateYYYYMM}
       onChange={(e) => handleChange(e.target.value)}
