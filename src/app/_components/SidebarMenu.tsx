@@ -19,7 +19,7 @@ export default function SidebarMenu({ onClose }: { onClose?: () => void }) {
   return (
     <aside className="h-full py-4 lg:w-[200px]">
       <div className="h-full px-5 py-6">
-        <Button className="mb-5 w-full px-4 py-2 text-center">
+        <Button className="mb-5 w-full px-4 py-2 text-center" onClick={onClose}>
           <Link href={!!user ? `/posts/new` : "/login"}>글쓰기</Link>
         </Button>
         {!!user && (

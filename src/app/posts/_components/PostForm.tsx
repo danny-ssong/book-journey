@@ -22,7 +22,7 @@ export default function PostForm({
         selectedBook={selectedBook}
         onSelectBook={setSelectedBook}
       />
-      <div className="flex-1">
+      <div className="mt-2 flex-1">
         <PostFormContent book={selectedBook} initPost={initPost} />
       </div>
     </div>

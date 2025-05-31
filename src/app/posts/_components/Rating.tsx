@@ -13,7 +13,7 @@ export default function Rating({ rating, onClickStar }: Props) {
         const starValue = index + 1;
         return (
           <Star
-            className={`${starValue > rating ? "text-muted-foreground/30" : "fill-primary text-primary"} cursor-pointer text-2xl`}
+            className={`${starValue > rating ? "text-muted-foreground/30" : "fill-primary text-primary"} h-4 w-4 cursor-pointer sm:h-6 sm:w-6`}
             key={index}
             onClick={onClickStar ? () => onClickStar(starValue) : undefined}
           >
