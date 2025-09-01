@@ -22,16 +22,14 @@ export default async function RootLayout({
         >
           <ReactQueryProvider>
             <UserProvider>
-              <div className="relative h-screen">
+              <div className="h-full">
                 <Header />
-                <div className="flex h-full overflow-hidden pt-16">
+                <div className="flex h-full justify-center pt-16">
                   <div className="mr-4 hidden border-r lg:block">
                     <SidebarMenu />
                   </div>
-                  <main className="flex-1 overflow-y-auto py-0 sm:py-8">
-                    <div className="mx-auto h-full px-4 sm:w-[800px] sm:px-0">
-                      {children}
-                    </div>
+                  <main className="px-4 py-0 sm:w-[800px] sm:px-0 sm:py-8">
+                    {children}
                   </main>
                 </div>
               </div>
