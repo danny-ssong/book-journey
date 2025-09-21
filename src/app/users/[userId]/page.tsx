@@ -1,8 +1,8 @@
 import ProfileViewer from "@/app/manage/settings/profile/_components/ProfileViewer";
 import { TabPanel, Tabs } from "@/app/_components/Tabs";
 import UserPostDashboard from "@/app/_components/UserPostDashboard";
-import UserPostList from "@/app/_components/UserPostList";
 import { getUser } from "./_lib/user";
+import InfinitePostList from "@/app/_components/InfinitePostList";
 
 type Props = {
   params: {
@@ -20,7 +20,7 @@ export default async function UserProfilePage({ params }: Props) {
       <ProfileViewer user={user} />
       <Tabs defaultActiveTab="recentPosts">
         <TabPanel tabId="recentPosts" label="최근 작성한 글">
-          <UserPostList userId={userId} />
+          <InfinitePostList type="user" userId={userId} />
         </TabPanel>
         <TabPanel tabId="staticstics" label="독서 통계">
           <UserPostDashboard user={user} />

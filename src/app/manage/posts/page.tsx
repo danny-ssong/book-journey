@@ -4,12 +4,12 @@ import ExpandedPostPreviewForManage from "./_components/ExapndedPostPreviewForMa
 import { Fragment, useState } from "react";
 import CompactPostPreviewForManage from "./_components/CompactPostPreview";
 import { Button } from "@/components/ui/button";
-import { useInfiniteMyPosts } from "@/app/_hooks/useInfiniteMyPosts";
+import { useInfinitePosts } from "@/app/_hooks/useInfinitePosts";
 import InfiniteScroll from "@/app/_components/InfiniteScroll";
 
 export default function ManagePostsPage() {
   const { posts, isLoading, error, fetchNextPage, hasNextPage } =
-    useInfiniteMyPosts(10);
+    useInfinitePosts({ type: "my" });
   const [showExpanded, setShowExpanded] = useState<boolean>(true);
 
   return (
