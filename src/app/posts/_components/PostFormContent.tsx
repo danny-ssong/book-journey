@@ -10,8 +10,7 @@ import MonthPicker from "../../_components/DateInput";
 import SelectPrivacy from "./SelectPrivacy";
 import { Book } from "@/types/book";
 import { Post } from "@/types/post";
-import { updatePost } from "../_lib/post";
-import { createPost } from "../_lib/post";
+import { updatePost, createPost } from "@/api/post";
 
 type Props = {
   book: Book | undefined;

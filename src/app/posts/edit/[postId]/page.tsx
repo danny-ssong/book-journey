@@ -3,7 +3,7 @@
 import PostForm from "../../_components/PostForm";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { getPost } from "../../_lib/post";
+import { getPost } from "@/api/post";
 import { PostWithBook } from "@/types/post";
 
 export default function PostEditPage() {

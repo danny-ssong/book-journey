@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { searchBooks } from "../books/_lib/book";
+import { searchBooks } from "@/api/book";
 import { Book } from "@/types/book";
 
 export default function useBookSearch(debounceMs: number = 500) {

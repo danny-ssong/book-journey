@@ -1,13 +1,9 @@
 "use client";
 import BookChartPerMonth from "./BookChartPerMonth";
 import AuthorChart from "./AuthorChart";
-import {
-  getGroupByAuthor,
-  getGroupByMonth,
-  getGroupByYear,
-} from "../_lib/getPostsGroupBy";
+import { getGroupByAuthor, getGroupByMonth, getGroupByYear } from "@/api/post";
 import { Card, CardContent } from "@/components/ui/card";
-import { getUserPosts } from "../posts/_lib/post";
+import { getUserPosts } from "@/api/post";
 import { useQuery } from "@tanstack/react-query";
 import { User } from "@/types/user";
 

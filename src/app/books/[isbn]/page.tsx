@@ -3,7 +3,8 @@ import PostPreviewForBook from "../_components/PostPreviewForBook";
 import Link from "next/link";
 import BookDetail from "../_components/BookDetail";
 import { Button } from "@/components/ui/button";
-import { getBookWithPosts, searchBooks } from "../_lib/book";
+import { searchBooks } from "@/api/book";
+import { getBookWithPostsOnServer } from "@/api/server/book";
 
 type Props = {
   params: {
@@ -18,7 +19,7 @@ export default async function Page({ params }: Props) {
   if (response.documents.length === 0) notFound();
 
   const book = response.documents[0];
-  const bookWithPosts = await getBookWithPosts(isbn);
+  const bookWithPosts = await getBookWithPostsOnServer(isbn);
   const posts = bookWithPosts?.posts;
 
   return (

@@ -1,7 +1,7 @@
 import ProfileViewer from "@/app/manage/settings/profile/_components/ProfileViewer";
 import { TabPanel, Tabs } from "@/app/_components/Tabs";
 import UserPostDashboard from "@/app/_components/UserPostDashboard";
-import { getUser } from "./_lib/user";
+import { getUser } from "@/api/user";
 import InfinitePostList from "@/app/_components/InfinitePostList";
 
 type Props = {

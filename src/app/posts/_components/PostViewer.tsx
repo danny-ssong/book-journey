@@ -7,7 +7,7 @@ import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { PostWithBook } from "@/types/post";
 import { useEffect, useState } from "react";
-import { getPost } from "../_lib/post";
+import { getPost } from "@/api/post";
 import { notFound, useParams } from "next/navigation";
 import { useUser } from "@/app/_hooks/useUser";
 

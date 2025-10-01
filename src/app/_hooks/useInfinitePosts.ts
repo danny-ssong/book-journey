@@ -1,8 +1,7 @@
 import { QueryFunctionContext, useInfiniteQuery } from "@tanstack/react-query";
 import { PaginationResponse } from "@/types/pagination-response";
 import { PostWithBook } from "@/types/post";
-import { getMyPosts } from "../posts/_lib/post";
-import { getPosts, getUserPosts } from "../posts/_lib/post";
+import { getPosts, getUserPosts, getMyPosts } from "@/api/post";
 
 type Props =
   | { type: "all"; take?: number }

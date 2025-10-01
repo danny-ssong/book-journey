@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Profile } from "@/types/profile";
-import updateProfile from "../_lib/updateProfile";
+import { updateProfile } from "@/api/me";
 
 function ProfileForm({ profile }: { profile: Profile }) {
   const [username, setUsername] = useState<string>(profile.nickname);
