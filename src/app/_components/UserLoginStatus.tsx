@@ -1,20 +1,10 @@
 "use client";
 import Link from "next/link";
 import LogoutButton from "./LogoutButton";
-import { User } from "@/types/user";
-import { useEffect, useState } from "react";
-import getMe from "../_lib/getMe";
+import { useAuth } from "../_hooks/useAuth";
 
 export default function UserLoginStatus() {
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    const fetchMe = async () => {
-      const user = await getMe();
-      setUser(user);
-    };
-    fetchMe();
-  }, []);
+  const { user } = useAuth();
 
   if (!user) {
     return (

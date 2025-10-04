@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import Link from "next/link";
 import { Book } from "@/types/book";
+
 export default function BookItem({ book }: { book: Book }) {
   return (
     <article className="mb-6 flex gap-4 overflow-hidden py-2">

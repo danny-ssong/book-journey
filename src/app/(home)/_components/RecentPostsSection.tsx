@@ -8,7 +8,12 @@ export default function RecentPostsSection() {
 
   return (
     <section aria-labelledby={headerId}>
-      <Heading text="최신 글" id={headerId} variant="h1" className="mb-5" />
+      <Heading
+        text="최신 글"
+        id={headerId}
+        variant="h1"
+        className="mb-5 px-4"
+      />
       <InfinitePostList type="all" />
     </section>
   );

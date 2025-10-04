@@ -2,16 +2,16 @@
 
 import { useState, useEffect } from "react";
 import PostForm from "@/app/posts/_components/PostForm";
-import { searchBooks } from "@/app/books/_lib/book";
+import { searchBooks } from "@/api/book";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Book } from "@/types/book";
-import { useUser } from "@/app/_hooks/useUser";
+import { useAuth } from "@/app/_hooks/useAuth";
 
 export default function NewPostClient() {
   const [initBook, setInitBook] = useState<Book | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const params = useSearchParams();
-  const { user } = useUser();
+  const { user } = useAuth();
   const router = useRouter();
 
   useEffect(() => {

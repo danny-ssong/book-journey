@@ -16,7 +16,11 @@ export interface BookWithPosts extends Book {
   posts: Post[];
 }
 
-interface SearchedBook {
+export interface CreateBook extends Omit<Book, "author"> {
+  author: string;
+}
+
+export interface SearchedBook {
   authors: string[];
   contents: string;
   datetime: string;

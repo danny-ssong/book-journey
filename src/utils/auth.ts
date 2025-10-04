@@ -13,8 +13,7 @@ async function refreshAccessToken(): Promise<void> {
       );
       if (!res.ok) throw new Error("리프레시 토큰 만료");
     } catch (error) {
-      console.warn("refresh token expired");
-      // window.location.href = "/login";
+      throw error;
     } finally {
       refreshPromise = null;
     }
@@ -36,6 +35,7 @@ export async function fetchWithAuth(
       ...options,
       credentials: "include",
     });
+    if (!res.ok) throw new Error((await res.json()).message);
   }
   return res;
 }

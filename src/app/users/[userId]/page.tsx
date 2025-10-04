@@ -3,6 +3,7 @@ import { TabPanel, Tabs } from "@/app/_components/Tabs";
 import UserPostDashboard from "@/app/_components/UserPostDashboard";
 import { getUser } from "@/api/user";
 import InfinitePostList from "@/app/_components/InfinitePostList";
+import { Suspense } from "react";
 
 type Props = {
   params: {
@@ -23,7 +24,9 @@ export default async function UserProfilePage({ params }: Props) {
           <InfinitePostList type="user" userId={userId} />
         </TabPanel>
         <TabPanel tabId="staticstics" label="독서 통계">
-          <UserPostDashboard user={user} />
+          <Suspense fallback={<div>Loading...</div>}>
+            <UserPostDashboard user={user} />
+          </Suspense>
         </TabPanel>
       </Tabs>
     </div>

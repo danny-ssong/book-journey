@@ -1,29 +1,19 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { User } from "@/types/user";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import getMe from "../_lib/getMe";
+import { useAuth } from "../_hooks/useAuth";
 
-export default function SidebarMenu({ onClose }: { onClose?: () => void }) {
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    const fetchMe = async () => {
-      const user = await getMe();
-      setUser(user);
-    };
-    fetchMe();
-  }, []);
+export default function SidebarMenu() {
+  const { user } = useAuth();
 
   return (
-    <aside className="h-full py-4 lg:w-[200px]">
+    <aside className="h-full w-[200px] border-r py-4">
       <div className="h-full px-5 py-6">
-        <Button className="mb-5 w-full px-4 py-2 text-center" onClick={onClose}>
+        <Button className="mb-5 w-full px-4 py-2 text-center">
           <Link href={!!user ? `/posts/new` : "/login"}>글쓰기</Link>
         </Button>
         {!!user && (
-          <ul className="flex flex-col gap-2" onClick={onClose}>
+          <ul className="flex flex-col gap-2">
             <li>
               <Link href={`/manage/posts`}>글 관리</Link>
             </li>

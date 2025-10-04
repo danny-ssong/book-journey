@@ -3,20 +3,11 @@ import BookChartPerMonth from "./BookChartPerMonth";
 import AuthorChart from "./AuthorChart";
 import { getGroupByAuthor, getGroupByMonth, getGroupByYear } from "@/api/post";
 import { Card, CardContent } from "@/components/ui/card";
-import { getUserPosts } from "@/api/post";
-import { useQuery } from "@tanstack/react-query";
+import { useUserPosts } from "@/react-query/post";
 import { User } from "@/types/user";
 
 export default function UserPostDashboard({ user }: { user: User }) {
-  const { data: posts } = useQuery({
-    queryKey: ["all-posts", user.id],
-    queryFn: () => {
-      if (!user?.id) throw new Error("User ID is required");
-      return getUserPosts(999, user.id);
-    },
-  });
-
-  if (!posts?.data) return <div>Loading...</div>;
+  const { data: posts } = useUserPosts(user.id, 9999);
 
   const postsGroupByAuthor = getGroupByAuthor(posts?.data);
   const postsGroupByMonth = getGroupByMonth(posts?.data);
@@ -39,7 +30,7 @@ export default function UserPostDashboard({ user }: { user: User }) {
         <CardContent className="space-y-8 rounded-lg p-6">
           <div className="text-center">
             <p className="mt-2 text-lg">
-              총 읽은 책:{" "}
+              총 읽은 책:
               <span className="font-bold text-blue-600">
                 {posts?.data.length}
               </span>

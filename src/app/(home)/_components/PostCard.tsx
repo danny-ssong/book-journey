@@ -4,13 +4,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
+import MyPostActionButtons from "@/app/manage/posts/_components/MyPostActionButtons";
 
 type Props = {
   post: PostWithBook;
+  isOwner: boolean;
 };
 
-export default function PostCard({ post }: Props) {
+export default function PostCard({ post, isOwner = false }: Props) {
   const updatedAtId = `post-${post.id}-updated-at`;
+
   return (
     <Card className="h-[210px]">
       <article className="flex h-full p-4">
@@ -54,13 +57,18 @@ export default function PostCard({ post }: Props) {
             </h1>
           </header>
 
-          <div className="mt-2 flex items-center">
-            <p className="mr-2 text-sm text-muted-foreground hover:underline">
-              <Link href={`/users/${post.user.id}`}>
-                {post.user.profile.nickname}
-              </Link>
-            </p>
-            <RatingViewer rating={post.rating!} />
+          <div className="mt-2 flex items-center justify-between">
+            <div className="flex items-center">
+              {!isOwner && (
+                <p className="mr-2 text-sm text-muted-foreground hover:underline">
+                  <Link href={`/users/${post.user.id}`}>
+                    {post.user.profile.nickname}
+                  </Link>
+                </p>
+              )}
+              <RatingViewer rating={post.rating!} />
+            </div>
+            {isOwner && <MyPostActionButtons postId={post.id} />}
           </div>
 
           <div className="flex-1">

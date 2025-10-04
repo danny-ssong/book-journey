@@ -9,14 +9,14 @@ import { PostWithBook } from "@/types/post";
 import { useEffect, useState } from "react";
 import { getPost } from "@/api/post";
 import { notFound, useParams } from "next/navigation";
-import { useUser } from "@/app/_hooks/useUser";
+import { useAuth } from "@/app/_hooks/useAuth";
 
 export default function PostViewer({
   initPost,
 }: {
   initPost: PostWithBook | undefined;
 }) {
-  const { user } = useUser();
+  const { user } = useAuth();
   const [post, setPost] = useState<PostWithBook | undefined>(initPost);
   const params = useParams();
   const postId = params.postId as string;

@@ -17,7 +17,7 @@ export default function MobileMenuButton() {
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="w-72 lg:hidden">
-        <SidebarMenu onClose={() => setOpen(false)} />
+        <SidebarMenu />
       </SheetContent>
     </Sheet>
   );

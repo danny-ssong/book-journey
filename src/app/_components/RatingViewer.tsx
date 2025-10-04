@@ -1,6 +1,6 @@
-import { Badge } from "@/components/ui/badge";
-import React, { useState } from "react";
+import React from "react";
 import { Star } from "lucide-react";
+
 type Props = {
   rating: number;
 };

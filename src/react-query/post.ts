@@ -1,9 +1,14 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import { createPost, deletePost, getUserPosts, updatePost } from "@/api/post";
-import { Post } from "@/types/post";
+import { Post, CreatePost, UpdatePost } from "@/types/post";
 
 export function useUserPosts(userId: string, take: number = 9999) {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ["all-posts", userId],
     queryFn: () => getUserPosts(take, userId),
   });
@@ -19,20 +24,26 @@ export function useDeletePost(postId: number) {
   });
 }
 
-export function useCreatePost(createPostDto: CreatePostDto) {
+export function useCreatePost() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: () => createPost(createPostDto),
+    mutationFn: (createPostData: CreatePost) => createPost(createPostData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["my-posts"] });
     },
   });
 }
 
-export function useUpdatePost(postId: number, updatePostDto: CreatePostDto) {
+export function useUpdatePost() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: () => updatePost(postId, updatePostDto),
+    mutationFn: ({
+      id,
+      updatePostData,
+    }: {
+      id: number;
+      updatePostData: UpdatePost;
+    }) => updatePost(id, updatePostData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["my-posts"] });
     },

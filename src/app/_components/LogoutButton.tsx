@@ -1,8 +1,8 @@
 "use client";
-import { useUser } from "../_hooks/useUser";
+import { useAuth } from "../_hooks/useAuth";
 
 export default function LogoutButton() {
-  const { logout } = useUser();
+  const { logout } = useAuth();
   return (
     <form onSubmit={logout}>
       <button className="overflow-visible text-nowrap py-2">

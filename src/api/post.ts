@@ -1,32 +1,12 @@
 import { PaginationResponse } from "@/types/pagination-response";
 import dayjs from "dayjs";
-import { PostWithBook } from "@/types/post";
+import { PostWithBook, CreatePost, UpdatePost } from "@/types/post";
 import { fetchWithAuth } from "@/utils/auth";
 import { revalidatePath } from "@/api/revalidatePath";
 
-type CreatePostDto = {
-  title: string;
-  content: string;
-  rating: number;
-  startDate: Date;
-  isPrivate: boolean;
-  book: CreateBookDto;
-};
-
-type CreateBookDto = {
-  author: string;
-  isbn: string;
-  publishedAt: Date;
-  title: string;
-  thumbnailUrl: string;
-  contents: string;
-  url: string;
-  publisher: string;
-};
-
 export async function createPost(
-  createPostDto: CreatePostDto,
-): Promise<PostWithBook | undefined> {
+  createPostData: CreatePost,
+): Promise<PostWithBook> {
   const res = await fetchWithAuth(
     `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts`,
     {
@@ -34,7 +14,7 @@ export async function createPost(
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(createPostDto),
+      body: JSON.stringify(createPostData),
     },
   );
   if (!res.ok) throw new Error((await res.json()).message);
@@ -42,7 +22,10 @@ export async function createPost(
   return res.json();
 }
 
-export async function updatePost(id: number, updatePostDto: CreatePostDto) {
+export async function updatePost(
+  id: number,
+  updatePostData: UpdatePost,
+): Promise<PostWithBook> {
   const res = await fetchWithAuth(
     `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts/${id}`,
     {
@@ -50,7 +33,7 @@ export async function updatePost(id: number, updatePostDto: CreatePostDto) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(updatePostDto),
+      body: JSON.stringify(updatePostData),
     },
   );
   if (!res.ok) throw new Error((await res.json()).message);

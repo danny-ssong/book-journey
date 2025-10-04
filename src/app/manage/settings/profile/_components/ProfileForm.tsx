@@ -3,22 +3,30 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Profile } from "@/types/profile";
-import { updateProfile } from "@/api/me";
+import { useUpdateProfile } from "@/react-query/me";
+import { Profile } from "@/types/user";
 
-function ProfileForm({ profile }: { profile: Profile }) {
-  const [username, setUsername] = useState<string>(profile.nickname);
-  const [bio, setBio] = useState<string>(profile.bio);
-  const [image, setImage] = useState<File | null>(null);
+type Props = {
+  profile: Profile;
+};
+
+export default function ProfileForm({ profile }: Props) {
   const router = useRouter();
+  const { mutateAsync: updateProfileMutation } = useUpdateProfile();
+  const [username, setUsername] = useState<string>(profile.nickname ?? "");
+  const [bio, setBio] = useState<string>(profile.bio ?? "");
+  const [image, setImage] = useState<File | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const result = await updateProfile(username, bio, image);
-    if (result) {
-      const path = `/manage/settings/profile`;
-      router.push(path);
-    } else {
+    try {
+      await updateProfileMutation({
+        nickname: username,
+        bio: bio,
+      });
+      router.push(`/manage/settings/profile`);
+    } catch (error) {
+      console.error(error);
       alert("프로필 수정 실패");
     }
   };
@@ -63,5 +71,3 @@ function ProfileForm({ profile }: { profile: Profile }) {
     </form>
   );
 }
-
-export default ProfileForm;

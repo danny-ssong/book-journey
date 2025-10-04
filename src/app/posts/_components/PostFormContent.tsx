@@ -9,8 +9,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import MonthPicker from "../../_components/DateInput";
 import SelectPrivacy from "./SelectPrivacy";
 import { Book } from "@/types/book";
-import { Post } from "@/types/post";
-import { updatePost, createPost } from "@/api/post";
+import { CreatePost, Post } from "@/types/post";
+import { useUpdatePost, useCreatePost } from "@/react-query/post";
 
 type Props = {
   book: Book | undefined;
@@ -18,8 +18,10 @@ type Props = {
 };
 
 export default function PostFormContent({ book, initPost = undefined }: Props) {
-  const queryClient = useQueryClient();
   const router = useRouter();
+  const { mutateAsync: createPostMutation } = useCreatePost();
+  const { mutateAsync: updatePostMutation } = useUpdatePost();
+
   const [title, setTitle] = useState(initPost?.title ?? "");
   const [content, setContent] = useState(initPost?.content ?? "");
   const [startDate, setStartDate] = useState<string>(
@@ -38,10 +40,9 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
       return;
     }
 
-    let updatedPost = undefined;
     setIsSubmitting(true);
 
-    const createPostDto = {
+    const createPostDto: CreatePost = {
       title,
       content,
       rating,
@@ -59,17 +60,19 @@ export default function PostFormContent({ book, initPost = undefined }: Props) {
       },
     };
 
-    if (initPost) {
-      updatedPost = await updatePost(initPost.id, createPostDto);
-    } else {
-      updatedPost = await createPost(createPostDto);
-    }
-
-    if (updatedPost) {
-      queryClient.invalidateQueries({ queryKey: ["my-posts"] });
-      // router.push(`/posts/${updatedPost.id}`);
+    try {
+      if (initPost) {
+        await updatePostMutation({
+          id: initPost.id,
+          updatePostData: createPostDto,
+        });
+      } else {
+        await createPostMutation(createPostDto);
+      }
       router.push("/manage/posts");
-    } else {
+    } catch (error) {
+      console.error(error);
+    } finally {
       setIsSubmitting(false);
     }
   };

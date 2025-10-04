@@ -1,10 +1,13 @@
 "use client";
 import UserPostDashboard from "@/app/_components/UserPostDashboard";
-import { useUser } from "@/app/_hooks/useUser";
-
+import { useAuth } from "@/app/_hooks/useAuth";
+import { Suspense } from "react";
 export default function StaticsticsPage() {
-  const { user } = useUser();
-  if (!user) return <div>로그인 후 이용해주세요.</div>;
+  const { user } = useAuth();
 
-  return <UserPostDashboard user={user} />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <UserPostDashboard user={user!} />
+    </Suspense>
+  );
 }
