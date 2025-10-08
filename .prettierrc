@@ -4,10 +4,12 @@
     "@trivago/prettier-plugin-sort-imports"
   ],
   "importOrder": [
-    "^react$",
-    "^next",
+    "^(react|next)(/.*)?$",
     "<THIRD_PARTY_MODULES>",
-    "^@/(.*)$",
+    "^@/providers/(.*)",
+    "^@/components/(.*)$",
+    "^@/(hooks|api|lib|react-query|types|utils)/(.*)$",
+    "^@/app/(.*)$",
     "^[./]"
   ],
   "importOrderSeparation": true,
