@@ -1,7 +1,9 @@
-import { notFound } from "next/navigation";
-import PostViewer from "../_components/PostViewer";
 import { Metadata } from "next";
-import { getPosts, getPost } from "@/api/post";
+import { notFound } from "next/navigation";
+
+import { getPost, getPosts } from "@/api/post";
+
+import PostViewer from "../_components/PostViewer";
 
 type Props = {
   params: {

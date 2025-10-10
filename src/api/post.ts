@@ -1,8 +1,10 @@
-import { PaginationResponse } from "@/types/pagination-response";
 import dayjs from "dayjs";
-import { PostWithBook, CreatePost, UpdatePost } from "@/types/post";
-import { fetchWithAuth } from "@/utils/auth";
-import { revalidatePath } from "@/api/revalidatePath";
+
+import { fetchWithAuth } from "@/api/auth";
+import { PaginationResponse } from "@/types/pagination-response";
+import { CreatePost, PostWithBook, UpdatePost } from "@/types/post";
+
+import { revalidatePath } from "./revalidatePath";
 
 export async function createPost(
   createPostData: CreatePost,

@@ -1,5 +1,7 @@
-import dayjs from "dayjs";
 import Link from "next/link";
+
+import dayjs from "dayjs";
+
 import { Book } from "@/types/book";
 
 export default function BookItem({ book }: { book: Book }) {

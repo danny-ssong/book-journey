@@ -1,8 +1,12 @@
 "use client";
-import ProfileViewer from "./_components/ProfileViewer";
+
 import Link from "next/link";
+
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/app/_hooks/useAuth";
+
+import { useAuth } from "@/hooks/useAuth";
+
+import ProfileViewer from "../../../../components/post/ProfileViewer";
 
 export default function Page() {
   const { user } = useAuth();

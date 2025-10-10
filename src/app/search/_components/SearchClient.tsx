@@ -1,12 +1,15 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import BookItem from "./BookItem";
-import PaginationButtonsForClient from "../../_components/PaginationButtonsForClient";
-import { useSearchPagination } from "../_hooks/useSearchPagination";
-import { Book } from "@/types/book";
 import { useId } from "react";
-import Heading from "@/app/_components/Heading";
+
+import Heading from "@/components/common/Heading";
+
+import { Book } from "@/types/book";
+
+import PaginationButtonsForClient from "../../../components/common/PaginationButtonsForClient";
+import { useSearchPagination } from "../_hooks/useSearchPagination";
+import BookItem from "./BookItem";
 
 export default function SearchClient() {
   const searchParams = useSearchParams();

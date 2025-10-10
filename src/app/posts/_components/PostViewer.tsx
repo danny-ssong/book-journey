@@ -1,15 +1,19 @@
 "use client";
-import dayjs from "dayjs";
-import RatingViewer from "../../_components/RatingViewer";
+
 import Link from "next/link";
-import EditIcon from "@/app/_components/icons/EditIcon";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { PostWithBook } from "@/types/post";
-import { useEffect, useState } from "react";
-import { getPost } from "@/api/post";
 import { notFound, useParams } from "next/navigation";
-import { useAuth } from "@/app/_hooks/useAuth";
+import { useEffect, useState } from "react";
+
+import dayjs from "dayjs";
+
+import EditIcon from "@/components/icons/EditIcon";
+import RatingViewer from "@/components/post/RatingViewer";
+import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+
+import { getPost } from "@/api/post";
+import { useAuth } from "@/hooks/useAuth";
+import { PostWithBook } from "@/types/post";
 
 export default function PostViewer({
   initPost,

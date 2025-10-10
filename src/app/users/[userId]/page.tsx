@@ -1,9 +1,11 @@
-import ProfileViewer from "@/app/manage/settings/profile/_components/ProfileViewer";
-import { TabPanel, Tabs } from "@/app/_components/Tabs";
-import UserPostDashboard from "@/app/_components/UserPostDashboard";
-import { getUser } from "@/api/user";
-import InfinitePostList from "@/app/_components/InfinitePostList";
 import { Suspense } from "react";
+
+import { TabPanel, Tabs } from "@/components/common/Tabs";
+import InfinitePostList from "@/components/post/InfinitePostList";
+import ProfileViewer from "@/components/post/ProfileViewer";
+import UserPostDashboard from "@/components/user/UserPostDashboard";
+
+import { getUser } from "@/api/user";
 
 type Props = {
   params: {

@@ -1,12 +1,15 @@
 "use client";
 
-import MyPostCardExpanded from "./_components/MyPostCardExpanded";
-import { Fragment, useState, useId } from "react";
-import { useInfinitePosts } from "@/app/_hooks/useInfinitePosts";
-import InfiniteScroll from "@/app/_components/InfiniteScroll";
-import Heading from "@/app/_components/Heading";
-import ViewToggleButtons from "./_components/ViewToggleButtons";
+import { useId, useState } from "react";
+
+import Heading from "@/components/common/Heading";
+import InfiniteScroll from "@/components/common/InfiniteScroll";
+
+import { useInfinitePosts } from "@/hooks/useInfinitePosts";
+
 import MyPostCardCompact from "./_components/MyPostCardCompact";
+import MyPostCardExpanded from "./_components/MyPostCardExpanded";
+import ViewToggleButtons from "./_components/ViewToggleButtons";
 
 export default function ManagePostsPage() {
   const { posts, isLoading, fetchNextPage, hasNextPage } = useInfinitePosts({
@@ -31,13 +34,13 @@ export default function ManagePostsPage() {
       >
         <ul className="min-h-[500px]">
           {posts.map((post) => (
-            <Fragment key={post.id}>
+            <li key={post.id}>
               {isExpanded ? (
                 <MyPostCardExpanded post={post} />
               ) : (
                 <MyPostCardCompact post={post} />
               )}
-            </Fragment>
+            </li>
           ))}
         </ul>
       </InfiniteScroll>

@@ -1,7 +1,9 @@
 "use client";
-import Heading from "@/app/_components/Heading";
+
 import { useId } from "react";
-import InfinitePostList from "@/app/_components/InfinitePostList";
+
+import Heading from "@/components/common/Heading";
+import InfinitePostList from "@/components/post/InfinitePostList";
 
 export default function RecentPostsSection() {
   const headerId = useId();

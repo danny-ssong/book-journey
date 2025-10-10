@@ -1,11 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import PostForm from "@/app/posts/_components/PostForm";
-import { searchBooks } from "@/api/book";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
+import { searchBooks } from "@/api/book";
+import { useAuth } from "@/hooks/useAuth";
 import { Book } from "@/types/book";
-import { useAuth } from "@/app/_hooks/useAuth";
+
+import PostForm from "../../_components/PostForm";
 
 export default function NewPostClient() {
   const [initBook, setInitBook] = useState<Book | undefined>(undefined);

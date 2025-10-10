@@ -1,9 +1,11 @@
+import { AuthProvider } from "@/providers/AuthProvider";
+import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
+import { ThemeProvider } from "@/providers/ThemeProvider";
+
+import Header from "@/components/layout/Header";
+import SidebarMenu from "@/components/layout/SidebarMenu";
+
 import "./globals.css";
-import ReactQueryProvider from "./_components/ReactQueryProvider";
-import SidebarMenu from "./_components/SidebarMenu";
-import { ThemeProvider } from "./_components/theme-privider";
-import { AuthProvider } from "./_context/AuthContext";
-import Header from "./_components/Header";
 
 export default async function RootLayout({
   children,

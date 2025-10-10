@@ -1,8 +1,11 @@
-import { useEffect, useRef } from "react";
-import useBookSearch from "@/app/_hooks/useBookSearch";
-import SearchIcon from "@/components/ui/search-icon";
 import { useRouter } from "next/navigation";
+import { useEffect, useRef } from "react";
+
+import SearchIcon from "@/components/ui/search-icon";
+
+import useBookSearch from "@/hooks/useBookSearch";
 import { Book } from "@/types/book";
+
 type Props = {
   selectedBook?: Book;
   onSelectBook: (book: Book | undefined) => void;

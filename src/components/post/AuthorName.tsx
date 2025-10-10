@@ -1,0 +1,27 @@
+import Link from "next/link";
+
+import { cn } from "@/lib/utils";
+
+type Props = {
+  authorName: string;
+  className?: string;
+  asLink?: boolean;
+};
+
+export default function AuthorName({
+  authorName,
+  className,
+  asLink = false,
+}: Props) {
+  return (
+    <p className={cn("text-sm text-muted-foreground", className)}>
+      {asLink ? (
+        <Link href={`/search?query=${authorName}`} className="hover:underline">
+          {authorName}
+        </Link>
+      ) : (
+        authorName
+      )}
+    </p>
+  );
+}

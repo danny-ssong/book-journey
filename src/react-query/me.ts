@@ -1,6 +1,7 @@
+import { useMutation, useQuery } from "@tanstack/react-query";
+
 import { getMe, logout, updateProfile } from "@/api/me";
 import { UpdateProfile } from "@/types/user";
-import { useMutation, useQuery } from "@tanstack/react-query";
 
 export function useGetMe() {
   return useQuery({

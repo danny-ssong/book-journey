@@ -1,10 +1,12 @@
 "use client";
 
-import PostForm from "../../_components/PostForm";
-import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
 import { getPost } from "@/api/post";
 import { PostWithBook } from "@/types/post";
+
+import PostForm from "../../_components/PostForm";
 
 export default function PostEditPage() {
   const params = useParams();

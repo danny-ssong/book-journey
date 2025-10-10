@@ -1,5 +1,5 @@
+import { fetchWithAuth } from "@/api/auth";
 import { UpdateProfile, User } from "@/types/user";
-import { fetchWithAuth } from "@/utils/auth";
 
 export async function getMe(): Promise<User> {
   const res = await fetchWithAuth(

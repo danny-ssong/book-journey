@@ -1,10 +1,13 @@
 "use client";
+
 import React, { useState } from "react";
-import PostFormContent from "../_components/PostFormContent";
-import BookSearchInput from "../_components/BookSearchInput";
-import { Post } from "@/types/post";
-import { useBeforeunload } from "../_hooks/useBeforeunload";
+
 import { Book } from "@/types/book";
+import { Post } from "@/types/post";
+
+import { useBeforeunload } from "../_hooks/useBeforeunload";
+import BookSearchInput from "./BookSearchInput";
+import PostFormContent from "./PostFormContent";
 
 export default function PostForm({
   initPost,

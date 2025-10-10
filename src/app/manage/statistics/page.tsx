@@ -1,7 +1,11 @@
 "use client";
-import UserPostDashboard from "@/app/_components/UserPostDashboard";
-import { useAuth } from "@/app/_hooks/useAuth";
+
 import { Suspense } from "react";
+
+import UserPostDashboard from "@/components/user/UserPostDashboard";
+
+import { useAuth } from "@/hooks/useAuth";
+
 export default function StaticsticsPage() {
   const { user } = useAuth();
 

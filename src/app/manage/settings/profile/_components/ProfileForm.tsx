@@ -1,8 +1,11 @@
 "use client";
-import { Button } from "@/components/ui/button";
+
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+
 import { useUpdateProfile } from "@/react-query/me";
 import { Profile } from "@/types/user";
 

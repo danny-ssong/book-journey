@@ -1,10 +1,13 @@
-import { notFound } from "next/navigation";
-import PostPreviewForBook from "../_components/PostPreviewForBook";
 import Link from "next/link";
-import BookDetail from "../_components/BookDetail";
+import { notFound } from "next/navigation";
+
 import { Button } from "@/components/ui/button";
+
 import { searchBooks } from "@/api/book";
 import { getBookWithPostsOnServer } from "@/api/server/book";
+
+import BookDetail from "../_components/BookDetail";
+import PostCardForBook from "../_components/PostCardForBook";
 
 type Props = {
   params: {
@@ -32,9 +35,7 @@ export default async function Page({ params }: Props) {
       </div>
       <div className="border-t-2">
         <ul>
-          {posts?.map((post) => (
-            <PostPreviewForBook key={post.id} post={post} />
-          ))}
+          {posts?.map((post) => <PostCardForBook key={post.id} post={post} />)}
         </ul>
       </div>
     </div>

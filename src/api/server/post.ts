@@ -1,5 +1,6 @@
-import { PostWithBook } from "@/types/post";
 import { cookies } from "next/headers";
+
+import { PostWithBook } from "@/types/post";
 
 export async function getPost(
   postId: string,

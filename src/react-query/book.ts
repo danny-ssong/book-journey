@@ -1,10 +1,19 @@
-import { searchBooks } from "@/api/book";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
-export function useSearchBooks(query: string, take: number = 10, page: number) {
+import { searchBooks } from "@/api/book";
+
+export function useSearchBooks(
+  query: string,
+  take: number = 10,
+  page: number,
+  enabled: boolean = true,
+) {
   return useQuery({
     queryKey: ["search-books", query, take, page],
     queryFn: () => searchBooks(query, take, page),
+    enabled,
+    staleTime: 1000 * 60 * 10,
+    gcTime: 1000 * 60 * 10,
   });
 }
 

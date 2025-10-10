@@ -1,5 +1,7 @@
 "use server";
+
 import { cookies } from "next/headers";
+
 import { User } from "@/types/user";
 
 export default async function getUserOnServer(): Promise<User | null> {

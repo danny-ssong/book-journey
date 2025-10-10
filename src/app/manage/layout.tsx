@@ -1,6 +1,8 @@
 "use client";
-import { useAuth } from "@/app/_hooks/useAuth";
+
 import { useRouter } from "next/navigation";
+
+import { useAuth } from "@/hooks/useAuth";
 
 export default function ManageLayout({
   children,
