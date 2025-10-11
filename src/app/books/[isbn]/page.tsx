@@ -1,12 +1,10 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 
-import { searchBooks } from "@/api/book";
 import { getBookWithPostsOnServer } from "@/api/server/book";
 
-import BookDetail from "../_components/BookDetail";
+import BookInfo from "../_components/BookInfo";
 import PostCardForBook from "../_components/PostCardForBook";
 
 type Props = {
@@ -18,26 +16,22 @@ type Props = {
 export default async function Page({ params }: Props) {
   let { isbn } = params;
 
-  const response = await searchBooks(isbn, 5, 1);
-  if (response.documents.length === 0) notFound();
-
-  const book = response.documents[0];
   const bookWithPosts = await getBookWithPostsOnServer(isbn);
   const posts = bookWithPosts?.posts;
 
   return (
-    <div className="border bg-background">
-      <BookDetail book={book} />
-      <div className="mx-2 my-2 flex items-center justify-end">
-        <Button>
-          <Link href={`/posts/new?isbn=${isbn}`}>글 쓰기</Link>
-        </Button>
-      </div>
-      <div className="border-t-2">
-        <ul>
-          {posts?.map((post) => <PostCardForBook key={post.id} post={post} />)}
-        </ul>
-      </div>
+    <div>
+      <section className="mb-2 border">
+        <BookInfo book={bookWithPosts} />
+        <div className="p-2 text-right">
+          <Button>
+            <Link href={`/posts/new?isbn=${isbn}`}>글 쓰기</Link>
+          </Button>
+        </div>
+      </section>
+      <ul>
+        {posts?.map((post) => <PostCardForBook key={post.id} post={post} />)}
+      </ul>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { SearchedBook } from "@/types/book";
+import { Book, SearchedBook } from "@/types/book";
 
 interface SearchBookResponse {
   documents: SearchedBook[];
@@ -12,6 +12,16 @@ export async function searchBooks(
 ): Promise<SearchBookResponse> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/books/search?query=${query}&size=${size}&page=${page}`,
+  );
+
+  if (!res.ok) throw new Error((await res.json()).message);
+
+  return res.json();
+}
+
+export async function getBook(isbn: string): Promise<Book> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/books/${isbn}`,
   );
 
   if (!res.ok) throw new Error((await res.json()).message);

@@ -1,6 +1,18 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useQuery,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 
-import { searchBooks } from "@/api/book";
+import { getBook, searchBooks } from "@/api/book";
+
+export function useGetBook(isbn: string) {
+  return useQuery({
+    queryKey: ["book", isbn],
+    queryFn: () => getBook(isbn),
+    enabled: !!isbn,
+  });
+}
 
 export function useSearchBooks(
   query: string,

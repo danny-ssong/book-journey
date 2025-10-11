@@ -25,7 +25,7 @@ export default function DateViewer({ date, label, className }: Props) {
       <span className="text-xs" id={id}>
         {label}
       </span>
-      <time dateTime={date.toString()} aria-labelledby={id}>
+      <time className="text-sm" dateTime={date.toString()} aria-labelledby={id}>
         {dayjs(date).format("YYYY-MM-DD")}
       </time>
     </div>

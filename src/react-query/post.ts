@@ -4,11 +4,22 @@ import {
   useQueryClient,
   useSuspenseQuery,
 } from "@tanstack/react-query";
-import { toast } from "sonner";
 
-import { createPost, deletePost, getUserPosts, updatePost } from "@/api/post";
+import {
+  createPost,
+  deletePost,
+  getPost,
+  getUserPosts,
+  updatePost,
+} from "@/api/post";
 import { CreatePost, UpdatePost } from "@/schemas/post";
-import { Post } from "@/types/post";
+
+export function useGetPost(postId: string) {
+  return useQuery({
+    queryKey: ["post", postId],
+    queryFn: () => getPost(postId),
+  });
+}
 
 export function useUserPosts(userId: string, take: number = 9999) {
   return useSuspenseQuery({

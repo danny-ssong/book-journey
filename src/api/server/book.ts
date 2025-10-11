@@ -2,7 +2,7 @@
 
 import { BookWithPosts } from "@/types/book";
 
-export async function getBooks(): Promise<BookWithPosts[] | undefined> {
+export async function getBooks(): Promise<BookWithPosts[]> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/books`);
   if (!res.ok) throw new Error((await res.json()).message);
 
@@ -11,7 +11,7 @@ export async function getBooks(): Promise<BookWithPosts[] | undefined> {
 
 export async function getBookWithPostsOnServer(
   isbn: string,
-): Promise<BookWithPosts | undefined> {
+): Promise<BookWithPosts> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts/book/${isbn}`,
     {
