@@ -17,14 +17,3 @@ export interface Post {
 export interface PostWithBook extends Post {
   book: Book;
 }
-
-export interface CreatePost {
-  title: string;
-  content: string;
-  rating: number;
-  startDate: Date;
-  isPrivate: boolean;
-  book: CreateBook;
-}
-
-export type UpdatePost = Partial<CreatePost>;

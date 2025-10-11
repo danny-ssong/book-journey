@@ -1,14 +1,14 @@
 import dayjs from "dayjs";
 
 type Props = {
-  date: string;
-  setDate: (date: string) => void;
+  date: Date;
+  setDate: (date: Date) => void;
 };
-export default function MonthPicker({ date, setDate }: Props) {
+export default function MonthPicker({ date, setDate, ...props }: Props) {
   const dateYYYYMM = dayjs(date).format("YYYY-MM");
 
   const handleChange = (date: string) => {
-    const dateString = dayjs(date).format("YYYY-MM-DD");
+    const dateString = dayjs(date).toDate();
     setDate(dateString);
   };
 
@@ -18,7 +18,8 @@ export default function MonthPicker({ date, setDate }: Props) {
       type="month"
       value={dateYYYYMM}
       onChange={(e) => handleChange(e.target.value)}
-      required
+      onKeyDown={(e) => e.preventDefault()}
+      {...props}
     />
   );
 }

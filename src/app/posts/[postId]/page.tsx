@@ -17,7 +17,7 @@ export default async function Page({ params }: Props) {
 
   const post = await getPost(postId);
 
-  return <PostViewer initPost={post} />;
+  return <PostViewer post={post} />;
 }
 
 export async function generateStaticParams() {

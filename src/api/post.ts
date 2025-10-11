@@ -95,9 +95,7 @@ export async function getMyPosts(
   return res.json();
 }
 
-export async function getPost(
-  postId: string,
-): Promise<PostWithBook | undefined> {
+export async function getPost(postId: string): Promise<PostWithBook> {
   const res = await fetchWithAuth(
     `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts/${postId}`,
   );

@@ -6,7 +6,7 @@ import BookTitle from "@/components/post/BookTitle";
 import DateViewer from "@/components/post/DateViewer";
 import PostContent from "@/components/post/PostContent";
 import PostTitle from "@/components/post/PostTitle";
-import RatingViewer from "@/components/post/RatingViewer";
+import Rating from "@/components/post/Rating";
 import { Card } from "@/components/ui/card";
 
 import { PostWithBook } from "@/types/post";
@@ -25,7 +25,7 @@ function MyPostCardExpanded({ post }: Props) {
           title={post.book.title}
           thumbnailUrl={post.book.thumbnailUrl}
         />
-        <section className="flex flex-1 flex-col min-w-0">
+        <section className="flex min-w-0 flex-1 flex-col">
           <header className="flex justify-between">
             <div className="flex items-center gap-2">
               <BookTitle title={post.book.title} isbn={post.book.isbn} asLink />
@@ -34,10 +34,10 @@ function MyPostCardExpanded({ post }: Props) {
             <DateViewer date={post.updatedAt} label="최근 수정일" />
           </header>
 
-          <div className="flex items-center justify-between mb-2">
+          <div className="mb-2 flex items-center justify-between">
             <div>
               <PostTitle post={post} asLink />
-              <RatingViewer rating={post.rating!} />
+              <Rating rating={post.rating!} />
             </div>
             <MyPostActionButtons postId={post.id} />
           </div>

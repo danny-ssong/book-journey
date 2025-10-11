@@ -3,7 +3,7 @@ import BookTitle from "@/components/post/BookTitle";
 import DateViewer from "@/components/post/DateViewer";
 import PostContent from "@/components/post/PostContent";
 import PostTitle from "@/components/post/PostTitle";
-import RatingViewer from "@/components/post/RatingViewer";
+import Rating from "@/components/post/Rating";
 
 import { PostWithBook } from "@/types/post";
 
@@ -20,9 +20,9 @@ export default function MyPostCardCompact({ post }: { post: PostWithBook }) {
         <DateViewer date={post.updatedAt} label="최근 수정일" />
       </header>
 
-      <div className="flex items-center justify-between mb-2">
+      <div className="mb-2 flex items-center justify-between">
         <div>
-          <RatingViewer rating={post.rating!} />
+          <Rating rating={post.rating!} />
           <PostTitle post={post} asLink />
         </div>
         <MyPostActionButtons postId={post.id} />

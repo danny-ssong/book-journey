@@ -1,0 +1,116 @@
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+
+import BookThumbnail from "@/components/post/BookThumbnail";
+import SearchIcon from "@/components/ui/search-icon";
+
+import useBookSearch from "@/hooks/useBookSearch";
+import { SearchedBook } from "@/types/book";
+
+type Props = {
+  selectedBookTitle?: string;
+  onSelectBook: (book: SearchedBook | null) => void;
+  onSearchQuery?: (query: string) => void;
+  placeholder?: string;
+};
+
+export default function BookSearchBar({
+  selectedBookTitle,
+  onSelectBook,
+  onSearchQuery,
+  placeholder = "책 제목을 검색하세요...",
+}: Props) {
+  const { query, setQuery, books, isLoading, error, isDebouncing } =
+    useBookSearch();
+  const router = useRouter();
+  const [isShowDropDown, setIsShowDropDown] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // 책 검색 창 이외의 부분 클릭 시 드랍다운 닫기
+  useEffect(() => {
+    const handleWindowClick = (event: MouseEvent) => {
+      if (inputRef.current?.contains(event.target as Node)) return;
+      setIsShowDropDown(false);
+    };
+
+    window.addEventListener("click", handleWindowClick);
+    return () => {
+      window.removeEventListener("click", handleWindowClick);
+    };
+  }, [setIsShowDropDown]);
+
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value;
+    setQuery(query);
+    onSelectBook(null);
+  };
+
+  const handleSelectBook = (book: SearchedBook) => {
+    onSelectBook(book);
+    setIsShowDropDown(false);
+  };
+
+  const handleInputFocus = () => {
+    setIsShowDropDown(true);
+  };
+
+  const handleSearchQuery = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSearchQuery?.(query);
+  };
+
+  return (
+    <div className="relative">
+      <div className="relative flex items-center gap-2">
+        <input
+          tabIndex={0}
+          ref={inputRef}
+          className="h-full rounded-lg border px-4 py-1 focus:outline-none w-[360px] sm:py-2"
+          type="text"
+          onChange={handleSearchInputChange}
+          value={selectedBookTitle ?? query}
+          onFocus={handleInputFocus}
+          placeholder={placeholder}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              onSearchQuery?.(query);
+            }
+          }}
+        />
+        <SearchIcon className="absolute right-2 block" />
+      </div>
+      {isShowDropDown && (
+        <div className="absolute">
+          {query.length < 2 ? (
+            <p>검색어를 2자 이상 입력해주세요.</p>
+          ) : isDebouncing || isLoading ? (
+            <p>검색중...</p>
+          ) : books.length === 0 ? (
+            <p>검색된 책이 없습니다.</p>
+          ) : (
+            <ul className="bg-background w-fit max-w-[600px]">
+              {books.map((book: SearchedBook) => (
+                <li
+                  key={book.isbn}
+                  className="flex cursor-pointer items-center gap-4 px-4 py-2 hover:bg-secondary"
+                  onClick={() => handleSelectBook(book)}
+                >
+                  <BookThumbnail
+                    title={book.title}
+                    thumbnailUrl={book.thumbnailUrl}
+                    width={48}
+                    height={64}
+                  />
+                  <p className="truncate">{book.title}</p>
+                  <p className="truncate text-nowrap text-muted-foreground">
+                    {book.author.name}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}

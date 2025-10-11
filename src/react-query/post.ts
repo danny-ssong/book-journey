@@ -1,3 +1,4 @@
+import { CreatePost, UpdatePost } from "@/schemas/post";
 import {
   useMutation,
   useQuery,
@@ -6,7 +7,7 @@ import {
 } from "@tanstack/react-query";
 
 import { createPost, deletePost, getUserPosts, updatePost } from "@/api/post";
-import { CreatePost, Post, UpdatePost } from "@/types/post";
+import { Post } from "@/types/post";
 
 export function useUserPosts(userId: string, take: number = 9999) {
   return useSuspenseQuery({

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { useSearchBooks } from "@/react-query/book";
-import { Book } from "@/types/book";
+import { SearchedBook } from "@/types/book";
 
 export default function useBookSearch(debounceMs: number = 500) {
   const [query, setQuery] = useState("");
@@ -25,7 +25,8 @@ export default function useBookSearch(debounceMs: number = 500) {
     return () => clearTimeout(timeoutId);
   }, [query, debounceMs]);
 
-  const books: Book[] = data?.documents || [];
+  const books: SearchedBook[] = data?.documents || [];
+  const isDebouncing = query !== debouncedQuery;
 
   return {
     query,
@@ -33,5 +34,6 @@ export default function useBookSearch(debounceMs: number = 500) {
     books,
     isLoading,
     error,
+    isDebouncing,
   };
 }

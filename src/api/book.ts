@@ -1,7 +1,7 @@
-import { Book } from "@/types/book";
+import { SearchedBook } from "@/types/book";
 
 interface SearchBookResponse {
-  documents: Book[];
+  documents: SearchedBook[];
   meta: { is_end: boolean; pageable_count: number; total_count: number };
 }
 

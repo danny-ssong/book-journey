@@ -20,17 +20,11 @@ export interface CreateBook extends Omit<Book, "author"> {
   author: string;
 }
 
-export interface SearchedBook {
-  authors: string[];
-  contents: string;
-  datetime: string;
-  isbn: string;
+export interface SearchedBook extends Book {
+  // datetime: string;
+  // thumbnail: string;
   price: number;
-  publisher: string;
   sale_price: number;
   status: string;
-  thumbnail: string; //url
-  title: string;
   translators: string[];
-  url: string;
 }

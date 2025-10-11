@@ -2,19 +2,19 @@
 
 import { useRouter } from "next/navigation";
 
-import BookSearchInput from "../../app/posts/_components/BookSearchInput";
+import BookSearchBar from "../book/BookSearchBar";
 
 export default function MainBookSearchInput() {
   const router = useRouter();
   return (
-    <BookSearchInput
+    <BookSearchBar
+      selectedBookTitle={undefined}
       onSelectBook={(book) => {
         if (book) {
           router.push(`/books/${book.isbn}`);
         }
       }}
       placeholder="책 제목, 작가를 검색하세요..."
-      enableNavigateToBookDetailPage
     />
   );
 }

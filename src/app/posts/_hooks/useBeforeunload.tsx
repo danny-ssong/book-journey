@@ -1,29 +1,14 @@
 import { useEffect } from "react";
 
-export function useBeforeunload() {
+export function useBeforeunload(isDirty: boolean) {
   useEffect(() => {
     const preventClose = (e: any) => {
-      e.preventDefault();
-      //   e.returnValue = "";
+      if (isDirty) e.preventDefault();
     };
 
     window.addEventListener("beforeunload", preventClose);
     return () => {
       window.removeEventListener("beforeunload", preventClose);
     };
-  }, []);
+  }, [isDirty]);
 }
-
-// export function useUnsavedChangesWarning() {
-//   useEffect(() => {
-//     const handleBeforeUnload = (e: any) => {
-//       e.preventDefault();
-//       //   e.returnValue = "";
-//     };
-
-//     window.addEventListener("beforeunload", handleBeforeUnload);
-//     return () => {
-//       window.removeEventListener("beforeunload", handleBeforeUnload);
-//     };
-//   }, []);
-// }

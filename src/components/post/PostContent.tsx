@@ -14,27 +14,18 @@ export default function PostContent({
   post,
   className,
   asLink = false,
-  maxLines = 3,
+  maxLines,
 }: Props) {
-  const getClasses = (lines: 1 | 2 | 3 | 4 | 5) => {
-    switch (lines) {
-      case 1:
-        return cn("text-sm line-clamp-1 h-[1.25rem] ", className);
-      case 2:
-        return cn("text-sm line-clamp-2 h-[2.5rem] ", className);
-      case 3:
-        return cn("text-sm line-clamp-3 h-[3.75rem] ", className);
-      case 4:
-        return cn("text-sm line-clamp-4 h-[5rem] ", className);
-      case 5:
-        return cn("text-sm line-clamp-5 h-[6.25rem] ", className);
-      default:
-        return cn("text-sm line-clamp-3 h-[3.75rem] ", className);
-    }
-  };
+  const classMap = {
+    1: cn("text-sm line-clamp-1 h-[1.25rem] ", className),
+    2: cn("text-sm line-clamp-2 h-[2.5rem] ", className),
+    3: cn("text-sm line-clamp-3 h-[3.75rem] ", className),
+    4: cn("text-sm line-clamp-4 h-[5rem] ", className),
+    5: cn("text-sm line-clamp-5 h-[6.25rem] ", className),
+  } as const;
 
   return (
-    <p className={getClasses(maxLines)}>
+    <p className={maxLines ? classMap[maxLines] : className}>
       {asLink ? (
         <Link href={`/posts/${post.id}`} className="hover:underline">
           {post.content}
