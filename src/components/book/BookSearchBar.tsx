@@ -20,9 +20,7 @@ export default function BookSearchBar({
   onSearchQuery,
   placeholder = "책 제목을 검색하세요...",
 }: Props) {
-  const { query, setQuery, books, isLoading, error, isDebouncing } =
-    useBookSearch();
-  const router = useRouter();
+  const { query, setQuery, books, isLoading, isDebouncing } = useBookSearch();
   const [isShowDropDown, setIsShowDropDown] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -52,11 +50,6 @@ export default function BookSearchBar({
 
   const handleInputFocus = () => {
     setIsShowDropDown(true);
-  };
-
-  const handleSearchQuery = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSearchQuery?.(query);
   };
 
   return (
@@ -91,9 +84,13 @@ export default function BookSearchBar({
             <ul className="w-fit max-w-[600px] bg-background">
               {books.map((book: SearchedBook) => (
                 <li
+                  tabIndex={0}
                   key={book.isbn}
-                  className="flex cursor-pointer items-center gap-4 px-4 py-2 hover:bg-secondary"
+                  className="flex cursor-pointer items-center gap-4 py-2 hover:bg-secondary"
                   onClick={() => handleSelectBook(book)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handleSelectBook(book);
+                  }}
                 >
                   <BookThumbnail
                     title={book.title}
