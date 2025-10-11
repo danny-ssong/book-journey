@@ -8,7 +8,7 @@
     "<THIRD_PARTY_MODULES>",
     "^@/providers/(.*)",
     "^@/components/(.*)$",
-    "^@/(hooks|api|lib|react-query|types|utils)/(.*)$",
+    "^@/(?!app)(.*)$",
     "^@/app/(.*)$",
     "^[./]"
   ],

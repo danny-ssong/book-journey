@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 import BookSearchBar from "../book/BookSearchBar";
 
-export default function MainBookSearchInput() {
+export default function MainBookSearchBar() {
   const router = useRouter();
   return (
     <BookSearchBar

@@ -3,12 +3,12 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 
-import { CreatePost, createPostSchema } from "@/schemas/post";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldErrors, FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 import { useCreatePost, useUpdatePost } from "@/react-query/post";
+import { CreatePost, createPostSchema } from "@/schemas/post";
 import { Book } from "@/types/book";
 import { Post } from "@/types/post";
 import { getFirstZodErrorMessage } from "@/utils/zod-error-util";
@@ -62,18 +62,14 @@ export default function PostForm({
 
   const createOrUpdatePost = async (post: CreatePost) => {
     try {
-      if (initPost) {
-        await updatePostMutation({
-          id: initPost.id,
-          updatePostData: post,
-        });
-      } else {
-        await createPostMutation(post);
-      }
+      await (initPost
+        ? updatePostMutation({ id: initPost.id, updatePostData: post })
+        : createPostMutation(post));
+
       router.push("/manage/posts");
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      alert("포스트 저장 실패");
+      alert(`포스트 저장 실패: ${error?.message}`);
     }
   };
 

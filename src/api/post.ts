@@ -1,8 +1,9 @@
 import dayjs from "dayjs";
 
 import { fetchWithAuth } from "@/api/auth";
+import { CreatePost, UpdatePost } from "@/schemas/post";
 import { PaginationResponse } from "@/types/pagination-response";
-import { CreatePost, PostWithBook, UpdatePost } from "@/types/post";
+import { PostWithBook } from "@/types/post";
 
 import { revalidatePath } from "./revalidatePath";
 

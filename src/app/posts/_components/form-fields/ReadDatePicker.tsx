@@ -4,7 +4,7 @@ import { useId } from "react";
 
 import { Controller, useFormContext } from "react-hook-form";
 
-import MonthPicker from "../../../../components/common/MonthPicker";
+import MonthPicker from "@/components/common/MonthPicker";
 
 export default function ReadDatePicker() {
   const { control } = useFormContext();

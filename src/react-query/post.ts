@@ -1,12 +1,13 @@
-import { CreatePost, UpdatePost } from "@/schemas/post";
 import {
   useMutation,
   useQuery,
   useQueryClient,
   useSuspenseQuery,
 } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 import { createPost, deletePost, getUserPosts, updatePost } from "@/api/post";
+import { CreatePost, UpdatePost } from "@/schemas/post";
 import { Post } from "@/types/post";
 
 export function useUserPosts(userId: string, take: number = 9999) {
@@ -33,6 +34,9 @@ export function useCreatePost() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["my-posts"] });
     },
+    onError: (error) => {
+      console.error(error);
+    },
   });
 }
 
@@ -48,6 +52,9 @@ export function useUpdatePost() {
     }) => updatePost(id, updatePostData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["my-posts"] });
+    },
+    onError: (error) => {
+      console.error(error);
     },
   });
 }

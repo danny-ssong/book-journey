@@ -65,7 +65,7 @@ export default function BookSearchBar({
         <input
           tabIndex={0}
           ref={inputRef}
-          className="h-full rounded-lg border px-4 py-1 focus:outline-none w-[360px] sm:py-2"
+          className="h-full w-[360px] rounded-lg border px-4 py-1 focus:outline-none sm:py-2"
           type="text"
           onChange={handleSearchInputChange}
           value={selectedBookTitle ?? query}
@@ -82,13 +82,13 @@ export default function BookSearchBar({
       {isShowDropDown && (
         <div className="absolute">
           {query.length < 2 ? (
-            <p>검색어를 2자 이상 입력해주세요.</p>
+            <p className="p-2">검색어를 2자 이상 입력해주세요.</p>
           ) : isDebouncing || isLoading ? (
-            <p>검색중...</p>
+            <p className="p-2">검색중...</p>
           ) : books.length === 0 ? (
-            <p>검색된 책이 없습니다.</p>
+            <p className="p-2">검색된 책이 없습니다.</p>
           ) : (
-            <ul className="bg-background w-fit max-w-[600px]">
+            <ul className="w-fit max-w-[600px] bg-background">
               {books.map((book: SearchedBook) => (
                 <li
                   key={book.isbn}

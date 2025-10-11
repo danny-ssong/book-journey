@@ -1,6 +1,6 @@
 import { Controller, useFormContext } from "react-hook-form";
 
-import BookSearchBar from "../../../../components/book/BookSearchBar";
+import BookSearchBar from "@/components/book/BookSearchBar";
 
 export default function PostFormBookSearchBar() {
   const { control } = useFormContext();

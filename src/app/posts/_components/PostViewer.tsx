@@ -10,7 +10,7 @@ import PostTitle from "@/components/post/PostTitle";
 import Rating from "@/components/post/Rating";
 import UserName from "@/components/post/UserName";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 import { useAuth } from "@/hooks/useAuth";
 import { PostWithBook } from "@/types/post";

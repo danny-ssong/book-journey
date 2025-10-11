@@ -1,10 +1,7 @@
 "use client";
 
-import Link from "next/link";
-
 import HeaderNavLinks from "./HeaderNavLinks";
-import BookSearchArea from "./MainBookSearchInput";
-import MobileMenuButton from "./MobileMenuButton";
+import BookSearchArea from "./MainBookSearchBar";
 import ThemeModeToggle from "./ThemeModeToggle";
 import UserLoginStatus from "./UserLoginStatus";
 
