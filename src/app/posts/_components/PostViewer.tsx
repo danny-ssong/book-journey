@@ -1,88 +1,54 @@
 "use client";
 
 import Link from "next/link";
-import { notFound, useParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
-import dayjs from "dayjs";
+import AuthorName from "@/components/post/AuthorName";
+import BookTitle from "@/components/post/BookTitle";
+import DateViewer from "@/components/post/DateViewer";
+import PostContent from "@/components/post/PostContent";
+import PostTitle from "@/components/post/PostTitle";
+import Rating from "@/components/post/Rating";
+import UserName from "@/components/post/UserName";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import EditIcon from "@/components/icons/EditIcon";
-import RatingViewer from "@/components/post/RatingViewer";
-import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-
-import { getPost } from "@/api/post";
 import { useAuth } from "@/hooks/useAuth";
 import { PostWithBook } from "@/types/post";
 
-export default function PostViewer({
-  initPost,
-}: {
-  initPost: PostWithBook | undefined;
-}) {
+export default function PostViewer({ post }: { post: PostWithBook }) {
   const { user } = useAuth();
-  const [post, setPost] = useState<PostWithBook | undefined>(initPost);
-  const params = useParams();
-  const postId = params.postId as string;
-  if (!postId) notFound();
-
-  useEffect(() => {
-    const fetchPost = async () => {
-      const post = await getPost(postId);
-      setPost(post);
-    };
-
-    if (initPost) setPost(initPost);
-    else fetchPost();
-  }, [initPost, postId]);
-
-  if (!post) return <div>접근 불가 페이지입니다...</div>;
-
   const isOwner = post.user.id === user?.id;
 
   return (
-    <article className="h-full w-full">
+    <article>
       <Card>
-        <CardContent className="flex min-h-[60vh] flex-col p-6">
-          <header className="flex flex-col">
-            <div className="mb-1 flex flex-col justify-between sm:flex-row sm:items-center">
-              <div className="flex items-center gap-2">
-                <h2 className="text-lg">{post.book.title}</h2>
-                <p className="text-sm text-gray-600">{post.book.author.name}</p>
-              </div>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <p className="text-xs">읽은 날짜</p>
-                <p>{`${dayjs(post.startDate).format("YYYY")}년 ${dayjs(post.startDate).format("MM")}월`}</p>
-              </div>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <BookTitle title={post.book.title} isbn={post.book.isbn} asLink />
+              <AuthorName authorName={post.book.author.name} asLink />
             </div>
-            <div>
-              <RatingViewer rating={post.rating!} />
-            </div>
-            <div className="mt-3 flex items-center gap-3">
-              <p>{post.user.profile.nickname}</p>
-            </div>
-          </header>
-          <Separator className="my-4" />
-          <div className="flex flex-1 flex-col">
-            <main className="flex-1">
-              <h1 className="mb-5 text-xl font-semibold">{post.title}</h1>
-              <p className="w-full whitespace-pre-line">{post.content}</p>
-            </main>
-            <footer className="mt-auto">
-              {isOwner && (
-                <div className="mt-5 flex w-full items-center justify-end">
-                  <Link
-                    href={`/posts/edit/${post.id}`}
-                    className="relative rounded-md hover:bg-slate-100"
-                  >
-                    <EditIcon width={36} height={36} />
-                  </Link>
-                </div>
-              )}
-            </footer>
+            <DateViewer date={post.startDate} label="읽은 날짜" />
           </div>
+          <Rating rating={post.rating} />
+          <UserName
+            userName={post.user.profile.nickname}
+            userId={post.user.id}
+            asLink
+          />
+        </CardHeader>
+        <CardContent className="flex min-h-[600px] flex-col p-6">
+          <PostTitle post={post} className="mb-4 text-xl font-semibold" />
+          <PostContent post={post} className="whitespace-pre-line" />
         </CardContent>
       </Card>
+      {isOwner && (
+        <footer className="fixed bottom-0 left-0 flex w-full justify-end bg-secondary p-4">
+          <Link href={`/posts/edit/${post.id}`}>
+            <Button className="w-24 rounded-full">수정</Button>
+          </Link>
+        </footer>
+      )}
     </article>
   );
 }
