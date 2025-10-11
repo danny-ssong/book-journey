@@ -1,21 +1,25 @@
 "use client";
+
 import React, { useEffect, useRef } from "react";
+
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
   BarElement,
+  CategoryScale,
+  ChartDataset,
+  Chart as ChartJS,
+  ChartOptions,
+  Legend,
+  LinearScale,
   Title,
   Tooltip,
-  Legend,
-  ChartOptions,
-  ChartDataset,
 } from "chart.js";
-import { Bar } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import dayjs from "dayjs";
+import { Bar } from "react-chartjs-2";
+
 import { usePrimaryColorHsl } from "@/hooks/usePrimaryColorHsl";
 import { PostWithBook } from "@/types/post";
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
