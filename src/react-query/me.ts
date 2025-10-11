@@ -1,6 +1,7 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { getMe, logout, updateProfile } from "@/api/me";
+import { revalidatePath } from "@/api/revalidatePath";
 import { UpdateProfile } from "@/types/user";
 
 export function useGetMe() {
@@ -19,8 +20,14 @@ export function useLogout() {
 }
 
 export function useUpdateProfile() {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: (updateProfileData: UpdateProfile) =>
       updateProfile(updateProfileData),
+    onSuccess: (profile) => {
+      queryClient.invalidateQueries({ queryKey: ["me"] });
+      if (profile.id) revalidatePath(`/users/${profile.id}`);
+    },
   });
 }
