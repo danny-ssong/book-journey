@@ -1,14 +1,8 @@
-import Image from "next/image";
-import Link from "next/link";
-
-import dayjs from "dayjs";
-
 import Rating from "@/components/post/Rating";
 import { Card } from "@/components/ui/card";
 
 import { PostWithBook } from "@/types/post";
 
-import MyPostActionButtons from "../../app/manage/posts/_components/MyPostActionButtons";
 import AuthorName from "./AuthorName";
 import BookThumbnail from "./BookThumbnail";
 import BookTitle from "./BookTitle";

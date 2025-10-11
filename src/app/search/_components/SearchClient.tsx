@@ -4,10 +4,10 @@ import { useSearchParams } from "next/navigation";
 import { useId } from "react";
 
 import Heading from "@/components/common/Heading";
+import PaginationButtonsForClient from "@/components/common/PaginationButtonsForClient";
 
 import { Book } from "@/types/book";
 
-import PaginationButtonsForClient from "../../../components/common/PaginationButtonsForClient";
 import { useSearchPagination } from "../_hooks/useSearchPagination";
 import BookItem from "./BookItem";
 

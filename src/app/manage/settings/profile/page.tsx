@@ -2,11 +2,10 @@
 
 import Link from "next/link";
 
+import ProfileViewer from "@/components/post/ProfileViewer";
 import { Button } from "@/components/ui/button";
 
 import { useAuth } from "@/hooks/useAuth";
-
-import ProfileViewer from "../../../../components/post/ProfileViewer";
 
 export default function Page() {
   const { user } = useAuth();
@@ -14,7 +13,7 @@ export default function Page() {
   return (
     <div>
       <ProfileViewer user={user!} />
-      <div className="my-4 flex justify-end">
+      <div className="mt-4 flex justify-end">
         <Button className="px-4 py-2">
           <Link href={`/manage/settings/profile/edit`}>수정</Link>
         </Button>

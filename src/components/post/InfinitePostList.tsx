@@ -1,6 +1,7 @@
 "use client";
 
-import { useInfinitePosts } from "../../hooks/useInfinitePosts";
+import { useInfinitePosts } from "@/hooks/useInfinitePosts";
+
 import InfiniteScroll from "../common/InfiniteScroll";
 import PostCardList from "./PostCardList";
 
