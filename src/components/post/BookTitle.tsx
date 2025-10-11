@@ -16,7 +16,7 @@ export default function BookTitle({
   asLink = false,
 }: Props) {
   return (
-    <p className={cn("line-clamp-1 text-lg", className)}>
+    <p className={cn("text-lg", className)}>
       {asLink ? (
         <Link href={`/books/${isbn}`} className="hover:underline">
           {title}

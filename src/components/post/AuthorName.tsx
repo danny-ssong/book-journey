@@ -14,7 +14,12 @@ export default function AuthorName({
   asLink = false,
 }: Props) {
   return (
-    <p className={cn("text-sm text-muted-foreground", className)}>
+    <p
+      className={cn(
+        "line-clamp-1 whitespace-nowrap text-sm text-muted-foreground",
+        className,
+      )}
+    >
       {asLink ? (
         <Link href={`/search?query=${authorName}`} className="hover:underline">
           {authorName}

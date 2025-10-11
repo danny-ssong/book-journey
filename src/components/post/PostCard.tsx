@@ -32,7 +32,12 @@ export default function PostCard({ post }: Props) {
         <section className="flex min-w-0 flex-1 flex-col">
           <header>
             <div className="flex items-center gap-2">
-              <BookTitle title={post.book.title} isbn={post.book.isbn} asLink />
+              <BookTitle
+                title={post.book.title}
+                isbn={post.book.isbn}
+                asLink
+                className="max-w-80 truncate"
+              />
               <AuthorName authorName={post.book.author.name} asLink />
             </div>
             <DateViewer date={post.updatedAt} label="최근 수정일" />

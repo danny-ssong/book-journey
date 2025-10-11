@@ -14,7 +14,12 @@ export default function MyPostCardCompact({ post }: { post: PostWithBook }) {
     <article className="group flex-col border-b-2 px-4 py-4 last:border-none">
       <header className="flex w-full justify-between">
         <div className="flex items-center gap-2">
-          <BookTitle title={post.book.title} isbn={post.book.isbn} asLink />
+          <BookTitle
+            title={post.book.title}
+            isbn={post.book.isbn}
+            asLink
+            className="max-w-80 truncate"
+          />
           <AuthorName authorName={post.book.author.name} asLink />
         </div>
         <DateViewer date={post.updatedAt} label="최근 수정일" />

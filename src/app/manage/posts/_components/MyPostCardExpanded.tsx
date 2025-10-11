@@ -28,10 +28,19 @@ function MyPostCardExpanded({ post }: Props) {
         <section className="flex min-w-0 flex-1 flex-col">
           <header className="flex justify-between">
             <div className="flex items-center gap-2">
-              <BookTitle title={post.book.title} isbn={post.book.isbn} asLink />
+              <BookTitle
+                title={post.book.title}
+                isbn={post.book.isbn}
+                asLink
+                className="line-clamp-1 max-w-64"
+              />
               <AuthorName authorName={post.book.author.name} asLink />
             </div>
-            <DateViewer date={post.updatedAt} label="최근 수정일" />
+            <DateViewer
+              date={post.updatedAt}
+              label="최근 수정일"
+              className="ml-2"
+            />
           </header>
 
           <div className="mb-2 flex items-center justify-between">

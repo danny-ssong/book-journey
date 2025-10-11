@@ -17,7 +17,10 @@ export default function DateViewer({ date, label, className }: Props) {
 
   return (
     <div
-      className={cn("flex items-center gap-2 text-muted-foreground", className)}
+      className={cn(
+        "flex items-center gap-2 whitespace-nowrap text-muted-foreground",
+        className,
+      )}
     >
       <span className="text-xs" id={id}>
         {label}
