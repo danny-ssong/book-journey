@@ -67,6 +67,7 @@ export default function BookSearchBar({
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               onSearchQuery?.(query);
+              setIsShowDropDown(false);
             }
           }}
         />

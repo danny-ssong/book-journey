@@ -19,6 +19,9 @@ export default function MainBookSearchBar() {
 
         setSelectedBookTitle(book?.title ?? undefined);
       }}
+      onSearchQuery={(query) => {
+        router.push(`/search?query=${query}`);
+      }}
       placeholder="책 제목, 작가를 검색하세요..."
     />
   );
