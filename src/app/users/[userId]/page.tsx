@@ -43,7 +43,7 @@ export const revalidate = 3600;
 export async function generateStaticParams() {
   const users = await getUsers();
 
-  return users.map((user: User) => ({
+  return users.map((user) => ({
     userId: user.id,
   }));
 }
