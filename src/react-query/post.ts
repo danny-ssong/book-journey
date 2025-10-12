@@ -34,6 +34,7 @@ export function useDeletePost(postId: number) {
     mutationFn: () => deletePost(postId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["my-posts"] });
+      queryClient.invalidateQueries({ queryKey: ["all-posts"] });
     },
   });
 }
@@ -44,6 +45,7 @@ export function useCreatePost() {
     mutationFn: (createPostData: CreatePost) => createPost(createPostData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["my-posts"] });
+      queryClient.invalidateQueries({ queryKey: ["all-posts"] });
     },
     onError: (error) => {
       console.error(error);
@@ -63,6 +65,7 @@ export function useUpdatePost() {
     }) => updatePost(id, updatePostData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["my-posts"] });
+      queryClient.invalidateQueries({ queryKey: ["all-posts"] });
     },
     onError: (error) => {
       console.error(error);
