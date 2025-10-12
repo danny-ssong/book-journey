@@ -1,4 +1,6 @@
-export async function getUser(userId: string) {
+import { User } from "@/types/user";
+
+export async function getUser(userId: string): Promise<User> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/users/${userId}`,
   );
@@ -6,7 +8,7 @@ export async function getUser(userId: string) {
   return res.json();
 }
 
-export async function getUsers() {
+export async function getUsers(): Promise<User[]> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/users`);
   if (!res.ok) throw new Error((await res.json()).message);
   return res.json();

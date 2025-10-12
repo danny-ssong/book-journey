@@ -12,7 +12,7 @@ type Props = {
 };
 
 export default async function Page({ params }: Props) {
-  const postId = params?.postId;
+  const postId = params.postId;
   if (!postId) notFound();
 
   const post = await getPost(postId);
@@ -22,7 +22,6 @@ export default async function Page({ params }: Props) {
 
 export async function generateStaticParams() {
   const posts = await getPosts(999);
-  if (!posts) return [];
 
   return posts.data.map((post) => ({
     postId: String(post.id),

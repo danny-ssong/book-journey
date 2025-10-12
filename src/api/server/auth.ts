@@ -1,5 +1,6 @@
 "use server";
 
+import { User } from "@/types/user";
 import { cookies } from "next/headers";
 
 let refreshPromise: Promise<void> | null = null;
@@ -50,4 +51,18 @@ export async function fetchWithAuthOnServer(
   }
 
   return res;
+}
+
+export default async function getMeOnServer(): Promise<User | null> {
+  const url = `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/users/me`;
+  const fetchOptions = {
+    headers: {
+      Cookie: cookies().toString(),
+    },
+  };
+  const res = await fetch(url, fetchOptions);
+  if (!res.ok) throw new Error((await res.json()).message);
+
+  const user = await res.json();
+  return user;
 }
