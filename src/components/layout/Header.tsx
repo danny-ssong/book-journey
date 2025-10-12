@@ -18,7 +18,7 @@ export default function Header() {
 
 function DesktopHeader() {
   return (
-    <header className="fixed flex min-h-16 w-full items-center justify-between border bg-background px-10">
+    <header className="fixed z-50 flex min-h-16 w-full items-center justify-between border bg-background px-10">
       <div className="flex items-center gap-10">
         <span className="text-nowrap">Book-Journey Logo</span>
         <HeaderNavLinks />
