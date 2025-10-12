@@ -5,7 +5,7 @@ import { CreatePost, UpdatePost } from "@/schemas/post";
 import { PaginationResponse } from "@/types/pagination-response";
 import { PostWithBook } from "@/types/post";
 
-import { revalidatePath } from "./revalidatePath";
+import { revalidatePath } from "./server/revalidatePath";
 
 export async function createPost(
   createPostData: CreatePost,
