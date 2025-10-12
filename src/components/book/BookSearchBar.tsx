@@ -1,4 +1,3 @@
-import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import BookThumbnail from "@/components/post/BookThumbnail";
@@ -54,11 +53,11 @@ export default function BookSearchBar({
 
   return (
     <div className="relative">
-      <div className="relative flex items-center gap-2">
+      <div className="relative flex w-[360px] items-center">
         <input
           tabIndex={0}
           ref={inputRef}
-          className="h-full w-[360px] rounded-lg border px-4 py-1 focus:outline-none sm:py-2"
+          className="w-full rounded-lg border px-4 py-2 focus:outline-none"
           type="text"
           onChange={handleSearchInputChange}
           value={selectedBookTitle ?? query}
@@ -71,7 +70,7 @@ export default function BookSearchBar({
             }
           }}
         />
-        <SearchIcon className="absolute right-2 block" />
+        <SearchIcon className="absolute right-2" />
       </div>
       {isShowDropDown && (
         <div className="absolute">
@@ -87,7 +86,7 @@ export default function BookSearchBar({
                 <li
                   tabIndex={0}
                   key={book.isbn}
-                  className="flex cursor-pointer items-center gap-4 py-2 hover:bg-secondary"
+                  className="flex cursor-pointer items-center gap-4 px-2 py-2 hover:bg-secondary"
                   onClick={() => handleSelectBook(book)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") handleSelectBook(book);
