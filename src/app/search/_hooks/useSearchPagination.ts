@@ -11,7 +11,7 @@ export function useSearchPagination(query: string) {
   const [page, setPage] = useState(1);
 
   const books = data?.documents || [];
-  const isLastPage = data?.meta?.is_end || true;
+  const isLastPage = data?.meta?.is_end ?? true;
 
   useEffect(() => {
     if (!query || isLastPage) return;
