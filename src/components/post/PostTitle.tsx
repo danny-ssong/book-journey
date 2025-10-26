@@ -11,7 +11,10 @@ type Props = {
 
 export default function PostTitle({ post, className, asLink = false }: Props) {
   return (
-    <h1 className={cn("line-clamp-1 text-lg", className)}>
+    <h1
+      className={cn("line-clamp-1 text-lg", className)}
+      aria-label={"포스트 제목"}
+    >
       {asLink ? (
         <Link href={`/posts/${post.id}`} className="hover:underline">
           {post.title || "\u00A0"}

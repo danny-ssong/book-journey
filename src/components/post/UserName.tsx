@@ -16,7 +16,7 @@ export default function UserName({
   asLink = false,
 }: Props) {
   return (
-    <p className={cn("text-sm", className)}>
+    <p className={cn("text-sm", className)} aria-label={"작성자"}>
       {asLink ? (
         <Link href={`/users/${userId}`} className="hover:underline">
           {userName}

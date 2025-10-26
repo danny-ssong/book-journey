@@ -13,8 +13,13 @@ export function useGetMe() {
 }
 
 export function useLogout() {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: () => logout(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["me"] });
+    },
   });
 }
 

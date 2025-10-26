@@ -16,7 +16,7 @@ export default function BookTitle({
   asLink = false,
 }: Props) {
   return (
-    <p className={cn("text-lg", className)}>
+    <p className={cn("text-lg", className)} aria-label={"책 제목"}>
       {asLink ? (
         <Link href={`/books/${isbn}`} className="hover:underline">
           {title}

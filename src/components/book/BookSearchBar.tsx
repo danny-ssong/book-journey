@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import BookThumbnail from "@/components/post/BookThumbnail";
 import SearchIcon from "@/components/ui/search-icon";
@@ -59,6 +59,7 @@ export default function BookSearchBar({
           ref={inputRef}
           className="w-full rounded-lg border px-4 py-2 focus:outline-none"
           type="text"
+          aria-label="책 검색 입력창"
           onChange={handleSearchInputChange}
           value={selectedBookTitle ?? query}
           onFocus={handleInputFocus}
@@ -81,7 +82,10 @@ export default function BookSearchBar({
           ) : books.length === 0 ? (
             <p className="p-2">검색된 책이 없습니다.</p>
           ) : (
-            <ul className="w-fit max-w-[600px] bg-background">
+            <ul
+              className="w-fit max-w-[600px] bg-background"
+              aria-label="책 검색 결과"
+            >
               {books.map((book: SearchedBook) => (
                 <li
                   tabIndex={0}

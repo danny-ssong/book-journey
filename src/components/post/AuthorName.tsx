@@ -19,6 +19,7 @@ export default function AuthorName({
         "line-clamp-1 whitespace-nowrap text-sm text-muted-foreground",
         className,
       )}
+      aria-label={"저자"}
     >
       {asLink ? (
         <Link href={`/search?query=${authorName}`} className="hover:underline">

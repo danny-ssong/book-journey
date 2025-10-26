@@ -6,7 +6,10 @@ export default function LogoutButton() {
   const { logout } = useAuth();
   return (
     <form onSubmit={logout}>
-      <button className="overflow-visible text-nowrap py-2">
+      <button
+        className="overflow-visible text-nowrap py-2"
+        aria-label="로그아웃 버튼"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           height="24px"

@@ -18,7 +18,7 @@ export default function Rating({ rating, onClickStar, size = "sm" }: Props) {
   };
 
   return (
-    <div className="flex items-center gap-0.5">
+    <div className="flex items-center gap-0.5" aria-label={"평점"}>
       {[...Array(5)].map((_, index) => {
         const starValue = index + 1;
         return (
