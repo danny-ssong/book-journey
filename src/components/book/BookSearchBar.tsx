@@ -74,7 +74,7 @@ export default function BookSearchBar({
         <SearchIcon className="absolute right-2" />
       </div>
       {isShowDropDown && (
-        <div className="absolute">
+        <div className="absolute" role="status" aria-label="책 검색 결과">
           {query.length < 2 ? (
             <p className="p-2">검색어를 2자 이상 입력해주세요.</p>
           ) : isDebouncing || isLoading ? (
@@ -84,7 +84,7 @@ export default function BookSearchBar({
           ) : (
             <ul
               className="w-fit max-w-[600px] bg-background"
-              aria-label="책 검색 결과"
+              aria-label="책 목록"
             >
               {books.map((book: SearchedBook) => (
                 <li
