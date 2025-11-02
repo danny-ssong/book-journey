@@ -3,15 +3,24 @@ import { existsSync } from "fs";
 
 export const authFile = "tests/e2e/.auth.json";
 
-setup("authenticate with Google", async ({ page }) => {
-  await page.goto("/");
-  const logoutButton = page.getByRole("button", { name: "로그아웃 버튼" });
+setup("authenticate with Google", async ({ page, browser }) => {
+  if (existsSync(authFile)) {
+    const context = await browser.newContext({ storageState: authFile });
+    const testPage = await context.newPage();
 
-  try {
-    await logoutButton.waitFor({ state: "visible", timeout: 3000 });
-    console.log("✅ 이미 로그인 상태입니다. 로그인 프로세스를 건너뜁니다.");
-    return;
-  } catch (error) {}
+    try {
+      await testPage.goto("/");
+      const logoutButton = testPage.getByRole("button", { name: "로그아웃 버튼" });
+      await logoutButton.waitFor({ state: "visible", timeout: 3000 });
+
+      console.log("✅ Auth file이 유효합니다. 로그인 프로세스를 건너뜁니다.");
+      await context.close();
+      return;
+    } catch (error) {
+      console.log("⚠️ Auth file이 만료되었습니다. 재로그인을 진행합니다.");
+      await context.close();
+    }
+  }
 
   console.log("🔐 Starting Google OAuth login...");
   await page.goto("/login");
