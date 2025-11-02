@@ -14,6 +14,7 @@ export default function PrivacySelector() {
       render={({ field: { onChange, value } }) => (
         <div className="text-right">
           <select
+            aria-label="공개 범위"
             value={value ? "private" : "public"}
             onChange={(e) => onChange(e.target.value === "private")}
             className={cn("w-24 rounded-lg border px-2 py-1")}

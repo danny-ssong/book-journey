@@ -15,6 +15,7 @@ export default function ViewToggleButtons({
     <div className="flex items-center">
       <Button
         size="sm"
+        aria-label="간단히 보기"
         className={`p-2 ${isExpanded && "bg-secondary"}`}
         onClick={() => setIsExpanded(false)}
       >
@@ -28,6 +29,7 @@ export default function ViewToggleButtons({
       </Button>
       <Button
         size="sm"
+        aria-label="확장하여 보기"
         className={`p-2 ${!isExpanded && "bg-secondary"}`}
         onClick={() => setIsExpanded(true)}
       >
