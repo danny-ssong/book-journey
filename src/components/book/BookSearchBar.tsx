@@ -49,6 +49,9 @@ export default function BookSearchBar({
 
   const handleInputFocus = () => {
     setIsShowDropDown(true);
+    if (selectedBookTitle && !query) {
+      setQuery(selectedBookTitle);
+    }
   };
 
   return (
