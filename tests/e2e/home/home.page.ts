@@ -1,12 +1,17 @@
-import { Page } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
 
 export class HomePage {
   readonly page: Page;
+  readonly postCards: Locator;
 
   constructor(page: Page) {
     this.page = page;
+    this.postCards = this.page.getByRole("region", { name: "최신 글" }).getByRole("article");
   }
 
+  getPostCardByPostTitle(postTitle: string) {
+    return this.postCards.filter({ hasText: postTitle }).first();
+  }
   async goto() {
     await this.page.goto("/");
   }

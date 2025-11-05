@@ -30,3 +30,8 @@ test("포스트를 삭제할 수 있다.", async ({ page }) => {
   await managePostsPage.deletePost("코끼리 공장의 해피엔드는 삭제될 포스트");
   await expect(page.getByText("코끼리 공장의 해피엔드는 삭제될 포스트").first()).not.toBeVisible();
 });
+
+test("무한스크롤 - 스크롤을 끝까지 내리면 추가 포스트를 불러온다.", async ({ page }) => {
+  await managePostsPage.scrollToBottom();
+  await expect(page.getByText("위너 1")).toBeVisible();
+});

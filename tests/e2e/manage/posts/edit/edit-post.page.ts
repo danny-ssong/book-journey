@@ -1,6 +1,6 @@
 import { Locator, Page } from "@playwright/test";
 
-export class NewPostPage {
+export class EditPostPage {
   readonly page: Page;
   readonly searchBar: Locator;
   readonly privacySelector: Locator;
@@ -23,11 +23,11 @@ export class NewPostPage {
     this.saveButton = this.page.getByRole("button", { name: "저장", exact: true });
   }
 
-  async goto() {
-    await this.page.goto("/posts/new");
+  async goto(postId: string) {
+    await this.page.goto(`/posts/edit/${postId}`);
   }
 
-  async createPost({
+  async editPost({
     bookTitle,
     privacy,
     rating,

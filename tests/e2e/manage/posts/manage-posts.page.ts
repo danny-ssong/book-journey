@@ -21,6 +21,14 @@ export class ManagePostsPage {
     return this.getPostCard(postTitle).getByRole("img", { name: postTitle });
   }
 
+  getPostCardRecentEditDate(postTitle: string) {
+    return this.getPostCard(postTitle).getByLabel("최근 수정일");
+  }
+
+  getPostCardRate(postTitle: string) {
+    return this.getPostCard(postTitle).getByLabel("평점");
+  }
+
   async goto() {
     await this.page.goto("/manage/posts");
   }
@@ -44,5 +52,10 @@ export class ManagePostsPage {
     const postCard = this.getPostCard(postTitle);
     await postCard.hover();
     await postCard.getByRole("button", { name: "삭제" }).click();
+  }
+
+  async scrollToBottom() {
+    await this.page.mouse.wheel(0, 10000);
+    await this.page.waitForRequest((r) => r.url().includes("/posts"));
   }
 }
