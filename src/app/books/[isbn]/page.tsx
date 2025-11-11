@@ -23,7 +23,7 @@ export default async function Page({ params }: Props) {
 
   return (
     <div>
-      <section className="mb-2 border">
+      <section className="mb-2 border" aria-label="책 정보">
         <BookInfo book={bookWithPosts} />
         <div className="p-2 text-right">
           <Button>
@@ -31,7 +31,7 @@ export default async function Page({ params }: Props) {
           </Button>
         </div>
       </section>
-      <ul>
+      <ul aria-label="책 포스트 목록">
         {posts?.map((post) => <PostCardForBook key={post.id} post={post} />)}
       </ul>
     </div>
