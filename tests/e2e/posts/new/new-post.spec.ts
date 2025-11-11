@@ -1,17 +1,18 @@
-import { expect, test } from "@playwright/test";
+import { expect, test as base } from "@playwright/test";
 import { NewPostPage } from "./new-post.page";
 import dayjs from "dayjs";
 import { ManagePostsPage } from "../../manage/posts/manage-posts.page";
 import { HomePage } from "../../home/home.page";
 
-let newPostPage: NewPostPage;
-
-test.beforeEach(async ({ page }) => {
-  newPostPage = new NewPostPage(page);
-  await newPostPage.goto();
+const test = base.extend<{ newPostPage: NewPostPage }>({
+  newPostPage: async ({ page }, use) => {
+    const newPostPage = new NewPostPage(page);
+    await newPostPage.goto();
+    await use(newPostPage);
+  },
 });
 
-test("포스트 공개 작성", async ({ page }) => {
+test("포스트 공개 작성", async ({ page, newPostPage }) => {
   await test.step("포스트 작성 후 글 관리 페이지로 이동한다.", async () => {
     await newPostPage.createPost({
       bookTitle: "직업으로서의 소설가",
@@ -43,7 +44,7 @@ test("포스트 공개 작성", async ({ page }) => {
   });
 });
 
-test("포스트 비공개로 작성", async ({ page }) => {
+test("포스트 비공개로 작성", async ({ page, newPostPage }) => {
   await test.step("포스트 작성 후 글 관리 페이지로 이동한다.", async () => {
     await newPostPage.createPost({
       bookTitle: "직업으로서의 소설가",

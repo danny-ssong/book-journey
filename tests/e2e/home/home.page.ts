@@ -17,23 +17,23 @@ export class HomePage {
   }
 
   async clickBookTitleInPost(bookTitle: string) {
-    await this.page.getByText(bookTitle, { exact: true }).click();
+    await this.postCards.getByText(bookTitle, { exact: true }).click();
   }
 
   async clickAuthorNameInPost(authorName: string) {
-    await this.page.getByLabel("저자").filter({ hasText: authorName }).first().click();
+    await this.postCards.getByLabel("저자").filter({ hasText: authorName }).first().click();
   }
 
   async clickPostTitleInPost(postTitle: string) {
-    await this.page.getByText(postTitle).click();
+    await this.postCards.getByText(postTitle).click();
   }
 
   async clickContentInPost(content: string) {
-    await this.page.getByText(content).click();
+    await this.postCards.getByText(content).click();
   }
 
   async clickUserNameInPost(userName: string) {
-    await this.page.getByText(userName, { exact: true }).last().click();
+    await this.postCards.getByText(userName, { exact: true }).last().click();
   }
 
   async scrollToBottom() {

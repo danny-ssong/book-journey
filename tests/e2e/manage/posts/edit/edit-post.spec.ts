@@ -1,17 +1,18 @@
-import { test, expect } from "@playwright/test";
+import { test as base, expect } from "@playwright/test";
 import { EditPostPage } from "./edit-post.page";
 import dayjs from "dayjs";
 import { ManagePostsPage } from "../manage-posts.page";
 import { HomePage } from "../../../home/home.page";
 
-let editPostPage: EditPostPage;
-
-test.beforeEach(async ({ page }) => {
-  editPostPage = new EditPostPage(page);
-  await editPostPage.goto("61");
+const test = base.extend<{ editPostPage: EditPostPage }>({
+  editPostPage: async ({ page }, use) => {
+    const editPostPage = new EditPostPage(page);
+    await editPostPage.goto("61");
+    await use(editPostPage);
+  },
 });
 
-test("포스트 공개 수정", async ({ page }) => {
+test("포스트 공개 수정", async ({ page, editPostPage }) => {
   await test.step("포스트 수정 후 글 관리 페이지로 이동한다.", async () => {
     await editPostPage.editPost({
       bookTitle: "직업으로서의 소설가",
@@ -43,7 +44,7 @@ test("포스트 공개 수정", async ({ page }) => {
   });
 });
 
-test("포스트 비공개로 수정", async ({ page }) => {
+test("포스트 비공개로 수정", async ({ page, editPostPage }) => {
   await test.step("포스트 수정 후 글 관리 페이지로 이동한다.", async () => {
     await editPostPage.editPost({
       bookTitle: "직업으로서의 소설가",

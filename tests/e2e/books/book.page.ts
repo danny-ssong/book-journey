@@ -13,7 +13,7 @@ export class BookPage {
     this.writePostButton = this.bookInfo.getByRole("button", { name: "글 쓰기" });
   }
 
-  getBookInfo() {
+  getBookTitle() {
     return this.bookInfo.getByLabel("책 제목");
   }
 
