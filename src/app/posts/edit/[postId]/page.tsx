@@ -1,45 +1,17 @@
 "use client";
 
+import { notFound, useParams } from "next/navigation";
+
+import { useGetPost } from "@/react-query/post";
+
 import PostForm from "../../_components/PostForm";
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import { getPost } from "../../_lib/post";
-import { PostWithBook } from "@/types/post";
 
 export default function PostEditPage() {
   const params = useParams();
-  const [postWithBook, setPostWithBook] = useState<PostWithBook | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data, isLoading } = useGetPost(params.postId as string);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const postId = params?.postId as string;
-        if (!postId) {
-          // router.push("/404");
-          return;
-        }
+  if (isLoading) return <div>Loading...</div>;
+  if (!data) return notFound();
 
-        const postData = await getPost(postId);
-        if (!postData) {
-          // router.push("/404");
-          console.log("postData not found");
-          return;
-        }
-
-        setPostWithBook(postData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [params.postId]);
-
-  if (isLoading) return <div>로딩 중...</div>;
-  if (!postWithBook) return <div>접근 불가 페이지입니다.</div>;
-
-  return <PostForm initBook={postWithBook.book} initPost={postWithBook} />;
+  return <PostForm initBook={data.book} initPost={data} />;
 }

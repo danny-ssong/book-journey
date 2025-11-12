@@ -1,6 +1,7 @@
-import { NextResponse, type NextRequest } from "next/server";
-import { jwtDecode } from "jwt-decode";
 import { parseSetCookie } from "next/dist/compiled/@edge-runtime/cookies";
+import { type NextRequest, NextResponse } from "next/server";
+
+import { jwtDecode } from "jwt-decode";
 
 export async function updateSession(request: NextRequest) {
   const accessToken = request.cookies.get("access_token")?.value;

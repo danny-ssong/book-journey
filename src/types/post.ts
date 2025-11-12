@@ -1,5 +1,6 @@
 import { User } from "@/types/user";
-import { Book } from "./book";
+
+import { Book, CreateBook } from "./book";
 
 export interface Post {
   id: number;
@@ -7,7 +8,6 @@ export interface Post {
   content: string;
   rating: number;
   startDate: Date;
-  endDate: Date;
   isPrivate: boolean;
   user: User;
   createdAt: Date;

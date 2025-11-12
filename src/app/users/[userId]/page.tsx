@@ -1,8 +1,13 @@
-import ProfileViewer from "@/app/manage/settings/profile/_components/ProfileViewer";
-import { TabPanel, Tabs } from "@/app/_components/Tabs";
-import UserPostDashboard from "@/app/_components/UserPostDashboard";
-import UserPostList from "@/app/_components/UserPostList";
-import { getUser } from "./_lib/user";
+import { Metadata } from "next";
+import { Suspense } from "react";
+
+import { TabPanel, Tabs } from "@/components/common/Tabs";
+import InfinitePostList from "@/components/post/InfinitePostList";
+import ProfileViewer from "@/components/post/ProfileViewer";
+import UserPostDashboard from "@/components/user/UserPostDashboard";
+
+import { getUser, getUsers } from "@/api/user";
+import { User } from "@/types/user";
 
 type Props = {
   params: {
@@ -20,26 +25,31 @@ export default async function UserProfilePage({ params }: Props) {
       <ProfileViewer user={user} />
       <Tabs defaultActiveTab="recentPosts">
         <TabPanel tabId="recentPosts" label="최근 작성한 글">
-          <UserPostList userId={userId} />
+          <InfinitePostList type="user" userId={userId} />
         </TabPanel>
         <TabPanel tabId="staticstics" label="독서 통계">
-          <UserPostDashboard user={user} />
+          <Suspense fallback={<div>Loading...</div>}>
+            <UserPostDashboard user={user} />
+          </Suspense>
         </TabPanel>
       </Tabs>
     </div>
   );
 }
 
-// export async function generateStaticParams() {
-//   const profiles = await getUsers();
-//   if (!profiles) return [];
-//   return profiles?.map((profile) => ({
-//     userId: profile.user_id,
-//   }));
-// }
+// 유저 프로필은 실시간으로 업데이트할 필요 없으므로, 1시간 캐싱 유효
+export const revalidate = 3600;
 
-// export async function generateMetadata({ params }: Props): Promise<Metadata> {
-//   const profile = await getProfile(params.userId);
-//   if (!profile) return { title: "User Not Found" };
-//   return { title: `${profile.username}의 프로필` };
-// }
+export async function generateStaticParams() {
+  const users = await getUsers();
+
+  return users.map((user) => ({
+    userId: user.id,
+  }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const user = await getUser(params.userId);
+  if (!user) return { title: "User Not Found" };
+  return { title: `${user.profile.nickname}의 프로필` };
+}
