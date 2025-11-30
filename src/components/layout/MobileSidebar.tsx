@@ -1,15 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
-import MenuIcon from "../../components/icons/MenuIcon";
-import SidebarMenu from "./SidebarMenu";
+import MenuIcon from "../icons/MenuIcon";
+import { SidebarMenuContent } from "./Sidebar";
 
-export default function MobileMenuButton() {
+export default function MobileSidebar() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -20,7 +26,7 @@ export default function MobileMenuButton() {
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="w-72 lg:hidden">
-        <SidebarMenu />
+        <SidebarMenuContent />
       </SheetContent>
     </Sheet>
   );
