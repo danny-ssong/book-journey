@@ -19,7 +19,7 @@ export default defineConfig({
   globalSetup: "./tests/e2e/fixture/db-reset.setup.ts",
 
   use: {
-    baseURL: "http://localhost:3001",
+    baseURL: process.env.TEST_BASE_URL,
     ignoreHTTPSErrors: true,
     locale: "ko-KR",
     timezoneId: "Asia/Seoul",
