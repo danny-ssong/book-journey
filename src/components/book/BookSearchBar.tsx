@@ -4,6 +4,7 @@ import BookThumbnail from "@/components/post/BookThumbnail";
 import SearchIcon from "@/components/ui/search-icon";
 
 import useBookSearch from "@/hooks/useBookSearch";
+import { cn } from "@/lib/utils";
 import { SearchedBook } from "@/types/book";
 
 type Props = {
@@ -11,6 +12,7 @@ type Props = {
   onSelectBook: (book: SearchedBook | null) => void;
   onSearchQuery?: (query: string) => void;
   placeholder?: string;
+  className?: string;
 };
 
 export default function BookSearchBar({
@@ -18,6 +20,7 @@ export default function BookSearchBar({
   onSelectBook,
   onSearchQuery,
   placeholder = "책 제목을 검색하세요...",
+  className = "",
 }: Props) {
   const { query, setQuery, books, isLoading, isDebouncing } = useBookSearch();
   const [isShowDropDown, setIsShowDropDown] = useState(false);
@@ -55,8 +58,8 @@ export default function BookSearchBar({
   };
 
   return (
-    <div className="relative">
-      <div className="relative flex w-[360px] items-center">
+    <div className={cn("relative", className)}>
+      <div className="relative flex items-center">
         <input
           tabIndex={0}
           ref={inputRef}

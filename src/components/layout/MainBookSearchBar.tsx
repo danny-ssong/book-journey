@@ -23,6 +23,7 @@ export default function MainBookSearchBar() {
         router.push(`/search?query=${query}`);
       }}
       placeholder="책 제목, 작가를 검색하세요..."
+      className="w-[200px] lg:w-[360px]"
     />
   );
 }

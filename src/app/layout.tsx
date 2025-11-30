@@ -5,7 +5,7 @@ import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 
 import Header from "@/components/layout/Header";
-import SidebarMenu from "@/components/layout/SidebarMenu";
+import Sidebar from "@/components/layout/Sidebar";
 
 import "./globals.css";
 
@@ -16,7 +16,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="h-screen w-screen">
+      <body className="min-h-screen">
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -27,10 +27,10 @@ export default async function RootLayout({
             <AuthProvider>
               <Header />
               <div className="flex h-full justify-center pt-16">
-                <SidebarMenu />
-                <main className="w-[800px] p-8">{children}</main>
-                <Toaster position="top-center" richColors />
+                <Sidebar />
+                <main className="mx-auto w-full max-w-3xl p-8">{children}</main>
               </div>
+              <Toaster position="top-center" richColors />
             </AuthProvider>
           </ReactQueryProvider>
         </ThemeProvider>
