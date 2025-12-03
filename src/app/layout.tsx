@@ -16,7 +16,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen">
+      <body className="flex min-h-screen flex-col">
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -26,9 +26,9 @@ export default async function RootLayout({
           <ReactQueryProvider>
             <AuthProvider>
               <Header />
-              <div className="flex h-full justify-center pt-16">
+              <div className="flex flex-1 justify-center pt-16">
                 <Sidebar />
-                <main className="mx-auto w-full max-w-3xl p-8">{children}</main>
+                <main className="w-full max-w-3xl p-8">{children}</main>
               </div>
               <Toaster position="top-center" richColors />
             </AuthProvider>
