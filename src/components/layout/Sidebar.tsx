@@ -10,7 +10,7 @@ export function SidebarMenuContent() {
   const { user } = useAuth();
 
   return (
-    <div className="h-full px-5 py-6">
+    <div className="px-5 py-6">
       <Button className="mb-5 w-full px-4 py-2 text-center">
         <Link href={!!user ? `/posts/new` : "/login"}>글쓰기</Link>
       </Button>
@@ -33,7 +33,7 @@ export function SidebarMenuContent() {
 
 export default function Sidebar() {
   return (
-    <aside className="hidden h-full w-[200px] border-r py-4 lg:block">
+    <aside className="hidden w-[200px] border-r py-4 lg:block">
       <SidebarMenuContent />
     </aside>
   );
