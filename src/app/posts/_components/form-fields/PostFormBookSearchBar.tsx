@@ -23,6 +23,7 @@ export default function PostFormBookSearchBar() {
                 : null,
             )
           }
+          className="w-[400px]"
         />
       )}
     />
