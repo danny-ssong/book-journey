@@ -63,7 +63,7 @@ export default function BookSearchBar({
         <input
           tabIndex={0}
           ref={inputRef}
-          className="w-full rounded-lg border px-4 py-2 focus:outline-none"
+          className="w-full rounded-lg border px-4 py-2 pr-8 focus:outline-none"
           type="text"
           aria-label="책 검색 입력창"
           onChange={handleSearchInputChange}
