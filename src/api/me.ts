@@ -1,9 +1,11 @@
-import { fetchWithAuth } from "@/api/auth";
 import { UpdateProfile, User } from "@/types/user";
 
 export async function getMe(): Promise<User> {
-  const res = await fetchWithAuth(
+  const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/users/me`,
+    {
+      credentials: "include",
+    },
   );
 
   if (!res.ok) throw new Error((await res.json()).message);
@@ -13,7 +15,7 @@ export async function getMe(): Promise<User> {
 }
 
 export async function updateProfile(updateProfile: UpdateProfile) {
-  const res = await fetchWithAuth(
+  const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/profiles/me`,
     {
       headers: {
@@ -21,6 +23,7 @@ export async function updateProfile(updateProfile: UpdateProfile) {
       },
       method: "PATCH",
       body: JSON.stringify(updateProfile),
+      credentials: "include",
     },
   );
   if (!res.ok) throw new Error((await res.json()).message);
@@ -34,6 +37,9 @@ export async function logout() {
     {
       method: "POST",
       credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
     },
   );
 
