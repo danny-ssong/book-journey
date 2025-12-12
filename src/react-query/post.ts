@@ -63,7 +63,8 @@ export function useUpdatePost() {
       id: number;
       updatePostData: UpdatePost;
     }) => updatePost(id, updatePostData),
-    onSuccess: () => {
+    onSuccess: (_, { id }) => {
+      queryClient.invalidateQueries({ queryKey: ["post", id.toString()] });
       queryClient.invalidateQueries({ queryKey: ["my-posts"] });
       queryClient.invalidateQueries({ queryKey: ["all-posts"] });
     },
