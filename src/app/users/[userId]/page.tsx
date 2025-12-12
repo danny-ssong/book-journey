@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { Suspense } from "react";
 
 import { TabPanel, Tabs } from "@/components/common/Tabs";
 import InfinitePostList from "@/components/post/InfinitePostList";
@@ -28,9 +27,7 @@ export default async function UserProfilePage({ params }: Props) {
           <InfinitePostList type="user" userId={userId} />
         </TabPanel>
         <TabPanel tabId="staticstics" label="독서 통계">
-          <Suspense fallback={<div>Loading...</div>}>
-            <UserPostDashboard user={user} />
-          </Suspense>
+          <UserPostDashboard user={user} />
         </TabPanel>
       </Tabs>
     </div>

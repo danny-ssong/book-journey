@@ -1,9 +1,4 @@
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-  useSuspenseQuery,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import {
   createPost,
@@ -22,7 +17,7 @@ export function useGetPost(postId: string) {
 }
 
 export function useUserPosts(userId: string, take: number = 9999) {
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ["all-posts", userId],
     queryFn: () => getUserPosts(take, userId),
   });
