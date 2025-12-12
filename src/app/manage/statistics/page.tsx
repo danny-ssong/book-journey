@@ -1,17 +1,13 @@
 "use client";
 
-import { Suspense } from "react";
-
 import UserPostDashboard from "@/components/user/UserPostDashboard";
 
-import { useAuth } from "@/hooks/useAuth";
+import { useGetMe } from "@/react-query/me";
 
 export default function StaticsticsPage() {
-  const { user } = useAuth();
+  const { data: user } = useGetMe();
 
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <UserPostDashboard user={user!} />
-    </Suspense>
-  );
+  if (!user) return null;
+
+  return <UserPostDashboard user={user} />;
 }

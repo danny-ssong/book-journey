@@ -1,6 +1,5 @@
 import { Toaster } from "sonner";
 
-import { AuthProvider } from "@/providers/AuthProvider";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 
@@ -24,14 +23,12 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <ReactQueryProvider>
-            <AuthProvider>
-              <Header />
-              <div className="flex flex-1 justify-center pt-16">
-                <Sidebar />
-                <main className="w-full max-w-3xl p-8">{children}</main>
-              </div>
-              <Toaster position="top-center" richColors />
-            </AuthProvider>
+            <Header />
+            <div className="flex flex-1 justify-center pt-16">
+              <Sidebar />
+              <main className="w-full max-w-3xl p-8">{children}</main>
+            </div>
+            <Toaster position="top-center" richColors />
           </ReactQueryProvider>
         </ThemeProvider>
       </body>

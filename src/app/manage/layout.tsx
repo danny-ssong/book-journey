@@ -2,21 +2,24 @@
 
 import { useRouter } from "next/navigation";
 
-import { useAuth } from "@/hooks/useAuth";
+import { useGetMe } from "@/react-query/me";
 
 export default function ManageLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { user, isLoading } = useAuth();
+  const { data, isLoading, isError } = useGetMe();
   const router = useRouter();
 
+  if (data) {
+    return <>{children}</>;
+  }
+
   if (isLoading) return <div>Loading...</div>;
-  if (user === null) {
+
+  if (isError) {
     router.push("/login");
     return null;
   }
-
-  return <>{children}</>;
 }
