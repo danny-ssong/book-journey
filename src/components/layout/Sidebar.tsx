@@ -4,14 +4,14 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 
-import { useAuth } from "@/hooks/useAuth";
+import { useGetMe } from "@/react-query/me";
 
 export function SidebarMenuContent() {
-  const { user } = useAuth();
+  const { data: user } = useGetMe();
 
   return (
     <div className="px-5 py-6">
-      <Button className="mb-5 w-full px-4 py-2 text-center">
+      <Button asChild className="mb-5 w-full px-4 py-2 text-center">
         <Link href={!!user ? `/posts/new` : "/login"}>글쓰기</Link>
       </Button>
       {!!user && (

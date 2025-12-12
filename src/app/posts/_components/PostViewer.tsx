@@ -12,11 +12,11 @@ import UserName from "@/components/post/UserName";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
-import { useAuth } from "@/hooks/useAuth";
+import { useGetMe } from "@/react-query/me";
 import { PostWithBook } from "@/types/post";
 
 export default function PostViewer({ post }: { post: PostWithBook }) {
-  const { user } = useAuth();
+  const { data: user } = useGetMe();
   const isOwner = post.user.id === user?.id;
 
   return (

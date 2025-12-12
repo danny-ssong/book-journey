@@ -1,11 +1,12 @@
 "use client";
 
-import { useAuth } from "@/hooks/useAuth";
+import { useLogout } from "@/react-query/me";
 
 export default function LogoutButton() {
-  const { logout } = useAuth();
+  const { mutate: logout } = useLogout();
+
   return (
-    <form onSubmit={logout}>
+    <form onSubmit={() => logout()}>
       <button
         className="overflow-visible text-nowrap py-2"
         aria-label="로그아웃 버튼"
