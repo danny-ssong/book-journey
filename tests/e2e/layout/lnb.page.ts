@@ -11,7 +11,7 @@ export class LNBPage {
   constructor(page: Page) {
     this.page = page;
     this.lnb = page.getByRole("complementary");
-    this.writePostButton = this.lnb.getByRole("button", { name: "글쓰기" });
+    this.writePostButton = this.lnb.getByRole("link", { name: "글쓰기" });
     this.manageMyPosts = this.lnb.getByRole("link", { name: "글 관리" });
     this.manageMyProfile = this.lnb.getByRole("link", { name: "프로필 관리" });
     this.myStatistics = this.lnb.getByRole("link", { name: "독서 통계" });

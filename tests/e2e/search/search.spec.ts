@@ -22,7 +22,7 @@ test("다음 페이지로 이동하면 새로운 검색 결과가 표시되어�
   await searchPage.clickNextPageButton();
 
   const firstPageBook = searchPage.getSearchedBook("달리기를 말할 때 내가 하고 싶은 이야기");
-  const secondPageBook = searchPage.getSearchedBook("만약 우리의 언어가 위스키라고 한다면");
+  const secondPageBook = searchPage.getSearchedBook("먼 북소리");
 
   await expect(firstPageBook).not.toBeVisible();
   await expect(secondPageBook).toBeVisible();
@@ -33,7 +33,7 @@ test("다음 페이지로 갔다가 이전 페이지로 돌아오면 첫 페이�
   await searchPage.clickPreviousPageButton();
 
   const firstPageBook = searchPage.getSearchedBook("달리기를 말할 때 내가 하고 싶은 이야기");
-  const secondPageBook = searchPage.getSearchedBook("만약 우리의 언어가 위스키라고 한다면");
+  const secondPageBook = searchPage.getSearchedBook("먼 북소리");
 
   await expect(firstPageBook).toBeVisible();
   await expect(secondPageBook).not.toBeVisible();
