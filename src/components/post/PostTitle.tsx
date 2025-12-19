@@ -10,17 +10,21 @@ type Props = {
 };
 
 export default function PostTitle({ post, className, asLink = false }: Props) {
+  const href = post.isPrivate
+    ? `/manage/posts/${post.id}`
+    : `/posts/${post.id}`;
+
   return (
     <h1
       className={cn("line-clamp-1 text-lg", className)}
       aria-label={"포스트 제목"}
     >
       {asLink ? (
-        <Link href={`/posts/${post.id}`} className="hover:underline">
-          {post.title || "\u00A0"}
+        <Link href={href} className="hover:underline">
+          {post.title}
         </Link>
       ) : (
-        post.title || "\u00A0"
+        post.title
       )}
     </h1>
   );

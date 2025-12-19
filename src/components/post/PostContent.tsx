@@ -24,10 +24,14 @@ export default function PostContent({
     5: cn("text-sm line-clamp-5 h-[6.25rem] ", className),
   } as const;
 
+  const href = post.isPrivate
+    ? `/manage/posts/${post.id}`
+    : `/posts/${post.id}`;
+
   return (
     <p className={maxLines ? classMap[maxLines] : className}>
       {asLink ? (
-        <Link href={`/posts/${post.id}`} className="hover:underline">
+        <Link href={href} className="hover:underline">
           {post.content}
         </Link>
       ) : (
