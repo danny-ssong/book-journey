@@ -5,8 +5,8 @@ import InfinitePostList from "@/components/post/InfinitePostList";
 import ProfileViewer from "@/components/post/ProfileViewer";
 import UserPostDashboard from "@/components/user/UserPostDashboard";
 
+import { getUsers } from "@/api/client/user";
 import { getUser } from "@/api/server/user";
-import { getUsers } from "@/api/user";
 
 type Props = {
   params: {

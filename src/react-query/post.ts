@@ -6,7 +6,7 @@ import {
   getPost,
   getUserPosts,
   updatePost,
-} from "@/api/post";
+} from "@/api/client/post";
 import { CreatePost, UpdatePost } from "@/schemas/post";
 
 export function useGetPost(postId: string) {

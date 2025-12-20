@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 
-import { getBook, getBooks } from "@/api/book";
+import { getBook, getBooks } from "@/api/client/book";
 import { getBookWithPosts } from "@/api/server/book";
 
 import BookInfo from "../_components/BookInfo";

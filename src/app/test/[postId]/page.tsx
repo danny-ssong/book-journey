@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { getPost } from "@/api/post";
+import { getPost } from "@/api/client/post";
 
 import PostViewer from "@/app/posts/_components/PostViewer";
 

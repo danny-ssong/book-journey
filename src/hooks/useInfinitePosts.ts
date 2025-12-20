@@ -1,6 +1,6 @@
 import { QueryFunctionContext, useInfiniteQuery } from "@tanstack/react-query";
 
-import { getMyPosts, getPosts, getUserPosts } from "@/api/post";
+import { getMyPosts, getPosts, getUserPosts } from "@/api/client/post";
 import { PaginationResponse } from "@/types/pagination-response";
 import { PostWithBook } from "@/types/post";
 

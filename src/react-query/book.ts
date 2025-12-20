@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { getBook, searchBooks } from "@/api/book";
+import { getBook, searchBooks } from "@/api/client/book";
 
 export function useGetBook(isbn: string) {
   return useQuery({
