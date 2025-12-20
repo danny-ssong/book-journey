@@ -28,3 +28,11 @@ export async function getBook(isbn: string): Promise<Book> {
 
   return res.json();
 }
+
+export async function getBooks(): Promise<Book[]> {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/books`);
+
+  if (!res.ok) throw new Error((await res.json()).message);
+
+  return res.json();
+}
