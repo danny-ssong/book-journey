@@ -3,8 +3,8 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 
-import { getBook } from "@/api/book";
-import { getBookWithPostsOnServer, getBooks } from "@/api/server/book";
+import { getBook, getBooks } from "@/api/book";
+import { getBookWithPosts } from "@/api/server/book";
 
 import BookInfo from "../_components/BookInfo";
 import PostCardForBook from "../_components/PostCardForBook";
@@ -18,8 +18,8 @@ type Props = {
 export default async function Page({ params }: Props) {
   let { isbn } = params;
 
-  const bookWithPosts = await getBookWithPostsOnServer(isbn);
-  const posts = bookWithPosts?.posts;
+  const bookWithPosts = await getBookWithPosts(isbn);
+  const posts = bookWithPosts.posts;
 
   return (
     <div>
@@ -32,7 +32,9 @@ export default async function Page({ params }: Props) {
         </div>
       </section>
       <ul aria-label="책 포스트 목록">
-        {posts?.map((post) => <PostCardForBook key={post.id} post={post} />)}
+        {posts.map((post) => (
+          <PostCardForBook key={post.id} post={post} />
+        ))}
       </ul>
     </div>
   );

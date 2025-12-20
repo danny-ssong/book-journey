@@ -5,8 +5,8 @@ import InfinitePostList from "@/components/post/InfinitePostList";
 import ProfileViewer from "@/components/post/ProfileViewer";
 import UserPostDashboard from "@/components/user/UserPostDashboard";
 
-import { getUser, getUsers } from "@/api/user";
-import { User } from "@/types/user";
+import { getUser } from "@/api/server/user";
+import { getUsers } from "@/api/user";
 
 type Props = {
   params: {
@@ -17,7 +17,6 @@ type Props = {
 export default async function UserProfilePage({ params }: Props) {
   const userId = params.userId;
   const user = await getUser(userId);
-  if (!user) return <div>User not found</div>;
 
   return (
     <div className="flex flex-col gap-4">
