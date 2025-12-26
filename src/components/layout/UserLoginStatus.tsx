@@ -7,9 +7,9 @@ import { useGetMe } from "@/react-query/me";
 import LogoutButton from "./LogoutButton";
 
 export default function UserLoginStatus() {
-  const { data: user, isLoading } = useGetMe();
+  const { data: user, isPending } = useGetMe();
 
-  if (isLoading) return null;
+  if (isPending) return null;
 
   if (user) {
     return (
