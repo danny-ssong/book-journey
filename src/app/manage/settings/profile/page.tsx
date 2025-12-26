@@ -1,18 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { notFound } from "next/navigation";
 
 import ProfileViewer from "@/components/post/ProfileViewer";
 import { Button } from "@/components/ui/button";
 
-import { useGetMe } from "@/react-query/me";
+import { useAuthContext } from "@/context/AuthContext";
 
 export default function Page() {
-  const { data: user, isPending, isError } = useGetMe();
-
-  if (isPending) return <div>Loading...</div>;
-  if (isError) notFound();
+  const user = useAuthContext();
 
   return (
     <div>

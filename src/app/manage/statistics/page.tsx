@@ -2,12 +2,10 @@
 
 import UserPostDashboard from "@/components/user/UserPostDashboard";
 
-import { useGetMe } from "@/react-query/me";
+import { useAuthContext } from "@/context/AuthContext";
 
 export default function StaticsticsPage() {
-  const { data: user } = useGetMe();
-
-  if (!user) return null;
+  const user = useAuthContext();
 
   return <UserPostDashboard user={user} />;
 }
