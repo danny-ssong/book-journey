@@ -1,28 +1,30 @@
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
+"use client";
 
-import { getPost } from "@/api/server/post";
+import { useParams } from "next/navigation";
+
+import ErrorAlert from "@/components/common/ErrorAlert";
+import Loading from "@/components/common/Loading";
+
+import { useGetPost } from "@/react-query/post";
 
 import PostViewer from "@/app/posts/_components/PostViewer";
 
-type Props = {
-  params: {
-    id: string;
-  };
-};
+export default function Page() {
+  const params = useParams();
+  const id = params?.id as string;
 
-export default async function Page({ params }: Props) {
-  const id = params.id;
-  if (!id) notFound();
+  const { data, isPending, isError, error } = useGetPost(id);
 
-  const post = await getPost(id);
+  if (isPending) return <Loading loadingText="게시글을 불러오는 중입니다..." />;
 
-  return <PostViewer post={post} />;
-}
+  if (isError) {
+    return (
+      <ErrorAlert
+        title="게시글을 불러오는 중에 에러가 발생했습니다."
+        description={error.message}
+      />
+    );
+  }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = await getPost(params.id);
-  if (!post) return { title: "Book-journey" };
-
-  return { title: `${post.title}` };
+  return <PostViewer post={data} />;
 }
