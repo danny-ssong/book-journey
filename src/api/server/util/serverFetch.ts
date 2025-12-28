@@ -5,14 +5,20 @@ import { redirect } from "next/navigation";
 
 export async function serverFetch<T>(
   url: string,
-  options?: RequestInit,
+  options?: RequestInit & { withCookies?: boolean },
 ): Promise<T> {
+  const headers = new Headers(options?.headers);
+
+  if (options?.withCookies) {
+    const cookie = cookies().toString();
+    if (cookie) {
+      headers.set("Cookie", cookie);
+    }
+  }
+
   const res = await fetch(url, {
     ...options,
-    headers: {
-      ...options?.headers,
-      Cookie: cookies().toString(),
-    },
+    headers,
   });
 
   if (!res.ok) {
