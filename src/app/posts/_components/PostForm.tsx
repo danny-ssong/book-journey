@@ -84,7 +84,7 @@ export default function PostForm({
         className="flex h-full flex-col"
         onSubmit={handleSubmit(createOrUpdatePost, handleSubmitError)}
       >
-        <article className="flex h-full flex-col gap-4">
+        <article className="mb-20 flex h-full flex-col gap-4">
           <PostFormBookSearchBar />
           <PrivacySelector />
           <div className="flex justify-between">
