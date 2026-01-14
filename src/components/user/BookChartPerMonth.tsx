@@ -66,12 +66,16 @@ const options: ChartOptions<"bar"> = {
     datalabels: {
       anchor: "end",
       align: "end",
-      color: "black",
+      color: () => {
+        const style = getComputedStyle(document.documentElement);
+        const hslValue = style.getPropertyValue("--foreground").trim();
+        return hslValue ? `hsl(${hslValue})` : "#000000";
+      },
       font: {
         size: 10,
         weight: "bold",
       },
-      formatter: (value) => value,
+      formatter: (value) => (value === 0 ? "" : value),
     },
   },
   scales: {
