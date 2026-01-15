@@ -69,7 +69,9 @@ export default function PostForm({
       router.push("/manage/posts");
     } catch (error: any) {
       console.error(error);
-      alert(`포스트 저장 실패: ${error?.message}`);
+      toast.error("포스트 저장 실패", {
+        description: error?.message || "알 수 없는 오류가 발생했습니다.",
+      });
     }
   };
 
