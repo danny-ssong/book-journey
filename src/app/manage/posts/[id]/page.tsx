@@ -15,7 +15,7 @@ export default function Page() {
 
   const { data, isPending, isError, error } = useGetPost(id);
 
-  if (isPending) return <Loading loadingText="게시글을 불러오는 중입니다..." />;
+  if (isPending) return <Loading text="게시글을 불러오는 중..." />;
 
   if (isError) {
     return (

@@ -1,7 +1,7 @@
 "use client";
 
 import ErrorAlert from "@/components/common/ErrorAlert";
-import SpinnerLoader from "@/components/common/SpinnerLoader";
+import Loading from "@/components/common/Loading";
 import { Card } from "@/components/ui/card";
 
 import { useUserPosts } from "@/react-query/post";
@@ -24,7 +24,7 @@ export default function UserPostDashboard({ user }: { user: User }) {
   } = useUserPosts(user.id, 9999);
 
   if (isLoading) {
-    return <SpinnerLoader text="통계를 불러오는 중..." size="md" />;
+    return <Loading text="통계를 불러오는 중..." variant="inline" size="md" />;
   }
 
   if (posts) {

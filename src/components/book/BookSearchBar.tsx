@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import SpinnerLoader from "@/components/common/SpinnerLoader";
+import Loading from "@/components/common/Loading";
 import BookThumbnail from "@/components/post/BookThumbnail";
 import {
   Command,
@@ -95,7 +95,7 @@ export default function BookSearchBar({
               </div>
             )}
 
-            {showLoading && <SpinnerLoader text="검색 중..." />}
+            {showLoading && <Loading text="검색 중..." variant="inline" />}
 
             {showResults && books.length === 0 && (
               <CommandEmpty>검색된 책이 없습니다.</CommandEmpty>
