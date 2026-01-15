@@ -1,8 +1,8 @@
 "use client";
 
-import { notFound } from "next/navigation";
-
-import { Card, CardContent } from "@/components/ui/card";
+import ErrorAlert from "@/components/common/ErrorAlert";
+import SpinnerLoader from "@/components/common/SpinnerLoader";
+import { Card } from "@/components/ui/card";
 
 import { useUserPosts } from "@/react-query/post";
 import { User } from "@/types/user";
@@ -16,9 +16,16 @@ import {
 } from "./_lib/group-by";
 
 export default function UserPostDashboard({ user }: { user: User }) {
-  const { data: posts, isLoading, isError } = useUserPosts(user.id, 9999);
+  const {
+    data: posts,
+    isLoading,
+    isError,
+    error,
+  } = useUserPosts(user.id, 9999);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return <SpinnerLoader text="통계를 불러오는 중..." size="md" />;
+  }
 
   if (posts) {
     const postsGroupByAuthor = getGroupByAuthor(posts.data);
@@ -88,5 +95,14 @@ export default function UserPostDashboard({ user }: { user: User }) {
     );
   }
 
-  if (isError) notFound();
+  if (isError) {
+    return (
+      <ErrorAlert
+        title="데이터를 불러올 수 없습니다"
+        description={error?.message || "잠시 후 다시 시도해주세요."}
+      />
+    );
+  }
+
+  return null;
 }

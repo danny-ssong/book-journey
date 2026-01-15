@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from "react";
 
+import SpinnerLoader from "./SpinnerLoader";
+
 type InfiniteScrollProps = {
   fetchNextPage: () => void;
   hasNextPage: boolean;
@@ -34,8 +36,8 @@ export default function InfiniteScroll({
   return (
     <>
       {children}
-      <div ref={loaderRef} style={{ height: 40 }} />
-      {isLoading && <div>로딩중...</div>}
+      <div ref={loaderRef} className="h-10" />
+      {isLoading && <SpinnerLoader />}
     </>
   );
 }
