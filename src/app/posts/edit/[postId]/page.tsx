@@ -4,7 +4,7 @@ import { notFound, useParams } from "next/navigation";
 
 import Loading from "@/components/common/Loading";
 
-import { useGetPost } from "@/react-query/post";
+import { useGetPost } from "@/api/client/post.queries";
 
 import PostForm from "../../_components/PostForm";
 

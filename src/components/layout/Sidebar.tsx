@@ -8,7 +8,7 @@ import { BarChart3, FileText, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
-import { useGetMe } from "@/react-query/me";
+import { useGetMe } from "@/api/client/me.queries";
 
 const menuItems = [
   {

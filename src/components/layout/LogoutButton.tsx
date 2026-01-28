@@ -1,6 +1,6 @@
 "use client";
 
-import { useLogout } from "@/react-query/me";
+import { useLogout } from "@/api/client/me.queries";
 
 export default function LogoutButton() {
   const { mutate: logout } = useLogout();

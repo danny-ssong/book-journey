@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { useSearchBooks } from "@/react-query/book";
+import { useSearchBooks } from "@/api/client/book.queries";
 import { SearchedBook } from "@/types/book";
 
 export default function useBookSearch(debounceMs: number = 500) {

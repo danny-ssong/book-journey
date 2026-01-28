@@ -1,6 +1,7 @@
 import { QueryFunctionContext, useInfiniteQuery } from "@tanstack/react-query";
 
 import { getMyPosts, getPosts, getUserPosts } from "@/api/client/post";
+import { postKeys } from "@/api/client/post.queries";
 import { PaginationResponse } from "@/types/pagination-response";
 import { PostWithBook } from "@/types/post";
 
@@ -23,10 +24,12 @@ type Props =
 export function useInfinitePosts(props: Props) {
   const { type, take = 10 } = props;
 
-  let queryKey: string[] = [];
-  if (type === "all") queryKey = ["all-posts"];
-  else if (type === "my") queryKey = ["my-posts"];
-  else if (type === "user") queryKey = ["user-posts", props.userId];
+  const getQueryKey = () => {
+    if (type === "all") return postKeys.infiniteAll();
+    if (type === "my") return postKeys.infiniteMy();
+    if (type === "user") return postKeys.infiniteUser(props.userId);
+    throw new Error(`Invalid type: ${type}`);
+  };
 
   const queryFn = (context: QueryFunctionContext) => {
     const cursor = context.pageParam as string | undefined;
@@ -40,7 +43,7 @@ export function useInfinitePosts(props: Props) {
     PaginationResponse<PostWithBook>,
     Error
   >({
-    queryKey: queryKey,
+    queryKey: getQueryKey(),
     queryFn: queryFn,
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
     initialPageParam: undefined,

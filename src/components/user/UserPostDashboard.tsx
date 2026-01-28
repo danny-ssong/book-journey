@@ -4,7 +4,7 @@ import ErrorAlert from "@/components/common/ErrorAlert";
 import Loading from "@/components/common/Loading";
 import { Card } from "@/components/ui/card";
 
-import { useUserPosts } from "@/react-query/post";
+import { useUserPosts } from "@/api/client/post.queries";
 import { User } from "@/types/user";
 
 import AuthorChart from "./AuthorChart";

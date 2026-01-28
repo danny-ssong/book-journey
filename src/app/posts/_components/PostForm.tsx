@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldErrors, FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-import { useCreatePost, useUpdatePost } from "@/react-query/post";
+import { useCreatePost, useUpdatePost } from "@/api/client/post.queries";
 import { CreatePost, createPostSchema } from "@/schemas/post";
 import { Book } from "@/types/book";
 import { Post } from "@/types/post";

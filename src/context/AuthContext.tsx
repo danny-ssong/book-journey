@@ -6,7 +6,7 @@ import { createContext, useContext } from "react";
 import ErrorAlert from "@/components/common/ErrorAlert";
 import Loading from "@/components/common/Loading";
 
-import { useGetMe } from "@/react-query/me";
+import { useGetMe } from "@/api/client/me.queries";
 import { User } from "@/types/user";
 
 const AuthContext = createContext<User | null>(null);

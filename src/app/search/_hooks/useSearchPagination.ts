@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { usePrefetchSearchBooks, useSearchBooks } from "@/react-query/book";
+import { usePrefetchSearchBooks, useSearchBooks } from "@/api/client/book.queries";
 
 export function useSearchPagination(query: string) {
   const [page, setPage] = useState(1);

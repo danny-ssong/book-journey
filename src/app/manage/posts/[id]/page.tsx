@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import ErrorAlert from "@/components/common/ErrorAlert";
 import Loading from "@/components/common/Loading";
 
-import { useGetPost } from "@/react-query/post";
+import { useGetPost } from "@/api/client/post.queries";
 
 import PostViewer from "@/app/posts/_components/PostViewer";
 

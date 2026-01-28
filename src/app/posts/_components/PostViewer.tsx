@@ -12,7 +12,7 @@ import UserName from "@/components/post/UserName";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
-import { useGetMe } from "@/react-query/me";
+import { useGetMe } from "@/api/client/me.queries";
 import { PostWithBook } from "@/types/post";
 
 export default function PostViewer({ post }: { post: PostWithBook }) {

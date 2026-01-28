@@ -5,7 +5,7 @@ import React from "react";
 
 import { Button } from "@/components/ui/button";
 
-import { useDeletePost } from "@/react-query/post";
+import { useDeletePost } from "@/api/client/post.queries";
 
 function MyPostActionButtons({ postId }: { postId: number }) {
   const deletePostMutation = useDeletePost(postId);

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { useGetMe } from "@/react-query/me";
+import { useGetMe } from "@/api/client/me.queries";
 
 import LogoutButton from "./LogoutButton";
 

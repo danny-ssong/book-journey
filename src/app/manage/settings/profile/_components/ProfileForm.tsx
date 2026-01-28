@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
-import { useUpdateProfile } from "@/react-query/me";
+import { useUpdateProfile } from "@/api/client/me.queries";
 import { Profile } from "@/types/user";
 
 type Props = {
