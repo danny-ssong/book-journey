@@ -12,12 +12,12 @@ export class GNBPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.gnb = page.getByRole("banner");
+    this.gnb = page.getByRole("banner", { name: "데스크톱 헤더" });
     this.homeLink = this.gnb.getByRole("link", { name: "홈" });
     this.logoutButton = this.gnb.getByRole("button", { name: "로그아웃 버튼" });
     this.loginButton = this.gnb.getByRole("link", { name: "로그인" });
     this.themeToggleButton = this.gnb.getByRole("button", { name: "Toggle theme" });
-    this.searchInput = this.gnb.getByRole("textbox", { name: "책 검색 입력창" });
+    this.searchInput = this.gnb.getByRole("combobox", { name: "책 검색 입력창" });
     this.searchResults = page.getByRole("status", { name: "책 검색 결과" });
   }
 
@@ -42,16 +42,16 @@ export class GNBPage {
   }
 
   async fillSearchBar(keyword: string) {
-    await this.searchInput.fill(keyword);
+    await this.searchInput.pressSequentially(keyword, { delay: 5 });
   }
 
   async searchKeywordBySearchBar(keyword: string) {
-    await this.searchInput.fill(keyword);
+    await this.searchInput.pressSequentially(keyword, { delay: 5 });
     await this.searchInput.press("Enter");
   }
 
   async fillKeyworkAndSelectItemInSearchBar(keyword: string, itemTitle: string) {
-    await this.searchInput.fill(keyword);
+    await this.searchInput.pressSequentially(keyword, { delay: 5 });
     await this.searchResults.getByText(itemTitle, { exact: true }).click();
   }
 }

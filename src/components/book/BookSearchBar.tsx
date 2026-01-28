@@ -54,8 +54,10 @@ export default function BookSearchBar({
   const handleInputChange = (value: string) => {
     setQuery(value);
     onSelectBook(null);
-    if (value.length >= 2) {
+    if (value.length >= 1) {
       setIsOpen(true);
+    } else {
+      setIsOpen(false);
     }
   };
 
@@ -84,11 +86,13 @@ export default function BookSearchBar({
           placeholder={placeholder}
           value={selectedBookTitle ?? query}
           onValueChange={handleInputChange}
-          onFocus={() => query.length >= 2 && setIsOpen(true)}
+          onFocus={() => query.length >= 1 && setIsOpen(true)}
           onKeyDown={handleKeyDown}
+          aria-label="책 검색 입력창"
         />
         {isOpen && (
-          <CommandList className="absolute left-0 top-full z-50 mt-1 w-full rounded-lg border bg-popover shadow-lg animate-in fade-in-0 zoom-in-95">
+          <div role="status" aria-label="책 검색 결과">
+            <CommandList className="absolute left-0 top-full z-50 mt-1 w-full rounded-lg border bg-popover shadow-lg animate-in fade-in-0 zoom-in-95">
             {query.length < 2 && (
               <div className="py-6 text-center text-sm text-muted-foreground">
                 검색어를 2자 이상 입력해주세요.
@@ -126,7 +130,8 @@ export default function BookSearchBar({
                 ))}
               </CommandGroup>
             )}
-          </CommandList>
+            </CommandList>
+          </div>
         )}
       </Command>
     </div>

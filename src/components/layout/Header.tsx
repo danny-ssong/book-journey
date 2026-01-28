@@ -19,7 +19,10 @@ export default function Header() {
 
 function DesktopHeader() {
   return (
-    <header className="fixed z-50 hidden min-h-16 w-full items-center justify-between border bg-background px-10 lg:flex">
+    <header
+      className="fixed z-50 hidden min-h-16 w-full items-center justify-between border bg-background px-10 lg:flex"
+      aria-label="데스크톱 헤더"
+    >
       <div className="flex items-center gap-10">
         <span className="text-nowrap">Book-Journey</span>
         <HeaderNavLinks />
@@ -35,7 +38,10 @@ function DesktopHeader() {
 
 function MobileHeader() {
   return (
-    <header className="fixed flex h-12 w-full items-center justify-between border bg-background px-1 lg:hidden">
+    <header
+      className="fixed flex h-12 w-full items-center justify-between border bg-background px-1 lg:hidden"
+      aria-label="모바일 헤더"
+    >
       <div className="flex w-16 items-center">
         <MobileSidebar />
       </div>

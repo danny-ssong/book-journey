@@ -70,7 +70,11 @@ export function SidebarMenuContent() {
 
 export default function Sidebar() {
   return (
-    <aside className="hidden w-[200px] border-r py-4 lg:block">
+    <aside
+      className="hidden w-[200px] border-r py-4 lg:block"
+      role="complementary"
+      aria-label="사이드바"
+    >
       <SidebarMenuContent />
     </aside>
   );
