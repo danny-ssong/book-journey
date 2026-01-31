@@ -16,8 +16,9 @@ import {
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { Bar } from "react-chartjs-2";
 
-import { usePrimaryColorHsl } from "@/hooks/usePrimaryColorHsl";
 import { PostWithBook } from "@/types/post";
+
+import { usePrimaryColorHsl } from "./_hooks/usePrimaryColorHsl";
 
 ChartJS.register(
   CategoryScale,

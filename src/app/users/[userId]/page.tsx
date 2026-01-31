@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import { TabPanel, Tabs } from "@/components/common/Tabs";
 import InfinitePostList from "@/components/post/InfinitePostList";
 import ProfileViewer from "@/components/post/ProfileViewer";
-import UserPostDashboard from "@/components/user/UserPostDashboard";
+import UserPostDashboard from "@/app/_components/statistics/UserPostDashboard";
 
 import { getUsers } from "@/api/client/user";
 import { getUser } from "@/api/server/user";

@@ -5,7 +5,7 @@ import Link from "next/link";
 import ProfileViewer from "@/components/post/ProfileViewer";
 import { Button } from "@/components/ui/button";
 
-import { useAuthContext } from "@/context/AuthContext";
+import { useAuthContext } from "@/providers/AuthProvider";
 
 export default function Page() {
   const user = useAuthContext();

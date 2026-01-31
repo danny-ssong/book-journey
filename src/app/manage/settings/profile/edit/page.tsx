@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuthContext } from "@/context/AuthContext";
+import { useAuthContext } from "@/providers/AuthProvider";
 
 import ProfileForm from "../_components/ProfileForm";
 

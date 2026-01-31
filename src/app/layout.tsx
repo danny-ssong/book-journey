@@ -1,7 +1,7 @@
+import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
 
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
-import { ThemeProvider } from "@/providers/ThemeProvider";
 
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";

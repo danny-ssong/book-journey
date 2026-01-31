@@ -1,6 +1,6 @@
 "use client";
 
-import { AuthProvider } from "@/context/AuthContext";
+import { AuthProvider } from "@/providers/AuthProvider";
 
 export default function ManageLayout({
   children,

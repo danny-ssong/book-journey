@@ -13,7 +13,7 @@ import {
   getGroupByAuthor,
   getGroupByMonth,
   getGroupByYear,
-} from "./_lib/group-by";
+} from "./_utils/group-by";
 
 export default function UserPostDashboard({ user }: { user: User }) {
   const {
