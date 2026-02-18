@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "book-journey-beta.vercel.app"
+        }
+      ],
+      "destination": "https://www.book-journey.shop/$1",
+      "permanent": true
+    }
+  ]
+}
