@@ -26,7 +26,7 @@ export default async function RootLayout({
             <Header />
             <div className="flex flex-1 justify-center pt-16">
               <Sidebar />
-              <main className="w-full max-w-3xl p-8">{children}</main>
+              <main className="w-full max-w-3xl p-4 sm:p-8">{children}</main>
             </div>
             <Toaster position="top-center" richColors />
           </ReactQueryProvider>

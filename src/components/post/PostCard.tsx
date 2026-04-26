@@ -17,8 +17,8 @@ type Props = {
 
 export default function PostCard({ post }: Props) {
   return (
-    <Card className="h-[210px]">
-      <article className="flex h-full gap-4 p-4">
+    <Card className="h-auto sm:h-[210px]">
+      <article className="flex h-full gap-3 p-4 sm:gap-4">
         <BookThumbnail
           title={post.book.title}
           thumbnailUrl={post.book.thumbnailUrl}
@@ -30,7 +30,7 @@ export default function PostCard({ post }: Props) {
                 title={post.book.title}
                 isbn={post.book.isbn}
                 asLink
-                className="max-w-80 truncate"
+                className="max-w-40 sm:max-w-80 truncate"
               />
               <AuthorName authorName={post.book.author.name} asLink />
             </div>

@@ -5,29 +5,28 @@ import { cn } from "@/lib/utils";
 type Props = {
   title: string;
   thumbnailUrl: string;
-  width?: number;
-  height?: number;
   className?: string;
 };
 
 export default function BookThumbnail({
   title,
   thumbnailUrl,
-  width = 120,
-  height = 174,
   className,
 }: Props) {
   return (
     <figure
-      className={cn("overflow-hidden rounded-md border", className)}
-      style={{ width: `${width}px`, height: `${height}px` }}
+      className={cn(
+        "relative overflow-hidden rounded-md border",
+        "w-[80px] h-[116px] sm:w-[120px] sm:h-[174px]",
+        className,
+      )}
     >
       <Image
         src={thumbnailUrl}
         alt={title}
-        width={width}
-        height={height}
-        className="h-full w-full object-cover"
+        fill
+        sizes="(max-width: 640px) 80px, 120px"
+        className="object-cover"
       />
     </figure>
   );

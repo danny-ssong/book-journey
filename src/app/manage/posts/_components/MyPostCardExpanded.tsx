@@ -20,7 +20,7 @@ type Props = {
 function MyPostCardExpanded({ post }: Props) {
   return (
     <Card>
-      <article className="group flex gap-4 p-4">
+      <article className="group flex gap-3 p-4 sm:gap-4">
         <BookThumbnail
           title={post.book.title}
           thumbnailUrl={post.book.thumbnailUrl}
@@ -32,7 +32,7 @@ function MyPostCardExpanded({ post }: Props) {
                 title={post.book.title}
                 isbn={post.book.isbn}
                 asLink
-                className="line-clamp-1 max-w-64"
+                className="line-clamp-1 max-w-36 sm:max-w-64"
               />
               <AuthorName authorName={post.book.author.name} asLink />
             </div>

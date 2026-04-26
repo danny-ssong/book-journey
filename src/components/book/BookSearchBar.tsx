@@ -117,8 +117,7 @@ export default function BookSearchBar({
                     <BookThumbnail
                       title={book.title}
                       thumbnailUrl={book.thumbnailUrl}
-                      width={40}
-                      height={56}
+                      className="w-10 h-14"
                     />
                     <div className="flex min-w-0 flex-1 flex-col">
                       <span className="truncate font-medium">{book.title}</span>
