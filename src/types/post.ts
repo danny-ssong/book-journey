@@ -1,6 +1,6 @@
 import { User } from "@/types/user";
 
-import { Book, CreateBook } from "./book";
+import { Book } from "./book";
 
 export interface Post {
   id: number;

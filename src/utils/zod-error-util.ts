@@ -26,6 +26,8 @@ function getErrorMessages(errors: FieldErrors): string[] {
 }
 
 // FieldError 타입 가드 함수
-function isFieldError(value: any): value is FieldError {
-  return value && typeof value === "object" && "type" in value;
+function isFieldError(value: unknown): value is FieldError {
+  return (
+    typeof value === "object" && value !== null && "type" in value
+  );
 }

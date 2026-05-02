@@ -67,11 +67,13 @@ export default function PostForm({
         : createPostMutation(post));
 
       router.push("/manage/posts");
-    } catch (error: any) {
+    } catch (error) {
       console.error(error);
-      toast.error("포스트 저장 실패", {
-        description: error?.message || "알 수 없는 오류가 발생했습니다.",
-      });
+      const description =
+        error instanceof Error
+          ? error.message
+          : "알 수 없는 오류가 발생했습니다.";
+      toast.error("포스트 저장 실패", { description });
     }
   };
 

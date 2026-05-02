@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 export function useBeforeunload(isDirty: boolean) {
   useEffect(() => {
-    const preventClose = (e: any) => {
+    const preventClose = (e: BeforeUnloadEvent) => {
       if (isDirty) e.preventDefault();
     };
 
