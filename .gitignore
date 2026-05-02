@@ -46,3 +46,13 @@ node_modules/
 /playwright/.auth/
 tests/e2e/.auth.json
 tests/e2e/fixture/*.sql
+
+/src/generated/prisma
+migration-seed.sql
+
+# DB dumps and pg_restore logs (운영 데이터/스키마 노출 위험)
+*.dump
+*.log
+
+# Supabase Studio 자동 저장 SQL 스니펫
+supabase/snippets/
