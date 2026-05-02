@@ -56,3 +56,6 @@ migration-seed.sql
 
 # Supabase Studio 자동 저장 SQL 스니펫
 supabase/snippets/
+
+# 삭제 보류 파일 임시 보관
+.temp/
