@@ -8,7 +8,11 @@ import { Book } from "@/types/book";
 export default function BookItem({ book }: { book: Book }) {
   return (
     <article className="mb-6 flex gap-4 overflow-hidden py-2">
-      <BookThumbnail title={book.title} thumbnailUrl={book.thumbnailUrl} />
+      <BookThumbnail
+        title={book.title}
+        thumbnailUrl={book.thumbnailUrl}
+        className="sm:w-[120px] sm:h-[174px]"
+      />
       <div className="flex flex-1 flex-col gap-2">
         <BookTitle
           title={book.title}

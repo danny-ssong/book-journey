@@ -16,8 +16,8 @@ export default function BookThumbnail({
   return (
     <figure
       className={cn(
-        "relative overflow-hidden rounded-md border",
-        "w-[80px] h-[116px] sm:w-[120px] sm:h-[174px]",
+        "relative shrink-0 overflow-hidden rounded-md border",
+        "w-[80px] h-[116px]",
         className,
       )}
     >
@@ -25,7 +25,7 @@ export default function BookThumbnail({
         src={thumbnailUrl}
         alt={title}
         fill
-        sizes="(max-width: 640px) 80px, 120px"
+        sizes="120px"
         className="object-cover"
       />
     </figure>

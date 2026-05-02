@@ -1,5 +1,3 @@
-import dayjs from "dayjs";
-
 import AuthorName from "@/components/post/AuthorName";
 import BookThumbnail from "@/components/post/BookThumbnail";
 import BookTitle from "@/components/post/BookTitle";
@@ -24,6 +22,7 @@ function MyPostCardExpanded({ post }: Props) {
         <BookThumbnail
           title={post.book.title}
           thumbnailUrl={post.book.thumbnailUrl}
+          className="sm:w-[120px] sm:h-[174px]"
         />
         <section className="flex min-w-0 flex-1 flex-col">
           <header className="flex justify-between">

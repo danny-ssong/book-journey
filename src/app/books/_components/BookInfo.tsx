@@ -12,7 +12,7 @@ export default function BookInfo({ book }: { book: Book }) {
         <BookThumbnail
           title={book.title}
           thumbnailUrl={book.thumbnailUrl}
-          className="mr-4"
+          className="mr-4 sm:w-[120px] sm:h-[174px]"
         />
         <div className="flex-1">
           <BookTitle
