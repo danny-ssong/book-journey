@@ -6,12 +6,13 @@ import { getPost, getPosts } from "@/api/client/post";
 import PostViewer from "../_components/PostViewer";
 
 type Props = {
-  params: {
+  params: Promise<{
     postId: string;
-  };
+  }>;
 };
 
-export default async function Page({ params }: Props) {
+export default async function Page(props: Props) {
+  const params = await props.params;
   const postId = params.postId;
   if (!postId) notFound();
 
@@ -28,7 +29,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const post = await getPost(params.postId);
   if (!post) return { title: "Book-journey" };
   return { title: `${post.title}` };

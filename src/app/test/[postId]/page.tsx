@@ -1,4 +1,3 @@
-import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { getPost } from "@/api/client/post";
@@ -6,12 +5,13 @@ import { getPost } from "@/api/client/post";
 import PostViewer from "@/app/posts/_components/PostViewer";
 
 type Props = {
-  params: {
+  params: Promise<{
     postId: string;
-  };
+  }>;
 };
 
-export default async function Page({ params }: Props) {
+export default async function Page(props: Props) {
+  const params = await props.params;
   const postId = params?.postId;
   if (!postId) return notFound();
 

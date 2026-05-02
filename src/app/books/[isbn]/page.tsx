@@ -10,13 +10,14 @@ import BookInfo from "../_components/BookInfo";
 import PostCardForBook from "../_components/PostCardForBook";
 
 type Props = {
-  params: {
+  params: Promise<{
     isbn: string;
-  };
+  }>;
 };
 
-export default async function Page({ params }: Props) {
-  let { isbn } = params;
+export default async function Page(props: Props) {
+  const params = await props.params;
+  const { isbn } = params;
 
   const bookWithPosts = await getBookWithPosts(isbn);
   const posts = bookWithPosts.posts;
@@ -48,7 +49,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const book = await getBook(params.isbn);
   if (!book) return { title: "Book Not Found" };
   return { title: `${book.title} 책 정보` };

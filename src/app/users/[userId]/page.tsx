@@ -9,12 +9,13 @@ import { getUsers } from "@/api/client/user";
 import { getUser } from "@/api/server/user";
 
 type Props = {
-  params: {
+  params: Promise<{
     userId: string;
-  };
+  }>;
 };
 
-export default async function UserProfilePage({ params }: Props) {
+export default async function UserProfilePage(props: Props) {
+  const params = await props.params;
   const userId = params.userId;
   const user = await getUser(userId);
 
@@ -44,7 +45,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const user = await getUser(params.userId);
   if (!user) return { title: "User Not Found" };
   return { title: `${user.profile.nickname}의 프로필` };
