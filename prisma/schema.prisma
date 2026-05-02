@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Author {
+  id                     Int                     @id @default(autoincrement())
+  name                   String                  @unique @db.VarChar
+  books                  Book[]
+  profileMostReadAuthors ProfileMostReadAuthor[]
+
+  @@map("author")
+}
+
+model Book {
+  createdAt    DateTime @default(now()) @db.Timestamp(6) @map("created_at")
+  updatedAt    DateTime @default(now()) @updatedAt @db.Timestamp(6) @map("updated_at")
+  version      Int
+  isbn         String   @id @db.VarChar
+  title        String   @db.VarChar
+  contents     String   @db.VarChar
+  url          String   @db.VarChar
+  publisher    String   @db.VarChar
+  thumbnailUrl String   @db.VarChar @map("thumbnail_url")
+  publishedAt  DateTime @db.Timestamp(6) @map("published_at")
+  authorId     Int?     @map("author_id")
+  author       Author?  @relation(fields: [authorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  posts        Post[]
+
+  @@map("book")
+}
+
+// Post.userId는 auth.users.id를 직접 참조한다 (cross-schema FK는 supabase/schema-extras.sql).
+// Prisma는 auth schema를 모르므로 user 관계 대신 Profile.userId를 통해 join한다.
+model Post {
+  createdAt DateTime  @default(now()) @db.Timestamp(6) @map("created_at")
+  updatedAt DateTime  @default(now()) @updatedAt @db.Timestamp(6) @map("updated_at")
+  version   Int
+  id        Int       @id @default(autoincrement())
+  title     String?   @db.VarChar
+  content   String?   @db.VarChar
+  rating    Int
+  startDate DateTime  @db.Timestamp(6) @map("start_date")
+  isPrivate Boolean   @map("is_private")
+  deletedAt DateTime? @db.Timestamp(6) @map("deleted_at")
+  userId    String?   @db.Uuid @map("user_id")
+  bookIsbn  String?   @db.VarChar @map("book_isbn")
+  profile   Profile?  @relation(fields: [userId], references: [userId], onDelete: NoAction, onUpdate: NoAction)
+  book      Book?     @relation(fields: [bookIsbn], references: [isbn], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("post")
+}
+
+// Profile은 auth.users와 1:1 매핑되는 도메인 영역.
+// 인증/세션은 Supabase Auth가 관리하고 도메인 정보(닉네임, role, 이름 등)는 여기 둔다.
+// userId가 auth.users.id를 참조하는 cross-schema FK는 supabase/schema-extras.sql로 관리.
+model Profile {
+  createdAt              DateTime                @default(now()) @db.Timestamp(6) @map("created_at")
+  updatedAt              DateTime                @default(now()) @updatedAt @db.Timestamp(6) @map("updated_at")
+  version                Int
+  id                     Int                     @id @default(autoincrement())
+  userId                 String                  @unique @db.Uuid @map("user_id")
+  nickname               String                  @unique @db.VarChar
+  name                   String                  @db.VarChar
+  role                   String                  @default("user") @db.VarChar
+  avatarUrl              String?                 @db.VarChar @map("avatar_url")
+  bio                    String?                 @db.VarChar
+  posts                  Post[]
+  profileMostReadAuthors ProfileMostReadAuthor[]
+
+  @@map("profile")
+}
+
+model ProfileMostReadAuthor {
+  profileId Int     @map("profile_id")
+  authorId  Int     @map("author_id")
+  author    Author  @relation(fields: [authorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@id([profileId, authorId])
+  @@index([authorId])
+  @@index([profileId])
+  @@map("profile_most_read_author")
+}
