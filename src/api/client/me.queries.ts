@@ -17,12 +17,12 @@ export function useGetMe() {
 }
 
 export function useLogout() {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: () => logout(),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: meKeys.all });
+      // signOut 응답으로 쿠키가 비워진 상태에서 풀 리로드.
+      // React Query 캐시·컴포넌트 상태·SSR 트리를 한 번에 깨끗이 초기화한다.
+      window.location.href = "/";
     },
   });
 }
