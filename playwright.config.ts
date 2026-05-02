@@ -2,6 +2,8 @@ import { defineConfig, devices } from "@playwright/test";
 import dotenv from "dotenv";
 
 dotenv.config({ path: ".env.test" });
+// .env.local의 SUPABASE 키들이 setup의 admin client에 필요 (override 안 함 — .env.test 우선)
+dotenv.config({ path: ".env.local" });
 
 export default defineConfig({
   testDir: "./tests/e2e",

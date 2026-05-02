@@ -1,51 +1,99 @@
-import { test as setup, expect } from "@playwright/test";
-import { existsSync } from "fs";
+import { test as setup } from "@playwright/test";
+import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import { createClient } from "@supabase/supabase-js";
 
 export const authFile = "tests/e2e/.auth.json";
 
-setup("authenticate with Google", async ({ page, browser }) => {
-  if (existsSync(authFile)) {
-    const context = await browser.newContext({ storageState: authFile });
-    const testPage = await context.newPage();
+// OAuth-only 테스트 유저는 encrypted_password가 비어있다.
+// admin API로 임시 password를 세팅한 뒤 password grant로 세션을 발급해
+// @supabase/ssr이 직접 만든 쿠키를 그대로 Playwright context에 주입한다.
+// → Google OAuth UI를 거치지 않으므로 "browser may not be secure" 차단을 피한다.
+const TEST_PASSWORD = "e2e-test-password";
 
-    try {
-      await testPage.goto("/");
-      const logoutButton = testPage.getByRole("button", { name: "로그아웃 버튼" });
-      await logoutButton.waitFor({ state: "visible", timeout: 3000 });
+setup("admin API로 세션 발급 후 storageState 저장", async ({ browser }) => {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+  const secretKey = process.env.SUPABASE_SECRET_KEY;
+  const email = process.env.TEST_USER_EMAIL;
+  const baseURL = process.env.TEST_BASE_URL;
 
-      console.log("✅ Auth file이 유효합니다. 로그인 프로세스를 건너뜁니다.");
-      await context.close();
-      return;
-    } catch (error) {
-      console.log("⚠️ Auth file이 만료되었습니다. 재로그인을 진행합니다.");
-      await context.close();
-    }
+  if (!supabaseUrl || !anonKey || !secretKey || !email || !baseURL) {
+    throw new Error(
+      "필수 환경변수 누락: NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY, SUPABASE_SECRET_KEY, TEST_USER_EMAIL, TEST_BASE_URL",
+    );
   }
 
-  console.log("🔐 Starting Google OAuth login...");
-  await page.goto("/login");
+  // 1. admin client로 테스트 유저 찾고 임시 password 세팅
+  const admin = createClient(supabaseUrl, secretKey, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
 
-  // Google OAuth 페이지로 리다이렉트 대기
-  await page.waitForURL("**/accounts.google.com/**");
+  const { data: list, error: listErr } = await admin.auth.admin.listUsers();
+  if (listErr) throw listErr;
+  const user = list.users.find((u) => u.email === email);
+  if (!user) {
+    throw new Error(
+      `테스트 유저(${email})가 DB에 없습니다. tests/e2e/fixture/seed.sql을 확인하세요.`,
+    );
+  }
 
-  // 이메일 입력
-  await page.fill('input[type="email"]', process.env.TEST_GOOGLE_EMAIL!);
-  await page.click("#identifierNext");
+  const { error: updateErr } = await admin.auth.admin.updateUserById(user.id, {
+    password: TEST_PASSWORD,
+  });
+  if (updateErr) throw updateErr;
 
-  // 비밀번호 입력 (페이지 로드 대기)
-  await page.waitForSelector('input[type="password"]', { state: "visible" });
-  await page.fill('input[type="password"]', process.env.TEST_GOOGLE_PASSWORD!);
-  await page.click("#passwordNext");
+  // 2. @supabase/ssr server client로 signInWithPassword → setAll 콜백으로 쿠키 캡처
+  const captured: { name: string; value: string; options: CookieOptions }[] =
+    [];
+  const ssr = createServerClient(supabaseUrl, anonKey, {
+    cookies: {
+      getAll: () => [],
+      setAll: (cookies) => {
+        captured.push(...cookies);
+      },
+    },
+  });
 
-  await page.getByText("계속").waitFor({ state: "visible", timeout: 5000 });
-  await page.getByText("계속").click();
+  const { error: signInErr } = await ssr.auth.signInWithPassword({
+    email,
+    password: TEST_PASSWORD,
+  });
+  if (signInErr) throw signInErr;
 
-  // 앱으로 리다이렉트 대기 (성공적으로 로그인됨)
-  await page.waitForURL("/");
+  if (captured.length === 0) {
+    throw new Error(
+      "signInWithPassword 후 캡처된 쿠키가 없습니다. @supabase/ssr 동작 확인 필요.",
+    );
+  }
 
-  // 로그인 상태 확인
-  await expect(page.locator("text=로그인")).not.toBeVisible();
-
-  // 인증 상태를 파일에 저장
-  await page.context().storageState({ path: authFile });
+  // 3. Playwright context에 쿠키 주입 후 storageState 저장
+  // cookie 라이브러리 포맷 → Playwright 포맷 변환:
+  //   sameSite는 소문자 → 파스칼, maxAge는 → expires(unix sec), domain은 직접 채움
+  const { hostname } = new URL(baseURL);
+  const nowSec = Math.floor(Date.now() / 1000);
+  const context = await browser.newContext();
+  await context.addCookies(
+    captured.map(({ name, value, options }) => ({
+      name,
+      value,
+      domain: hostname,
+      path: options.path ?? "/",
+      httpOnly: options.httpOnly ?? false,
+      secure: options.secure ?? false,
+      sameSite:
+        options.sameSite === "strict" || options.sameSite === true
+          ? "Strict"
+          : options.sameSite === "none"
+            ? "None"
+            : "Lax",
+      expires:
+        options.expires instanceof Date
+          ? Math.floor(options.expires.getTime() / 1000)
+          : typeof options.maxAge === "number"
+            ? nowSec + options.maxAge
+            : -1,
+    })),
+  );
+  await context.storageState({ path: authFile });
+  await context.close();
 });
