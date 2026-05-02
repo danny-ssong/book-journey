@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
 import {
   BarElement,
@@ -30,7 +30,7 @@ ChartJS.register(
   ChartDataLabels,
 );
 
-const options: ChartOptions<"bar"> = {
+const baseOptions: ChartOptions<"bar"> = {
   maintainAspectRatio: false,
   indexAxis: "y" as const,
   responsive: true,
@@ -119,12 +119,22 @@ export default function AuthorChart({ data }: Props) {
     }
   }, []);
 
-  data.sort((a, b) => b.posts.length - a.posts.length);
-  const labels = data.map((d) => d.author);
-  const postCount = data.map((d) => d.posts.length);
-  options.scales!.x!.suggestedMax = Math.max(...postCount) * 1.1;
+  const sortedData = [...data].sort((a, b) => b.posts.length - a.posts.length);
+  const labels = sortedData.map((d) => d.author);
+  const postCount = sortedData.map((d) => d.posts.length);
 
-  const categoryPercentage = data.length > 3 ? 0.6 : 0.2;
+  const options: ChartOptions<"bar"> = {
+    ...baseOptions,
+    scales: {
+      ...baseOptions.scales,
+      x: {
+        ...baseOptions.scales?.x,
+        suggestedMax: Math.max(...postCount) * 1.1,
+      },
+    },
+  };
+
+  const categoryPercentage = sortedData.length > 3 ? 0.6 : 0.2;
 
   const dataset: CustomBarChartDataset = {
     data: postCount,
@@ -132,7 +142,7 @@ export default function AuthorChart({ data }: Props) {
     borderWidth: 1,
     borderColor: darkerPrimaryColor,
     backgroundColor: primaryColor,
-    customData: data.map((d) => d.posts),
+    customData: sortedData.map((d) => d.posts),
   };
 
   const barData = {
@@ -143,7 +153,7 @@ export default function AuthorChart({ data }: Props) {
   return (
     <div className="rounded-lg px-5 py-4 shadow">
       <div ref={chartContainerRef} className="max-h-[600px] overflow-y-auto">
-        <div style={{ height: `${data.length * 45}px` }}>
+        <div style={{ height: `${sortedData.length * 45}px` }}>
           <Bar options={options} data={barData} />
         </div>
       </div>

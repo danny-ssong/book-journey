@@ -31,7 +31,7 @@ ChartJS.register(
   ChartDataLabels,
 );
 
-const options: ChartOptions<"bar"> = {
+const baseOptions: ChartOptions<"bar"> = {
   maintainAspectRatio: false,
   responsive: true,
   plugins: {
@@ -161,7 +161,16 @@ export default function BookChartPerMonth({ data }: Props) {
     }
   }
 
-  options.scales!.y!.suggestedMax = Math.max(...postCountPerMonth) * 1.1;
+  const options: ChartOptions<"bar"> = {
+    ...baseOptions,
+    scales: {
+      ...baseOptions.scales,
+      y: {
+        ...baseOptions.scales?.y,
+        suggestedMax: Math.max(...postCountPerMonth) * 1.1,
+      },
+    },
+  };
 
   const categoryPercentage = data.length > 5 ? 0.3 : 0.2;
 
