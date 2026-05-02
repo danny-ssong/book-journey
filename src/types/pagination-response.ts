@@ -1,5 +1,5 @@
 export interface PaginationResponse<T> {
   data: T[];
-  nextCursor: number;
+  nextCursor: number | null;
   count: number;
 }

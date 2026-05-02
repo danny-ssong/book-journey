@@ -10,7 +10,7 @@ export async function serverFetch<T>(
   const headers = new Headers(options?.headers);
 
   if (options?.withCookies) {
-    const cookie = cookies().toString();
+    const cookie = (await cookies()).toString();
     if (cookie) {
       headers.set("Cookie", cookie);
     }

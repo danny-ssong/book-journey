@@ -1,61 +1,31 @@
-import dayjs from "dayjs";
-
+import {
+  createPost as createPostAction,
+  deletePost as deletePostAction,
+  getMyPosts as getMyPostsAction,
+  getPost as getPostAction,
+  getPosts as getPostsAction,
+  getPostsByUser as getPostsByUserAction,
+  updatePost as updatePostAction,
+} from "@/actions/posts";
 import { CreatePost, UpdatePost } from "@/schemas/post";
 import { PaginationResponse } from "@/types/pagination-response";
 import { PostWithBook } from "@/types/post";
 
-import { revalidatePath } from "../server/util/revalidatePath";
-
 export async function createPost(
   createPostData: CreatePost,
 ): Promise<PostWithBook> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(createPostData),
-    credentials: "include",
-  });
-  if (!res.ok) throw new Error((await res.json()).message);
-
-  return res.json();
+  return createPostAction(createPostData);
 }
 
 export async function updatePost(
   id: number,
   updatePostData: UpdatePost,
 ): Promise<PostWithBook> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts/${id}`,
-    {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatePostData),
-      credentials: "include",
-    },
-  );
-  if (!res.ok) throw new Error((await res.json()).message);
-
-  await revalidatePath(`/posts/${id}`);
-  return res.json();
+  return updatePostAction(id, updatePostData);
 }
 
 export async function deletePost(postId: number) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts/${postId}`,
-    {
-      method: "DELETE",
-      credentials: "include",
-    },
-  );
-  if (!res.ok) throw new Error((await res.json()).message);
-
-  await revalidatePath(`/posts/${postId}`);
-
-  return res.json();
+  return deletePostAction(postId);
 }
 
 export async function getUserPosts(
@@ -63,56 +33,23 @@ export async function getUserPosts(
   userId: string,
   cursor?: string,
 ): Promise<PaginationResponse<PostWithBook>> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts/user/${userId}?take=${take}&cursor=${cursor ?? ""}`,
-    {
-      credentials: "include",
-    },
-  );
-  if (!res.ok) throw new Error((await res.json()).message);
-
-  return res.json();
+  return getPostsByUserAction(userId, take, cursor);
 }
 
 export async function getPosts(
   take: number,
   cursor?: string,
 ): Promise<PaginationResponse<PostWithBook>> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts?take=${take}&order=updatedAt_DESC&cursor=${cursor ?? ""}`,
-    {
-      credentials: "include",
-    },
-  );
-  if (!res.ok) throw new Error((await res.json()).message);
-
-  return res.json();
+  return getPostsAction(take, cursor);
 }
 
 export async function getMyPosts(
   take: number,
   cursor?: string,
 ): Promise<PaginationResponse<PostWithBook>> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts/user/me?take=${take}&order=updatedAt_DESC&cursor=${cursor ?? ""}`,
-    {
-      credentials: "include",
-    },
-  );
-  if (!res.ok) throw new Error((await res.json()).message);
-
-  return res.json();
+  return getMyPostsAction(take, cursor);
 }
 
 export async function getPost(postId: string): Promise<PostWithBook> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/posts/${postId}`,
-    {
-      credentials: "include",
-    },
-  );
-
-  if (!res.ok) throw new Error((await res.json()).message);
-
-  return res.json();
+  return getPostAction(postId);
 }
