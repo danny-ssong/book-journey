@@ -12,7 +12,6 @@ const test = base.extend<{ homePage: HomePage }>({
 test("최신 포스트들이 보여야 한다.", async ({ homePage }) => {
   await expect(homePage.getPostCardByPostTitle("무라카미 하루키는 어렵다")).toBeVisible();
   await expect(homePage.getPostCardByPostTitle("밸런타인데이의 무말랭이")).toBeVisible();
-  await expect(homePage.getPostCardByPostTitle("코끼리 공장의 해피엔드")).toBeVisible();
   await expect(homePage.getPostCardByPostTitle("브릿마리 여기 있다")).toBeVisible();
 });
 

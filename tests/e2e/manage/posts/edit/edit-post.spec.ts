@@ -15,7 +15,7 @@ const test = base.extend<{ editPostPage: EditPostPage }>({
 test("포스트 공개 수정", async ({ page, editPostPage }) => {
   await test.step("포스트 수정 후 글 관리 페이지로 이동한다.", async () => {
     await editPostPage.editPost({
-      bookTitle: "직업으로서의 소설가",
+      bookTitle: "무라카미 하루키는 어렵다",
       privacy: "공개",
       rating: 4,
       readDate: new Date("2022-02-02"),

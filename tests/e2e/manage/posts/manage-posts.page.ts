@@ -57,5 +57,7 @@ export class ManagePostsPage {
   async scrollToBottom() {
     await this.page.mouse.wheel(0, 10000);
     await this.page.waitForRequest((r) => r.url().includes("/posts"));
+    await this.page.mouse.wheel(0, 10000);
+    await this.page.waitForRequest((r) => r.url().includes("/posts"));
   }
 }

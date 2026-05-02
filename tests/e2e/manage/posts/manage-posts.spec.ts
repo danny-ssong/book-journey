@@ -17,7 +17,7 @@ test("다른 사용자의 포스트는 보이지 않는다.", async ({ page, man
   await expect(page.getByText("브릿마리 여기 있다는 다른 사용자 포스트").first()).not.toBeVisible();
 });
 
-test("간단히 보기 View에서는 책 이미지가 보이지 않는다.", async ({ page, managePostsPage }) => {
+test("간단히 보기 View에서는 책 이미지가 보이지 않는다.", async ({ managePostsPage }) => {
   await managePostsPage.toggleView(false);
   await expect(managePostsPage.getPostCardImage("밸런타인데이의 무말랭이")).not.toBeVisible();
 });
@@ -28,8 +28,8 @@ test("포스트 수정 페이지로 이동할 수 있다.", async ({ page, manag
 });
 
 test("포스트를 삭제할 수 있다.", async ({ page, managePostsPage }) => {
-  await managePostsPage.deletePost("코끼리 공장의 해피엔드는 삭제될 포스트");
-  await expect(page.getByText("코끼리 공장의 해피엔드는 삭제될 포스트").first()).not.toBeVisible();
+  await managePostsPage.deletePost("무라카미 하루키는 어렵다");
+  await expect(page.getByText("무라카미 하루키는 어렵다").first()).not.toBeVisible();
 });
 
 test("무한스크롤 - 스크롤을 끝까지 내리면 추가 포스트를 불러온다.", async ({ page, managePostsPage }) => {

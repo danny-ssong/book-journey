@@ -1,15 +1,12 @@
-import { execSync } from "child_process";
+import { seedLocal } from "../../../scripts/seed-local";
 
 export default async function resetDB() {
-  console.log("resetting Database ...");
+  console.log("로컬 Supabase DB 초기화 중...");
   try {
-    execSync(`cat ./tests/e2e/fixture/drop-tables.sql | docker exec -i local-postgres psql -U postgres -d bookjourney`, {
-      stdio: "inherit",
-    });
-    execSync(`cat ./tests/e2e/fixture/test-dump.sql | docker exec -i local-postgres psql -U postgres -d bookjourney`, { stdio: "inherit" });
-    console.log("✅ Database reset complete!");
+    await seedLocal();
+    console.log("DB 초기화 완료");
   } catch (error) {
-    console.error("❌ Failed to reset database:", error);
+    console.error("DB 초기화 실패:", error);
     throw error;
   }
 }

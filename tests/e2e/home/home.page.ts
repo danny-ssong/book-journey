@@ -38,9 +38,7 @@ export class HomePage {
 
   async scrollToBottom() {
     await this.page.mouse.wheel(0, 10000);
-    await this.page.waitForRequest((r) => r.url().includes("/posts"));
-    // 25ms 소요
-    // await this.page.waitForLoadState("networkidle");
-    // waitForLoadState는 800ms 정도 소요
+    await this.page.mouse.wheel(0, 10000);
+    await this.page.mouse.wheel(0, 10000);
   }
 }
