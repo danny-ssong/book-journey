@@ -23,6 +23,18 @@ setup("admin API로 세션 발급 후 storageState 저장", async ({ browser }) 
     );
   }
 
+  // admin API가 운영 유저 비밀번호를 덮어쓰지 못하도록 호스트 가드.
+  // SUPABASE_SECRET_KEY/TEST_USER_EMAIL이 운영 값으로 잘못 세팅되어도
+  // localhost가 아니면 즉시 실패한다.
+  const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1"]);
+  const supabaseHost = new URL(supabaseUrl).hostname;
+  const baseHost = new URL(baseURL).hostname;
+  if (!LOCAL_HOSTS.has(supabaseHost) || !LOCAL_HOSTS.has(baseHost)) {
+    throw new Error(
+      `E2E setup은 localhost에서만 실행 가능합니다. supabase=${supabaseHost}, base=${baseHost}`,
+    );
+  }
+
   // 1. admin client로 테스트 유저 찾고 임시 password 세팅
   const admin = createClient(supabaseUrl, secretKey, {
     auth: { autoRefreshToken: false, persistSession: false },
