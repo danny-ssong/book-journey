@@ -62,6 +62,10 @@
   * {
     @apply border-border outline-ring/50;
   }
+  /* 스크롤바 등장/소실로 인한 헤더 CLS 방지 — 항상 스크롤바 자리만 예약 */
+  html {
+    scrollbar-gutter: stable;
+  }
   body {
     @apply bg-background text-foreground;
   }
