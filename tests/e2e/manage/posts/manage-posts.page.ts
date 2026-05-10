@@ -21,8 +21,8 @@ export class ManagePostsPage {
     return this.getPostCard(postTitle).getByRole("img", { name: postTitle });
   }
 
-  getPostCardRecentEditDate(postTitle: string) {
-    return this.getPostCard(postTitle).getByLabel("최근 수정일");
+  getPostCardCreatedDate(postTitle: string) {
+    return this.getPostCard(postTitle).getByLabel("작성일");
   }
 
   getPostCardRate(postTitle: string) {

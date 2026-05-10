@@ -29,8 +29,8 @@ test("포스트 공개 작성", async ({ page, newPostPage }) => {
   await test.step("글 관리 페이지에 작성한 포스트가 반영되어야 한다.", async () => {
     const managePostsPage = new ManagePostsPage(page);
 
-    const recentEditDate = managePostsPage.getPostCardRecentEditDate("공개로 작성된 포스트 제목");
-    await expect(recentEditDate.getByText(dayjs(new Date()).format("YYYY-MM-DD"))).toBeVisible();
+    const createdDate = managePostsPage.getPostCardCreatedDate("공개로 작성된 포스트 제목");
+    await expect(createdDate.getByText(dayjs(new Date()).format("YYYY-MM-DD"))).toBeVisible();
 
     const rate = managePostsPage.getPostCardRate("공개로 작성된 포스트 제목");
     await expect(rate).toHaveAttribute("aria-label", "평점 4점");
@@ -61,8 +61,8 @@ test("포스트 비공개로 작성", async ({ page, newPostPage }) => {
   await test.step("글 관리 페이지에 작성한 포스트가 반영되어야 한다.", async () => {
     const managePostsPage = new ManagePostsPage(page);
 
-    const recentEditDate = managePostsPage.getPostCardRecentEditDate("비공개로 작성된 포스트 제목");
-    await expect(recentEditDate.getByText(dayjs(new Date()).format("YYYY-MM-DD"))).toBeVisible();
+    const createdDate = managePostsPage.getPostCardCreatedDate("비공개로 작성된 포스트 제목");
+    await expect(createdDate.getByText(dayjs(new Date()).format("YYYY-MM-DD"))).toBeVisible();
 
     const rate = managePostsPage.getPostCardRate("비공개로 작성된 포스트 제목");
     await expect(rate).toHaveAttribute("aria-label", "평점 4점");

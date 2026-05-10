@@ -1,6 +1,5 @@
 import { test as base, expect } from "@playwright/test";
 import { EditPostPage } from "./edit-post.page";
-import dayjs from "dayjs";
 import { ManagePostsPage } from "../manage-posts.page";
 import { HomePage } from "../../../home/home.page";
 
@@ -28,9 +27,6 @@ test("포스트 공개 수정", async ({ page, editPostPage }) => {
 
   await test.step("글 관리 페이지에 수정 내역이 반영되어야 한다.", async () => {
     const managePostsPage = new ManagePostsPage(page);
-
-    const recentEditDate = managePostsPage.getPostCardRecentEditDate("수정된 포스트 제목");
-    await expect(recentEditDate.getByText(dayjs(new Date()).format("YYYY-MM-DD"))).toBeVisible();
 
     const rate = managePostsPage.getPostCardRate("수정된 포스트 제목");
     await expect(rate).toHaveAttribute("aria-label", "평점 4점");
@@ -61,8 +57,6 @@ test("포스트 비공개로 수정", async ({ page, editPostPage }) => {
   await test.step("글 관리 페이지에 수정 내역이 반영되어야 한다.", async () => {
     const managePostsPage = new ManagePostsPage(page);
 
-    const recentEditDate = managePostsPage.getPostCardRecentEditDate("비공개로 수정된 포스트 제목");
-    await expect(recentEditDate.getByText(dayjs(new Date()).format("YYYY-MM-DD"))).toBeVisible();
 
     const rate = managePostsPage.getPostCardRate("비공개로 수정된 포스트 제목");
     await expect(rate).toHaveAttribute("aria-label", "평점 4점");
