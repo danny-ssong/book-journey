@@ -11,6 +11,7 @@ import Rating from "@/components/post/Rating";
 import UserName from "@/components/post/UserName";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 import { useGetMe } from "@/api/client/me.queries";
 import { PostWithBook } from "@/types/post";
@@ -22,21 +23,24 @@ export default function PostViewer({ post }: { post: PostWithBook }) {
   return (
     <article>
       <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <BookTitle title={post.book.title} isbn={post.book.isbn} asLink />
-              <AuthorName authorName={post.book.author.name} asLink />
-            </div>
-            <DateViewer date={post.startDate} label="읽은 날짜" />
+        <CardHeader className="gap-3">
+          <div className="flex items-center gap-2">
+            <BookTitle title={post.book.title} isbn={post.book.isbn} asLink />
+            <AuthorName authorName={post.book.author.name} asLink />
           </div>
-          <Rating rating={post.rating} />
-          <UserName
-            userName={post.user.profile.nickname}
-            userId={post.user.id}
-            asLink
-          />
+          <div className="flex flex-col gap-1">
+            <UserName
+              userName={post.user.profile.nickname}
+              userId={post.user.id}
+              asLink
+            />
+            <div className="flex items-center gap-3">
+              <Rating rating={post.rating} />
+              <DateViewer date={post.startDate} label="읽은 날짜" />
+            </div>
+          </div>
         </CardHeader>
+        <Separator />
         <CardContent className="flex min-h-[600px] flex-col p-6">
           <PostTitle post={post} className="mb-4 text-xl font-semibold" />
           <PostContent post={post} className="whitespace-pre-line" />
