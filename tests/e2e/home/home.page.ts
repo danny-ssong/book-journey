@@ -25,7 +25,7 @@ export class HomePage {
   }
 
   async clickPostTitleInPost(postTitle: string) {
-    await this.postCards.getByText(postTitle).click();
+    await this.postCards.getByText(postTitle).first().click();
   }
 
   async clickContentInPost(content: string) {

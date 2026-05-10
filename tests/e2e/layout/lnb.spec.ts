@@ -10,6 +10,7 @@ const test = base.extend<{ lnbPage: LNBPage }>({
 });
 
 test("글쓰기 버튼 클릭 시 해당 페이지로 이동한다.", async ({ page, lnbPage }) => {
+  await page.waitForLoadState("networkidle");
   await lnbPage.clickWritePost();
   await expect(page).toHaveURL("/posts/new");
 });
