@@ -54,7 +54,7 @@ export class EditPostPage {
   private async fillBookTitleAndSelectBook(searchKeyword: string, bookTitle: string) {
     await this.searchBar.clear();
     await this.searchBar.pressSequentially(searchKeyword, { delay: 50 });
-    await this.page.getByRole("status", { name: "책 검색 결과" }).getByText(bookTitle).click();
+    await this.page.getByRole("dialog").getByText(bookTitle).click();
   }
 
   private async selectRating(value: 1 | 2 | 3 | 4 | 5) {
