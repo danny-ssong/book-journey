@@ -42,6 +42,13 @@ test("포스트 공개 작성", async ({ page, newPostPage }) => {
     const postCard = homePage.getPostCardByPostTitle("공개로 작성된 포스트 제목");
     await expect(postCard.getByText("공개로 작성된 포스트 내용").first()).toBeVisible();
   });
+
+  await test.step("작성한 포스트 상세에서 읽은 날짜가 입력값으로 표시된다.", async () => {
+    const homePage = new HomePage(page);
+    await homePage.clickPostTitleInPost("공개로 작성된 포스트 제목");
+    await page.waitForURL(/\/posts\/\d+/);
+    await expect(page.getByLabel("읽은 날짜")).toContainText("2022-02");
+  });
 });
 
 test("포스트 비공개로 작성", async ({ page, newPostPage }) => {
