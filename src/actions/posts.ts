@@ -123,6 +123,7 @@ export async function createPost(input: CreatePost): Promise<PostWithBook> {
     });
   });
 
+  revalidatePath("/");
   return toPostWithBook(created);
 }
 
@@ -178,6 +179,7 @@ export async function updatePost(
   });
 
   revalidatePath(`/posts/${id}`);
+  revalidatePath("/");
   return toPostWithBook(updated);
 }
 
@@ -196,6 +198,7 @@ export async function deletePost(postId: number): Promise<{ id: number }> {
   });
 
   revalidatePath(`/posts/${postId}`);
+  revalidatePath("/");
   return { id: postId };
 }
 
@@ -239,7 +242,7 @@ async function paginatePosts(
 
   const posts = await prisma.post.findMany({
     where: baseWhere,
-    orderBy: [{ updatedAt: "desc" }, { id: "desc" }],
+    orderBy: [{ createdAt: "desc" }, { id: "desc" }],
     take: take + 1,
     ...(cursorId !== undefined ? { cursor: { id: cursorId }, skip: 1 } : {}),
     include: POST_INCLUDE,
