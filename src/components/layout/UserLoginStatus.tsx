@@ -10,13 +10,17 @@ export default function UserLoginStatus() {
   const { data: user, isPending } = useGetMe();
 
   if (isPending) {
-    return <div className="w-[120px] py-2" aria-hidden />;
+    return (
+      <div className="flex items-center justify-end py-2" aria-hidden>
+        <div className="h-8 w-16 animate-pulse rounded bg-muted" />
+      </div>
+    );
   }
 
   if (user) {
     return (
-      <div className="flex w-[120px] items-center justify-between py-2">
-        <p className="xs:block hidden text-nowrap text-xs">
+      <div className="flex items-center justify-end gap-2 py-2 lg:gap-4">
+        <p className="hidden text-nowrap text-xs lg:block">
           {user.profile.nickname}
         </p>
         <LogoutButton />
@@ -25,8 +29,10 @@ export default function UserLoginStatus() {
   }
 
   return (
-    <div className="w-[120px] text-nowrap py-2 pl-4">
-      <Link href="/login">로그인</Link>
+    <div className="flex items-center justify-end py-2">
+      <Link href="/login" className="text-nowrap text-sm">
+        로그인
+      </Link>
     </div>
   );
 }

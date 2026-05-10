@@ -34,7 +34,11 @@ export function SidebarMenuContent() {
 
   return (
     <div className="px-3 py-6">
-      <Button asChild className="mb-6 w-full px-4 py-2 text-center">
+      <Button
+        asChild
+        variant="outline"
+        className="mb-6 w-full border-primary px-4 py-2 text-center text-primary hover:bg-primary hover:text-primary-foreground"
+      >
         <Link href={!!user ? `/posts/new` : "/login"}>글쓰기</Link>
       </Button>
       {!!user && (

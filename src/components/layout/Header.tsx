@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import HeaderNavLinks from "./HeaderNavLinks";
+// import HeaderNavLinks from "./HeaderNavLinks";
 import BookSearchArea from "./MainBookSearchBar";
 import MobileSidebar from "./MobileSidebar";
 import ThemeModeToggle from "./ThemeModeToggle";
@@ -23,12 +23,14 @@ function DesktopHeader() {
       className="fixed z-50 hidden min-h-16 w-full items-center justify-between border bg-background px-10 lg:flex"
       aria-label="데스크톱 헤더"
     >
-      <div className="flex items-center gap-10">
-        <span className="text-nowrap">Book-Journey</span>
-        <HeaderNavLinks />
+      <div className="flex flex-1 items-center gap-10">
+        <Link href="/" className="text-nowrap">
+          Book-Journey
+        </Link>
+        {/* <HeaderNavLinks /> */}
       </div>
       <BookSearchArea />
-      <div className="flex items-center gap-10">
+      <div className="flex flex-1 items-center justify-end gap-10">
         <UserLoginStatus />
         <ThemeModeToggle />
       </div>
