@@ -10,9 +10,15 @@ type Props = {
   date: Date;
   label?: string;
   className?: string;
+  format?: string;
 };
 
-export default function DateViewer({ date, label, className }: Props) {
+export default function DateViewer({
+  date,
+  label,
+  className,
+  format = "YYYY-MM-DD",
+}: Props) {
   const id = useId();
 
   return (
@@ -24,7 +30,7 @@ export default function DateViewer({ date, label, className }: Props) {
     >
       <span id={id}>{label}</span>
       <time dateTime={date.toString()} aria-labelledby={id}>
-        {dayjs(date).format("YYYY-MM-DD")}
+        {dayjs(date).format(format)}
       </time>
     </div>
   );

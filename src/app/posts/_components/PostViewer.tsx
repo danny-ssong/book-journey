@@ -36,7 +36,11 @@ export default function PostViewer({ post }: { post: PostWithBook }) {
             />
             <div className="flex items-center gap-3">
               <Rating rating={post.rating} />
-              <DateViewer date={post.startDate} label="읽은 날짜" />
+              <DateViewer
+                date={post.startDate}
+                label="읽은 날짜"
+                format="YYYY-MM"
+              />
             </div>
           </div>
         </CardHeader>
