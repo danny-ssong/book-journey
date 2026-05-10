@@ -24,7 +24,7 @@ export default function PostCardForBook({ post }: Props) {
               asLink
             />
           </div>
-          <DateViewer date={post.updatedAt} label="최근 수정일" />
+          <DateViewer date={post.createdAt} label="작성일" />
         </div>
         <PostTitle post={post} asLink />
         <PostContent post={post} maxLines={3} asLink />

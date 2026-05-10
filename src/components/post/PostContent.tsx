@@ -17,11 +17,11 @@ export default function PostContent({
   maxLines,
 }: Props) {
   const classMap = {
-    1: cn("text-sm line-clamp-1 h-[1.25rem] ", className),
-    2: cn("text-sm line-clamp-2 h-[2.5rem] ", className),
-    3: cn("text-sm line-clamp-3 h-[3.75rem] ", className),
-    4: cn("text-sm line-clamp-4 h-[5rem] ", className),
-    5: cn("text-sm line-clamp-5 h-[6.25rem] ", className),
+    1: cn("text-sm line-clamp-1", className),
+    2: cn("text-sm line-clamp-2", className),
+    3: cn("text-sm line-clamp-3", className),
+    4: cn("text-sm line-clamp-4", className),
+    5: cn("text-sm line-clamp-5", className),
   } as const;
 
   const href = post.isPrivate
@@ -29,7 +29,12 @@ export default function PostContent({
     : `/posts/${post.id}`;
 
   return (
-    <p className={maxLines ? classMap[maxLines] : className}>
+    <p
+      className={cn(
+        "break-words",
+        maxLines ? classMap[maxLines] : className
+      )}
+    >
       {asLink ? (
         <Link href={href} className="hover:underline">
           {post.content}
