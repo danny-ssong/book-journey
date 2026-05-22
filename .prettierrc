@@ -10,5 +10,9 @@
     "^[./]"
   ],
   "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true
+  "importOrderSortSpecifiers": true,
+  "singleQuote": true,
+  "printWidth": 140,
+  "semi": false,
+  "trailingComma": "all"
 }
