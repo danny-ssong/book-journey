@@ -1,7 +1,12 @@
 "use client";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { toast } from "sonner";
 
 function makeQueryClient() {
   return new QueryClient({
@@ -10,9 +15,20 @@ function makeQueryClient() {
         retry: 0,
         gcTime: 1000 * 60 * 10,
         staleTime: 1000 * 60 * 10,
-        refetchOnWindowFocus: false,
       },
     },
+    queryCache: new QueryCache({
+      onError: (error, query) => {
+        if (query.state.data !== undefined) {
+          const errorMessage =
+            query.meta?.errorMessage ?? "최신 데이터를 불러오지 못했습니다.";
+
+          if (typeof errorMessage === "string") {
+            toast.error(errorMessage);
+          }
+        }
+      },
+    }),
   });
 }
 
