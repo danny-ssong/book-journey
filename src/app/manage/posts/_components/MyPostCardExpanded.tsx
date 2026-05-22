@@ -22,7 +22,7 @@ function MyPostCardExpanded({ post }: Props) {
         <BookThumbnail
           title={post.book.title}
           thumbnailUrl={post.book.thumbnailUrl}
-          className="sm:w-[120px] sm:h-[174px]"
+          className="sm:h-[174px] sm:w-[120px]"
         />
         <section className="flex min-w-0 flex-1 flex-col">
           <header className="flex items-center justify-between gap-2">
@@ -31,7 +31,7 @@ function MyPostCardExpanded({ post }: Props) {
                 title={post.book.title}
                 isbn={post.book.isbn}
                 asLink
-                className="line-clamp-1 max-w-36 sm:max-w-64 text-base"
+                className="line-clamp-1 max-w-36 text-base sm:max-w-64"
               />
               <AuthorName authorName={post.book.author.name} asLink />
             </div>
