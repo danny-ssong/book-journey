@@ -1,38 +1,36 @@
-"use client";
+'use client'
 
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from 'react'
 
-import { useTheme } from "next-themes";
+import { useTheme } from 'next-themes'
 
 export function usePrimaryColorHsl() {
-  const { theme } = useTheme();
-  const [primaryColor, setPrimaryColor] = useState<string>("");
-  const [darkerPrimaryColor, setDarkerPrimaryColor] = useState<string>("");
+  const { theme } = useTheme()
+  const [primaryColor, setPrimaryColor] = useState<string>('')
+  const [darkerPrimaryColor, setDarkerPrimaryColor] = useState<string>('')
 
   useLayoutEffect(() => {
     setTimeout(() => {
-      const computedPrimary = getComputedStyle(document.documentElement)
-        .getPropertyValue("--primary")
-        .trim();
+      const computedPrimary = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim()
 
-      const colorParts = computedPrimary.split(" ");
+      const colorParts = computedPrimary.split(' ')
       if (colorParts.length === 3) {
-        const hue = colorParts[0].trim();
-        const saturation = colorParts[1].trim();
-        const lightness = colorParts[2].trim();
+        const hue = colorParts[0].trim()
+        const saturation = colorParts[1].trim()
+        const lightness = colorParts[2].trim()
 
-        const lightnessValue = parseFloat(lightness.replace("%", ""));
+        const lightnessValue = parseFloat(lightness.replace('%', ''))
 
-        const darkerLightnessValue = Math.max(0, lightnessValue - 20);
+        const darkerLightnessValue = Math.max(0, lightnessValue - 20)
 
-        const primaryColorString = `hsl(${hue}, ${saturation}, ${lightness})`;
-        const darkerPrimaryColorString = `hsl(${hue}, ${saturation}, ${darkerLightnessValue}%)`;
+        const primaryColorString = `hsl(${hue}, ${saturation}, ${lightness})`
+        const darkerPrimaryColorString = `hsl(${hue}, ${saturation}, ${darkerLightnessValue}%)`
 
-        setPrimaryColor(primaryColorString);
-        setDarkerPrimaryColor(darkerPrimaryColorString);
+        setPrimaryColor(primaryColorString)
+        setDarkerPrimaryColor(darkerPrimaryColorString)
       }
-    }, 0);
-  }, [theme]);
+    }, 0)
+  }, [theme])
 
-  return { primaryColor, darkerPrimaryColor };
+  return { primaryColor, darkerPrimaryColor }
 }

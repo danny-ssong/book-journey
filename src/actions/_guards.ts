@@ -1,9 +1,9 @@
-import "server-only";
+import { redirect } from 'next/navigation'
 
-import { redirect } from "next/navigation";
+import 'server-only'
 
-import { prisma } from "@/lib/prisma";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { prisma } from '@/lib/prisma'
+import { createSupabaseServerClient } from '@/lib/supabase/server'
 
 /**
  * 현재 요청자의 auth.users.id를 반환. 인증 안 된 상태면 /login으로 redirect.
@@ -12,12 +12,12 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
  * getSession()처럼 위조된 쿠키에 속지 않으며 getUser()처럼 매 요청 네트워크를 타지도 않는다.
  */
 export async function requireUserId(): Promise<string> {
-  const supabase = await createSupabaseServerClient();
-  const { data, error } = await supabase.auth.getClaims();
+  const supabase = await createSupabaseServerClient()
+  const { data, error } = await supabase.auth.getClaims()
   if (error || !data?.claims?.sub) {
-    redirect("/login");
+    redirect('/login')
   }
-  return data.claims.sub;
+  return data.claims.sub
 }
 
 /**
@@ -25,21 +25,21 @@ export async function requireUserId(): Promise<string> {
  * Profile이 없는 경우는 트리거가 동작하지 않은 비정상 상태로 간주한다.
  */
 export async function requireProfile() {
-  const userId = await requireUserId();
-  const profile = await prisma.profile.findUnique({ where: { userId } });
+  const userId = await requireUserId()
+  const profile = await prisma.profile.findUnique({ where: { userId } })
   if (!profile) {
-    redirect("/login");
+    redirect('/login')
   }
-  return profile;
+  return profile
 }
 
 /**
  * 리소스 소유자 검증. ownerUserId(auth.users.id)가 현재 요청자와 다르면 throw.
  */
 export async function requireOwner(ownerUserId: string | null | undefined) {
-  const userId = await requireUserId();
+  const userId = await requireUserId()
   if (ownerUserId !== userId) {
-    throw new Error("접근 권한이 없습니다");
+    throw new Error('접근 권한이 없습니다')
   }
-  return userId;
+  return userId
 }

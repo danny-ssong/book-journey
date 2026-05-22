@@ -1,13 +1,13 @@
-import { AlertCircleIcon } from "lucide-react";
+import { AlertCircleIcon } from 'lucide-react'
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 export default function ErrorAlert({
-  title = "에러가 발생했습니다.",
-  description = "다시 시도해주세요.",
+  title = '에러가 발생했습니다.',
+  description = '다시 시도해주세요.',
 }: {
-  title?: string;
-  description?: string;
+  title?: string
+  description?: string
 }) {
   return (
     <div className="grid w-full max-w-xl items-start gap-4">
@@ -17,5 +17,5 @@ export default function ErrorAlert({
         <AlertDescription>{description}</AlertDescription>
       </Alert>
     </div>
-  );
+  )
 }

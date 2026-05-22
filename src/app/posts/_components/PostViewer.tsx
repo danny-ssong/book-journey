@@ -1,24 +1,24 @@
-"use client";
+'use client'
 
-import Link from "next/link";
+import Link from 'next/link'
 
-import AuthorName from "@/components/post/AuthorName";
-import BookTitle from "@/components/post/BookTitle";
-import DateViewer from "@/components/post/DateViewer";
-import PostContent from "@/components/post/PostContent";
-import PostTitle from "@/components/post/PostTitle";
-import Rating from "@/components/post/Rating";
-import UserName from "@/components/post/UserName";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import AuthorName from '@/components/post/AuthorName'
+import BookTitle from '@/components/post/BookTitle'
+import DateViewer from '@/components/post/DateViewer'
+import PostContent from '@/components/post/PostContent'
+import PostTitle from '@/components/post/PostTitle'
+import Rating from '@/components/post/Rating'
+import UserName from '@/components/post/UserName'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
 
-import { useGetMe } from "@/api/client/me.queries";
-import { PostWithBook } from "@/types/post";
+import { useGetMe } from '@/api/client/me.queries'
+import { PostWithBook } from '@/types/post'
 
 export default function PostViewer({ post }: { post: PostWithBook }) {
-  const { data: user } = useGetMe();
-  const isOwner = post.user.id === user?.id;
+  const { data: user } = useGetMe()
+  const isOwner = post.user.id === user?.id
 
   return (
     <article>
@@ -29,18 +29,10 @@ export default function PostViewer({ post }: { post: PostWithBook }) {
             <AuthorName authorName={post.book.author.name} asLink />
           </div>
           <div className="flex flex-col gap-1">
-            <UserName
-              userName={post.user.profile.nickname}
-              userId={post.user.id}
-              asLink
-            />
+            <UserName userName={post.user.profile.nickname} userId={post.user.id} asLink />
             <div className="flex items-center gap-3">
               <Rating rating={post.rating} />
-              <DateViewer
-                date={post.startDate}
-                label="읽은 날짜"
-                format="YYYY-MM"
-              />
+              <DateViewer date={post.startDate} label="읽은 날짜" format="YYYY-MM" />
             </div>
           </div>
         </CardHeader>
@@ -58,5 +50,5 @@ export default function PostViewer({ post }: { post: PostWithBook }) {
         </footer>
       )}
     </article>
-  );
+  )
 }

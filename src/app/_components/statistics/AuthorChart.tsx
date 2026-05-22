@@ -1,38 +1,20 @@
-"use client";
+'use client'
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from 'react'
 
-import {
-  BarElement,
-  CategoryScale,
-  ChartDataset,
-  Chart as ChartJS,
-  ChartOptions,
-  Legend,
-  LinearScale,
-  Title,
-  Tooltip,
-} from "chart.js";
-import ChartDataLabels from "chartjs-plugin-datalabels";
-import { Bar } from "react-chartjs-2";
+import { BarElement, CategoryScale, ChartDataset, Chart as ChartJS, ChartOptions, Legend, LinearScale, Title, Tooltip } from 'chart.js'
+import ChartDataLabels from 'chartjs-plugin-datalabels'
+import { Bar } from 'react-chartjs-2'
 
-import { PostWithBook } from "@/types/post";
+import { PostWithBook } from '@/types/post'
 
-import { usePrimaryColorHsl } from "./_hooks/usePrimaryColorHsl";
+import { usePrimaryColorHsl } from './_hooks/usePrimaryColorHsl'
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ChartDataLabels,
-);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels)
 
-const baseOptions: ChartOptions<"bar"> = {
+const baseOptions: ChartOptions<'bar'> = {
   maintainAspectRatio: false,
-  indexAxis: "y" as const,
+  indexAxis: 'y' as const,
   responsive: true,
   plugins: {
     legend: {
@@ -42,35 +24,30 @@ const baseOptions: ChartOptions<"bar"> = {
       enabled: true,
       callbacks: {
         title: function () {
-          return "";
+          return ''
         },
         label: function (context) {
-          const dataIndex = context.dataIndex;
-          const posts =
-            (context.dataset as CustomBarChartDataset).customData?.[
-              dataIndex
-            ] || [];
+          const dataIndex = context.dataIndex
+          const posts = (context.dataset as CustomBarChartDataset).customData?.[dataIndex] || []
           if (posts.length > 1) {
-            const bookTitles = posts.map(
-              (post: PostWithBook) => `- ${post.book.title}`,
-            );
-            return bookTitles;
+            const bookTitles = posts.map((post: PostWithBook) => `- ${post.book.title}`)
+            return bookTitles
           } else if (posts.length === 1) {
-            return posts[0].book.title;
+            return posts[0].book.title
           } else {
-            return "No posts";
+            return 'No posts'
           }
         },
       },
       displayColors: false,
     },
     datalabels: {
-      anchor: "end",
-      align: "end",
-      color: "black",
+      anchor: 'end',
+      align: 'end',
+      color: 'black',
       font: {
         size: 10,
-        weight: "bold",
+        weight: 'bold',
       },
       formatter: (value) => value,
     },
@@ -93,37 +70,36 @@ const baseOptions: ChartOptions<"bar"> = {
       ticks: {
         font: {
           size: 12,
-          weight: "bold",
+          weight: 'bold',
         },
       },
     },
   },
-};
-
-interface Props {
-  data: { author: string; posts: PostWithBook[] }[];
 }
 
-type CustomBarChartDataset = ChartDataset<"bar"> & {
-  customData: PostWithBook[][];
-};
+interface Props {
+  data: { author: string; posts: PostWithBook[] }[]
+}
+
+type CustomBarChartDataset = ChartDataset<'bar'> & {
+  customData: PostWithBook[][]
+}
 
 export default function AuthorChart({ data }: Props) {
-  const { primaryColor, darkerPrimaryColor } = usePrimaryColorHsl();
-  const chartContainerRef = useRef<HTMLDivElement>(null);
+  const { primaryColor, darkerPrimaryColor } = usePrimaryColorHsl()
+  const chartContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (chartContainerRef.current) {
-      chartContainerRef.current.scrollTop =
-        chartContainerRef.current.scrollHeight;
+      chartContainerRef.current.scrollTop = chartContainerRef.current.scrollHeight
     }
-  }, []);
+  }, [])
 
-  const sortedData = [...data].sort((a, b) => b.posts.length - a.posts.length);
-  const labels = sortedData.map((d) => d.author);
-  const postCount = sortedData.map((d) => d.posts.length);
+  const sortedData = [...data].sort((a, b) => b.posts.length - a.posts.length)
+  const labels = sortedData.map((d) => d.author)
+  const postCount = sortedData.map((d) => d.posts.length)
 
-  const options: ChartOptions<"bar"> = {
+  const options: ChartOptions<'bar'> = {
     ...baseOptions,
     scales: {
       ...baseOptions.scales,
@@ -132,9 +108,9 @@ export default function AuthorChart({ data }: Props) {
         suggestedMax: Math.max(...postCount) * 1.1,
       },
     },
-  };
+  }
 
-  const categoryPercentage = sortedData.length > 3 ? 0.6 : 0.2;
+  const categoryPercentage = sortedData.length > 3 ? 0.6 : 0.2
 
   const dataset: CustomBarChartDataset = {
     data: postCount,
@@ -143,12 +119,12 @@ export default function AuthorChart({ data }: Props) {
     borderColor: darkerPrimaryColor,
     backgroundColor: primaryColor,
     customData: sortedData.map((d) => d.posts),
-  };
+  }
 
   const barData = {
     labels,
     datasets: [dataset],
-  };
+  }
 
   return (
     <div className="rounded-lg px-5 py-4 shadow">
@@ -158,5 +134,5 @@ export default function AuthorChart({ data }: Props) {
         </div>
       </div>
     </div>
-  );
+  )
 }

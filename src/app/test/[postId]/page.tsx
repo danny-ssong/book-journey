@@ -1,24 +1,24 @@
-import { notFound } from "next/navigation";
+import { notFound } from 'next/navigation'
 
-import { getPost } from "@/api/client/post";
+import { getPost } from '@/api/client/post'
 
-import PostViewer from "@/app/posts/_components/PostViewer";
+import PostViewer from '@/app/posts/_components/PostViewer'
 
 type Props = {
   params: Promise<{
-    postId: string;
-  }>;
-};
+    postId: string
+  }>
+}
 
 export default async function Page(props: Props) {
-  const params = await props.params;
-  const postId = params?.postId;
-  if (!postId) return notFound();
+  const params = await props.params
+  const postId = params?.postId
+  if (!postId) return notFound()
 
-  const post = await getPost(postId);
-  if (!post) return notFound();
+  const post = await getPost(postId)
+  if (!post) return notFound()
 
-  return <PostViewer post={post} />;
+  return <PostViewer post={post} />
 }
 
 // export async function generateStaticParams() {

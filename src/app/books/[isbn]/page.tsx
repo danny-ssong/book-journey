@@ -1,26 +1,26 @@
-import { Metadata } from "next";
-import Link from "next/link";
+import { Metadata } from 'next'
+import Link from 'next/link'
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button'
 
-import { getBook, getBooks } from "@/api/client/book";
-import { getBookWithPosts } from "@/api/server/book";
+import { getBook, getBooks } from '@/api/client/book'
+import { getBookWithPosts } from '@/api/server/book'
 
-import BookInfo from "../_components/BookInfo";
-import PostCardForBook from "../_components/PostCardForBook";
+import BookInfo from '../_components/BookInfo'
+import PostCardForBook from '../_components/PostCardForBook'
 
 type Props = {
   params: Promise<{
-    isbn: string;
-  }>;
-};
+    isbn: string
+  }>
+}
 
 export default async function Page(props: Props) {
-  const params = await props.params;
-  const { isbn } = params;
+  const params = await props.params
+  const { isbn } = params
 
-  const bookWithPosts = await getBookWithPosts(isbn);
-  const posts = bookWithPosts.posts;
+  const bookWithPosts = await getBookWithPosts(isbn)
+  const posts = bookWithPosts.posts
 
   return (
     <div>
@@ -38,22 +38,22 @@ export default async function Page(props: Props) {
         ))}
       </ul>
     </div>
-  );
+  )
 }
 
 export async function generateStaticParams() {
-  const books = await getBooks();
+  const books = await getBooks()
 
   return books.map((book) => ({
     isbn: book.isbn,
-  }));
+  }))
 }
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
-  const params = await props.params;
-  const book = await getBook(params.isbn);
-  if (!book) return { title: "Book Not Found" };
-  return { title: `${book.title} 책 정보` };
+  const params = await props.params
+  const book = await getBook(params.isbn)
+  if (!book) return { title: 'Book Not Found' }
+  return { title: `${book.title} 책 정보` }
 }
 
-export const revalidate = 3600;
+export const revalidate = 3600

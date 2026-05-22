@@ -1,14 +1,14 @@
-"use client";
+'use client'
 
-import Link from "next/link";
+import Link from 'next/link'
 
-import ProfileViewer from "@/components/post/ProfileViewer";
-import { Button } from "@/components/ui/button";
+import { useAuthContext } from '@/providers/AuthProvider'
 
-import { useAuthContext } from "@/providers/AuthProvider";
+import ProfileViewer from '@/components/post/ProfileViewer'
+import { Button } from '@/components/ui/button'
 
 export default function Page() {
-  const user = useAuthContext();
+  const user = useAuthContext()
 
   return (
     <div>
@@ -19,5 +19,5 @@ export default function Page() {
         </Button>
       </div>
     </div>
-  );
+  )
 }

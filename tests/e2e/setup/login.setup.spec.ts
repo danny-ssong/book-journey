@@ -30,9 +30,7 @@ setup("admin API로 세션 발급 후 storageState 저장", async ({ browser }) 
   const supabaseHost = new URL(supabaseUrl).hostname;
   const baseHost = new URL(baseURL).hostname;
   if (!LOCAL_HOSTS.has(supabaseHost) || !LOCAL_HOSTS.has(baseHost)) {
-    throw new Error(
-      `E2E setup은 localhost에서만 실행 가능합니다. supabase=${supabaseHost}, base=${baseHost}`,
-    );
+    throw new Error(`E2E setup은 localhost에서만 실행 가능합니다. supabase=${supabaseHost}, base=${baseHost}`);
   }
 
   // 1. admin client로 테스트 유저 찾고 임시 password 세팅
@@ -44,9 +42,7 @@ setup("admin API로 세션 발급 후 storageState 저장", async ({ browser }) 
   if (listErr) throw listErr;
   const user = list.users.find((u) => u.email === email);
   if (!user) {
-    throw new Error(
-      `테스트 유저(${email})가 DB에 없습니다. tests/e2e/fixture/seed.sql을 확인하세요.`,
-    );
+    throw new Error(`테스트 유저(${email})가 DB에 없습니다. tests/e2e/fixture/seed.sql을 확인하세요.`);
   }
 
   const { error: updateErr } = await admin.auth.admin.updateUserById(user.id, {
@@ -55,8 +51,7 @@ setup("admin API로 세션 발급 후 storageState 저장", async ({ browser }) 
   if (updateErr) throw updateErr;
 
   // 2. @supabase/ssr server client로 signInWithPassword → setAll 콜백으로 쿠키 캡처
-  const captured: { name: string; value: string; options: CookieOptions }[] =
-    [];
+  const captured: { name: string; value: string; options: CookieOptions }[] = [];
   const ssr = createServerClient(supabaseUrl, anonKey, {
     cookies: {
       getAll: () => [],
@@ -73,9 +68,7 @@ setup("admin API로 세션 발급 후 storageState 저장", async ({ browser }) 
   if (signInErr) throw signInErr;
 
   if (captured.length === 0) {
-    throw new Error(
-      "signInWithPassword 후 캡처된 쿠키가 없습니다. @supabase/ssr 동작 확인 필요.",
-    );
+    throw new Error("signInWithPassword 후 캡처된 쿠키가 없습니다. @supabase/ssr 동작 확인 필요.");
   }
 
   // 3. Playwright context에 쿠키 주입 후 storageState 저장
@@ -92,12 +85,7 @@ setup("admin API로 세션 발급 후 storageState 저장", async ({ browser }) 
       path: options.path ?? "/",
       httpOnly: options.httpOnly ?? false,
       secure: options.secure ?? false,
-      sameSite:
-        options.sameSite === "strict" || options.sameSite === true
-          ? "Strict"
-          : options.sameSite === "none"
-            ? "None"
-            : "Lax",
+      sameSite: options.sameSite === "strict" || options.sameSite === true ? "Strict" : options.sameSite === "none" ? "None" : "Lax",
       expires:
         options.expires instanceof Date
           ? Math.floor(options.expires.getTime() / 1000)

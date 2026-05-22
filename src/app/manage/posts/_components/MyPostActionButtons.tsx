@@ -1,21 +1,21 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import React from "react";
+import Link from 'next/link'
+import React from 'react'
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button'
 
-import { useDeletePost } from "@/api/client/post.queries";
+import { useDeletePost } from '@/api/client/post.queries'
 
 function MyPostActionButtons({ postId }: { postId: number }) {
-  const deletePostMutation = useDeletePost(postId);
+  const deletePostMutation = useDeletePost(postId)
 
   const handleDelete = async () => {
-    const confirmDelete = confirm("정말로 삭제하시겠습니까?");
+    const confirmDelete = confirm('정말로 삭제하시겠습니까?')
     if (confirmDelete) {
-      deletePostMutation.mutate();
+      deletePostMutation.mutate()
     }
-  };
+  }
 
   return (
     // 데스크톱: 호버로만 표시, 모바일: 항상 표시
@@ -27,7 +27,7 @@ function MyPostActionButtons({ postId }: { postId: number }) {
         삭제
       </Button>
     </div>
-  );
+  )
 }
 
-export default MyPostActionButtons;
+export default MyPostActionButtons

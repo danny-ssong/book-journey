@@ -1,23 +1,24 @@
-import { Metadata } from "next";
+import { Metadata } from 'next'
 
-import { TabPanel, Tabs } from "@/components/common/Tabs";
-import InfinitePostList from "@/components/post/InfinitePostList";
-import ProfileViewer from "@/components/post/ProfileViewer";
-import UserPostDashboard from "@/app/_components/statistics/UserPostDashboard";
+import { TabPanel, Tabs } from '@/components/common/Tabs'
+import InfinitePostList from '@/components/post/InfinitePostList'
+import ProfileViewer from '@/components/post/ProfileViewer'
 
-import { getUsers } from "@/api/client/user";
-import { getUser } from "@/api/server/user";
+import { getUsers } from '@/api/client/user'
+import { getUser } from '@/api/server/user'
+
+import UserPostDashboard from '@/app/_components/statistics/UserPostDashboard'
 
 type Props = {
   params: Promise<{
-    userId: string;
-  }>;
-};
+    userId: string
+  }>
+}
 
 export default async function UserProfilePage(props: Props) {
-  const params = await props.params;
-  const userId = params.userId;
-  const user = await getUser(userId);
+  const params = await props.params
+  const userId = params.userId
+  const user = await getUser(userId)
 
   return (
     <div className="flex flex-col gap-4">
@@ -31,23 +32,23 @@ export default async function UserProfilePage(props: Props) {
         </TabPanel>
       </Tabs>
     </div>
-  );
+  )
 }
 
 // 유저 프로필은 실시간으로 업데이트할 필요 없으므로, 1시간 캐싱 유효
-export const revalidate = 3600;
+export const revalidate = 3600
 
 export async function generateStaticParams() {
-  const users = await getUsers();
+  const users = await getUsers()
 
   return users.map((user) => ({
     userId: user.id,
-  }));
+  }))
 }
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
-  const params = await props.params;
-  const user = await getUser(params.userId);
-  if (!user) return { title: "User Not Found" };
-  return { title: `${user.profile.nickname}의 프로필` };
+  const params = await props.params
+  const user = await getUser(params.userId)
+  if (!user) return { title: 'User Not Found' }
+  return { title: `${user.profile.nickname}의 프로필` }
 }

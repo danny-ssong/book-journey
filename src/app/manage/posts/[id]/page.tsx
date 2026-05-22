@@ -1,30 +1,25 @@
-"use client";
+'use client'
 
-import { useParams } from "next/navigation";
+import { useParams } from 'next/navigation'
 
-import ErrorAlert from "@/components/common/ErrorAlert";
-import Loading from "@/components/common/Loading";
+import ErrorAlert from '@/components/common/ErrorAlert'
+import Loading from '@/components/common/Loading'
 
-import { useGetPost } from "@/api/client/post.queries";
+import { useGetPost } from '@/api/client/post.queries'
 
-import PostViewer from "@/app/posts/_components/PostViewer";
+import PostViewer from '@/app/posts/_components/PostViewer'
 
 export default function Page() {
-  const params = useParams();
-  const id = params?.id as string;
+  const params = useParams()
+  const id = params?.id as string
 
-  const { data, isPending, isError, error } = useGetPost(id);
+  const { data, isPending, isError, error } = useGetPost(id)
 
-  if (isPending) return <Loading text="게시글을 불러오는 중..." />;
+  if (isPending) return <Loading text="게시글을 불러오는 중..." />
 
   if (isError) {
-    return (
-      <ErrorAlert
-        title="게시글을 불러오는 중에 에러가 발생했습니다."
-        description={error.message}
-      />
-    );
+    return <ErrorAlert title="게시글을 불러오는 중에 에러가 발생했습니다." description={error.message} />
   }
 
-  return <PostViewer post={data} />;
+  return <PostViewer post={data} />
 }

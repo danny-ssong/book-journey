@@ -1,22 +1,17 @@
-import Link from "next/link";
+import Link from 'next/link'
 
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils'
 
 type Props = {
-  title: string;
-  isbn: string;
-  className?: string;
-  asLink?: boolean;
-};
+  title: string
+  isbn: string
+  className?: string
+  asLink?: boolean
+}
 
-export default function BookTitle({
-  title,
-  isbn,
-  className,
-  asLink = false,
-}: Props) {
+export default function BookTitle({ title, isbn, className, asLink = false }: Props) {
   return (
-    <p className={cn("text-lg", className)} aria-label={"책 제목"}>
+    <p className={cn('text-lg', className)} aria-label={'책 제목'}>
       {asLink ? (
         <Link href={`/books/${isbn}`} className="hover:underline">
           {title}
@@ -25,5 +20,5 @@ export default function BookTitle({
         title
       )}
     </p>
-  );
+  )
 }

@@ -1,37 +1,32 @@
-"use client";
+'use client'
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react'
 
-import Loading from "./Loading";
+import Loading from './Loading'
 
 type InfiniteScrollProps = {
-  fetchNextPage: () => void;
-  hasNextPage: boolean;
-  isLoading?: boolean;
-  children: React.ReactNode;
-};
+  fetchNextPage: () => void
+  hasNextPage: boolean
+  isLoading?: boolean
+  children: React.ReactNode
+}
 
-export default function InfiniteScroll({
-  fetchNextPage,
-  hasNextPage,
-  isLoading,
-  children,
-}: InfiniteScrollProps) {
-  const loaderRef = useRef<HTMLDivElement>(null);
+export default function InfiniteScroll({ fetchNextPage, hasNextPage, isLoading, children }: InfiniteScrollProps) {
+  const loaderRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (!loaderRef.current || !hasNextPage) return;
+    if (!loaderRef.current || !hasNextPage) return
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && hasNextPage) {
-          fetchNextPage();
+          fetchNextPage()
         }
       },
       { threshold: 1 },
-    );
-    observer.observe(loaderRef.current);
-    return () => observer.disconnect();
-  }, [loaderRef, hasNextPage, fetchNextPage]);
+    )
+    observer.observe(loaderRef.current)
+    return () => observer.disconnect()
+  }, [loaderRef, hasNextPage, fetchNextPage])
 
   return (
     <>
@@ -39,5 +34,5 @@ export default function InfiniteScroll({
       <div ref={loaderRef} className="h-10" />
       {isLoading && <Loading variant="inline" />}
     </>
-  );
+  )
 }

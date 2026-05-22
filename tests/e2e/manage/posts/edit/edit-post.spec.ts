@@ -64,7 +64,6 @@ test("포스트 비공개로 수정", async ({ page, editPostPage }) => {
   await test.step("글 관리 페이지에 수정 내역이 반영되어야 한다.", async () => {
     const managePostsPage = new ManagePostsPage(page);
 
-
     const rate = managePostsPage.getPostCardRate("비공개로 수정된 포스트 제목");
     await expect(rate).toHaveAttribute("aria-label", "평점 4점");
   });

@@ -1,23 +1,23 @@
-"use client";
+'use client'
 
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { usePathname } from 'next/navigation'
+import { useState } from 'react'
 
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from '@/components/ui/button'
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 
-import MenuIcon from "../icons/MenuIcon";
-import { SidebarMenuContent } from "./Sidebar";
+import MenuIcon from '../icons/MenuIcon'
+import { SidebarMenuContent } from './Sidebar'
 
 export default function MobileSidebar() {
-  const pathname = usePathname();
-  const [open, setOpen] = useState(false);
-  const [prevPathname, setPrevPathname] = useState(pathname);
+  const pathname = usePathname()
+  const [open, setOpen] = useState(false)
+  const [prevPathname, setPrevPathname] = useState(pathname)
 
   // pathname 변경 시 사이드바를 닫는다 (렌더 중 비교 — React 권장 패턴)
   if (prevPathname !== pathname) {
-    setPrevPathname(pathname);
-    if (open) setOpen(false);
+    setPrevPathname(pathname)
+    if (open) setOpen(false)
   }
 
   return (
@@ -32,5 +32,5 @@ export default function MobileSidebar() {
         <SidebarMenuContent />
       </SheetContent>
     </Sheet>
-  );
+  )
 }

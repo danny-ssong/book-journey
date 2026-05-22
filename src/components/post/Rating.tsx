@@ -1,46 +1,39 @@
-"use client";
+'use client'
 
-import React from "react";
+import React from 'react'
 
-import { Star } from "lucide-react";
+import { Star } from 'lucide-react'
 
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils'
 
 type Props = {
-  rating: number;
-  onClickStar?: (rating: number) => void;
-  size?: "xs" | "sm" | "md" | "lg";
-};
+  rating: number
+  onClickStar?: (rating: number) => void
+  size?: 'xs' | 'sm' | 'md' | 'lg'
+}
 
-export default function Rating({ rating, onClickStar, size = "sm" }: Props) {
+export default function Rating({ rating, onClickStar, size = 'sm' }: Props) {
   const sizeClass = {
-    xs: "h-3 w-3",
-    sm: "h-4 w-4",
-    md: "h-6 w-6",
-    lg: "h-8 w-8",
-  };
+    xs: 'h-3 w-3',
+    sm: 'h-4 w-4',
+    md: 'h-6 w-6',
+    lg: 'h-8 w-8',
+  }
 
   return (
     <div className="flex items-center gap-0.5" aria-label={`평점 ${rating}점`}>
       {[...Array(5)].map((_, index) => {
-        const starValue = index + 1;
-        const isFilled = starValue <= rating;
+        const starValue = index + 1
+        const isFilled = starValue <= rating
 
         const starClassName = cn(
           sizeClass[size],
-          isFilled ? "fill-primary text-primary" : "text-muted-foreground/30",
-          onClickStar && "cursor-pointer",
-        );
+          isFilled ? 'fill-primary text-primary' : 'text-muted-foreground/30',
+          onClickStar && 'cursor-pointer',
+        )
 
-        return (
-          <Star
-            className={starClassName}
-            key={index}
-            onClick={() => onClickStar?.(starValue)}
-            aria-hidden="true"
-          />
-        );
+        return <Star className={starClassName} key={index} onClick={() => onClickStar?.(starValue)} aria-hidden="true" />
       })}
     </div>
-  );
+  )
 }

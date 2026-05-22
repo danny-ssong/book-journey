@@ -1,37 +1,27 @@
-"use client";
+'use client'
 
-import { useId } from "react";
+import { useId } from 'react'
 
-import dayjs from "dayjs";
+import dayjs from 'dayjs'
 
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils'
 
 type Props = {
-  date: Date;
-  label?: string;
-  className?: string;
-  format?: string;
-};
+  date: Date
+  label?: string
+  className?: string
+  format?: string
+}
 
-export default function DateViewer({
-  date,
-  label,
-  className,
-  format = "YYYY-MM-DD",
-}: Props) {
-  const id = useId();
+export default function DateViewer({ date, label, className, format = 'YYYY-MM-DD' }: Props) {
+  const id = useId()
 
   return (
-    <div
-      className={cn(
-        "flex items-center gap-2 whitespace-nowrap text-sm text-muted-foreground",
-        className,
-      )}
-    >
+    <div className={cn('flex items-center gap-2 whitespace-nowrap text-sm text-muted-foreground', className)}>
       <span id={id}>{label}</span>
       <time dateTime={date.toString()} aria-labelledby={id}>
         {dayjs(date).format(format)}
       </time>
     </div>
-  );
+  )
 }

@@ -1,27 +1,22 @@
-import { ThemeProvider } from "next-themes";
-import { Toaster } from "sonner";
+import { ThemeProvider } from 'next-themes'
+import { Toaster } from 'sonner'
 
-import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
+import { ReactQueryProvider } from '@/providers/ReactQueryProvider'
 
-import Header from "@/components/layout/Header";
-import Sidebar from "@/components/layout/Sidebar";
+import Header from '@/components/layout/Header'
+import Sidebar from '@/components/layout/Sidebar'
 
-import "./globals.css";
+import './globals.css'
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className="flex min-h-dvh flex-col">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <ReactQueryProvider>
             <Header />
             <div className="flex flex-1 justify-center">
@@ -33,5 +28,5 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }

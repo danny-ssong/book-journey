@@ -1,15 +1,15 @@
-import DateViewer from "@/components/post/DateViewer";
-import PostContent from "@/components/post/PostContent";
-import PostTitle from "@/components/post/PostTitle";
-import Rating from "@/components/post/Rating";
-import UserName from "@/components/post/UserName";
-import { Card } from "@/components/ui/card";
+import DateViewer from '@/components/post/DateViewer'
+import PostContent from '@/components/post/PostContent'
+import PostTitle from '@/components/post/PostTitle'
+import Rating from '@/components/post/Rating'
+import UserName from '@/components/post/UserName'
+import { Card } from '@/components/ui/card'
 
-import { Post } from "@/types/post";
+import { Post } from '@/types/post'
 
 type Props = {
-  post: Post;
-};
+  post: Post
+}
 
 export default function PostCardForBook({ post }: Props) {
   return (
@@ -18,11 +18,7 @@ export default function PostCardForBook({ post }: Props) {
         <div className="flex justify-between">
           <div>
             <Rating rating={post.rating} />
-            <UserName
-              userName={post.user.profile.nickname}
-              userId={post.user.id}
-              asLink
-            />
+            <UserName userName={post.user.profile.nickname} userId={post.user.id} asLink />
           </div>
           <DateViewer date={post.createdAt} label="작성일" />
         </div>
@@ -30,5 +26,5 @@ export default function PostCardForBook({ post }: Props) {
         <PostContent post={post} maxLines={3} asLink />
       </Card>
     </article>
-  );
+  )
 }

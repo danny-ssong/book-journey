@@ -1,28 +1,28 @@
-"use client";
+'use client'
 
-import { useSearchParams } from "next/navigation";
-import { useId } from "react";
+import { useSearchParams } from 'next/navigation'
+import { useId } from 'react'
 
-import Heading from "@/components/common/Heading";
-import PaginationButtonsForClient from "@/components/common/PaginationButtonsForClient";
+import Heading from '@/components/common/Heading'
+import PaginationButtonsForClient from '@/components/common/PaginationButtonsForClient'
 
-import { Book } from "@/types/book";
+import { Book } from '@/types/book'
 
-import { useSearchPagination } from "../_hooks/useSearchPagination";
-import BookItem from "./BookItem";
+import { useSearchPagination } from '../_hooks/useSearchPagination'
+import BookItem from './BookItem'
 
 export default function SearchClient() {
-  const searchParams = useSearchParams();
-  const query = searchParams.get("query") || "";
+  const searchParams = useSearchParams()
+  const query = searchParams.get('query') || ''
 
-  const { page, setPage, books, isLastPage } = useSearchPagination(query);
+  const { page, setPage, books, isLastPage } = useSearchPagination(query)
 
-  const headingId = useId();
+  const headingId = useId()
 
   return (
     <section aria-labelledby={headingId}>
       <div className="min-h-[400px] space-y-4">
-        <Heading id={headingId} variant="h1" text={"검색 결과"} />
+        <Heading id={headingId} variant="h1" text={'검색 결과'} />
         {books?.length > 0 ? (
           <ul>
             {books.map((book: Book) => (
@@ -35,11 +35,7 @@ export default function SearchClient() {
           <p>검색된 결과가 없습니다.</p>
         )}
       </div>
-      <PaginationButtonsForClient
-        page={page}
-        isLastPage={isLastPage}
-        onPageChange={setPage}
-      />
+      <PaginationButtonsForClient page={page} isLastPage={isLastPage} onPageChange={setPage} />
     </section>
-  );
+  )
 }

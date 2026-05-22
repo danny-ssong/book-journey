@@ -1,32 +1,27 @@
-"use client";
+'use client'
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
-import { useSearchBooks } from "@/api/client/book.queries";
-import { SearchedBook } from "@/types/book";
+import { useSearchBooks } from '@/api/client/book.queries'
+import { SearchedBook } from '@/types/book'
 
 export default function useBookSearch(debounceMs: number = 500) {
-  const [query, setQuery] = useState("");
-  const [debouncedQuery, setDebouncedQuery] = useState("");
+  const [query, setQuery] = useState('')
+  const [debouncedQuery, setDebouncedQuery] = useState('')
 
-  const { data, isLoading, error } = useSearchBooks(
-    debouncedQuery,
-    5,
-    1,
-    debouncedQuery.length >= 2,
-  );
+  const { data, isLoading, error } = useSearchBooks(debouncedQuery, 5, 1, debouncedQuery.length >= 2)
 
   // debounce 처리
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      setDebouncedQuery(query);
-    }, debounceMs);
+      setDebouncedQuery(query)
+    }, debounceMs)
 
-    return () => clearTimeout(timeoutId);
-  }, [query, debounceMs]);
+    return () => clearTimeout(timeoutId)
+  }, [query, debounceMs])
 
-  const books: SearchedBook[] = data?.documents || [];
-  const isDebouncing = query !== debouncedQuery;
+  const books: SearchedBook[] = data?.documents || []
+  const isDebouncing = query !== debouncedQuery
 
   return {
     query,
@@ -35,5 +30,5 @@ export default function useBookSearch(debounceMs: number = 500) {
     isLoading,
     error,
     isDebouncing,
-  };
+  }
 }

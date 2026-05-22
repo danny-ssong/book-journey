@@ -1,6 +1,6 @@
-import { PostWithBook } from "@/types/post";
+import { PostWithBook } from '@/types/post'
 
-import PostCard from "./PostCard";
+import PostCard from './PostCard'
 
 export default function PostCardList({ posts }: { posts: PostWithBook[] }) {
   return (
@@ -9,5 +9,5 @@ export default function PostCardList({ posts }: { posts: PostWithBook[] }) {
         <PostCard key={post.id} post={post} />
       ))}
     </ul>
-  );
+  )
 }

@@ -1,40 +1,28 @@
-import Link from "next/link";
+import Link from 'next/link'
 
-import { cn } from "@/lib/utils";
-import { Post } from "@/types/post";
+import { cn } from '@/lib/utils'
+import { Post } from '@/types/post'
 
 type Props = {
-  post: Post;
-  className?: string;
-  asLink?: boolean;
-  maxLines?: 1 | 2 | 3 | 4 | 5;
-};
+  post: Post
+  className?: string
+  asLink?: boolean
+  maxLines?: 1 | 2 | 3 | 4 | 5
+}
 
-export default function PostContent({
-  post,
-  className,
-  asLink = false,
-  maxLines,
-}: Props) {
+export default function PostContent({ post, className, asLink = false, maxLines }: Props) {
   const classMap = {
-    1: cn("text-sm line-clamp-1", className),
-    2: cn("text-sm line-clamp-2", className),
-    3: cn("text-sm line-clamp-3", className),
-    4: cn("text-sm line-clamp-4", className),
-    5: cn("text-sm line-clamp-5", className),
-  } as const;
+    1: cn('text-sm line-clamp-1', className),
+    2: cn('text-sm line-clamp-2', className),
+    3: cn('text-sm line-clamp-3', className),
+    4: cn('text-sm line-clamp-4', className),
+    5: cn('text-sm line-clamp-5', className),
+  } as const
 
-  const href = post.isPrivate
-    ? `/manage/posts/${post.id}`
-    : `/posts/${post.id}`;
+  const href = post.isPrivate ? `/manage/posts/${post.id}` : `/posts/${post.id}`
 
   return (
-    <p
-      className={cn(
-        "break-words",
-        maxLines ? classMap[maxLines] : className
-      )}
-    >
+    <p className={cn('break-words', maxLines ? classMap[maxLines] : className)}>
       {asLink ? (
         <Link href={href} className="hover:underline">
           {post.content}
@@ -43,5 +31,5 @@ export default function PostContent({
         post.content
       )}
     </p>
-  );
+  )
 }

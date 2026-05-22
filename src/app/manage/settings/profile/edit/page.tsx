@@ -1,11 +1,11 @@
-"use client";
+'use client'
 
-import { useAuthContext } from "@/providers/AuthProvider";
+import { useAuthContext } from '@/providers/AuthProvider'
 
-import ProfileForm from "../_components/ProfileForm";
+import ProfileForm from '../_components/ProfileForm'
 
 export default function ProfileEditPage() {
-  const user = useAuthContext();
+  const user = useAuthContext()
 
-  return <ProfileForm profile={user.profile} />;
+  return <ProfileForm profile={user.profile} />
 }

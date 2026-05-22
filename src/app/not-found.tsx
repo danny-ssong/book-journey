@@ -1,9 +1,9 @@
-import Link from "next/link";
+import Link from 'next/link'
 
-import { BookX, Home, Search } from "lucide-react";
+import { BookX, Home, Search } from 'lucide-react'
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardFooter } from '@/components/ui/card'
 
 export default function NotFound() {
   return (
@@ -14,12 +14,8 @@ export default function NotFound() {
             <div className="mb-4 rounded-full bg-muted p-3">
               <BookX className="h-8 w-8 text-muted-foreground" />
             </div>
-            <h2 className="mb-2 text-xl font-semibold">
-              페이지를 찾을 수 없습니다
-            </h2>
-            <p className="mb-4 text-sm text-muted-foreground">
-              요청하신 페이지가 존재하지 않거나 이동되었습니다.
-            </p>
+            <h2 className="mb-2 text-xl font-semibold">페이지를 찾을 수 없습니다</h2>
+            <p className="mb-4 text-sm text-muted-foreground">요청하신 페이지가 존재하지 않거나 이동되었습니다.</p>
           </div>
         </CardContent>
         <CardFooter className="flex justify-center gap-3">
@@ -37,5 +33,5 @@ export default function NotFound() {
         </CardFooter>
       </Card>
     </div>
-  );
+  )
 }

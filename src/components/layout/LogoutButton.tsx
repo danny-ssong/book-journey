@@ -1,9 +1,9 @@
-"use client";
+'use client'
 
-import { useLogout } from "@/api/client/me.queries";
+import { useLogout } from '@/api/client/me.queries'
 
 export default function LogoutButton() {
-  const { mutate: logout, isPending } = useLogout();
+  const { mutate: logout, isPending } = useLogout()
 
   return (
     <button
@@ -13,15 +13,9 @@ export default function LogoutButton() {
       className="overflow-visible text-nowrap py-2"
       aria-label="로그아웃 버튼"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        height="24px"
-        viewBox="0 -960 960 960"
-        width="24px"
-        fill="currentColor"
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
         <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"></path>
       </svg>
     </button>
-  );
+  )
 }

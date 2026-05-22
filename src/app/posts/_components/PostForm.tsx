@@ -1,47 +1,39 @@
-"use client";
+'use client'
 
-import { useRouter } from "next/navigation";
-import React from "react";
+import { useRouter } from 'next/navigation'
+import React from 'react'
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { FieldErrors, FormProvider, useForm } from "react-hook-form";
-import { toast } from "sonner";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FieldErrors, FormProvider, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
-import { useCreatePost, useUpdatePost } from "@/api/client/post.queries";
-import { CreatePost, createPostSchema } from "@/schemas/post";
-import { Book } from "@/types/book";
-import { Post } from "@/types/post";
-import { getFirstZodErrorMessage } from "@/utils/zod-error-util";
+import { useCreatePost, useUpdatePost } from '@/api/client/post.queries'
+import { CreatePost, createPostSchema } from '@/schemas/post'
+import { Book } from '@/types/book'
+import { Post } from '@/types/post'
+import { getFirstZodErrorMessage } from '@/utils/zod-error-util'
 
-import { useBeforeunload } from "../_hooks/useBeforeunload";
-import ContentInput from "./form-fields/ContentInput";
-import PostFormBookSearchBar from "./form-fields/PostFormBookSearchBar";
-import PostFormFooter from "./form-fields/PostFormFooter";
-import PrivacySelector from "./form-fields/PrivacySelector";
-import RatingSelector from "./form-fields/RatingSelector";
-import ReadDatePicker from "./form-fields/ReadDatePicker";
-import TitleInput from "./form-fields/TitleInput";
+import { useBeforeunload } from '../_hooks/useBeforeunload'
+import ContentInput from './form-fields/ContentInput'
+import PostFormBookSearchBar from './form-fields/PostFormBookSearchBar'
+import PostFormFooter from './form-fields/PostFormFooter'
+import PrivacySelector from './form-fields/PrivacySelector'
+import RatingSelector from './form-fields/RatingSelector'
+import ReadDatePicker from './form-fields/ReadDatePicker'
+import TitleInput from './form-fields/TitleInput'
 
-export default function PostForm({
-  initPost,
-  initBook,
-}: {
-  initPost?: Post;
-  initBook?: Book;
-}) {
-  const router = useRouter();
-  const { mutateAsync: createPostMutation } = useCreatePost();
-  const { mutateAsync: updatePostMutation } = useUpdatePost();
+export default function PostForm({ initPost, initBook }: { initPost?: Post; initBook?: Book }) {
+  const router = useRouter()
+  const { mutateAsync: createPostMutation } = useCreatePost()
+  const { mutateAsync: updatePostMutation } = useUpdatePost()
 
   const methods = useForm<CreatePost>({
     resolver: zodResolver(createPostSchema),
     defaultValues: {
-      title: initPost?.title ?? "",
-      content: initPost?.content ?? "",
+      title: initPost?.title ?? '',
+      content: initPost?.content ?? '',
       rating: initPost?.rating ?? 5,
-      startDate: initPost?.startDate
-        ? new Date(initPost.startDate)
-        : new Date(),
+      startDate: initPost?.startDate ? new Date(initPost.startDate) : new Date(),
       isPrivate: initPost?.isPrivate ?? false,
       book: initBook
         ? {
@@ -51,43 +43,35 @@ export default function PostForm({
           }
         : null,
     },
-  });
+  })
 
   const {
     handleSubmit,
     formState: { isDirty },
-  } = methods;
+  } = methods
 
-  useBeforeunload(isDirty);
+  useBeforeunload(isDirty)
 
   const createOrUpdatePost = async (post: CreatePost) => {
     try {
-      await (initPost
-        ? updatePostMutation({ id: initPost.id, updatePostData: post })
-        : createPostMutation(post));
+      await (initPost ? updatePostMutation({ id: initPost.id, updatePostData: post }) : createPostMutation(post))
 
-      router.push("/manage/posts");
+      router.push('/manage/posts')
     } catch (error) {
-      console.error(error);
-      const description =
-        error instanceof Error
-          ? error.message
-          : "알 수 없는 오류가 발생했습니다.";
-      toast.error("포스트 저장 실패", { description });
+      console.error(error)
+      const description = error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.'
+      toast.error('포스트 저장 실패', { description })
     }
-  };
+  }
 
   const handleSubmitError = (error: FieldErrors<CreatePost>) => {
-    const errorMessage = getFirstZodErrorMessage(error);
-    if (errorMessage) toast.error(errorMessage);
-  };
+    const errorMessage = getFirstZodErrorMessage(error)
+    if (errorMessage) toast.error(errorMessage)
+  }
 
   return (
     <FormProvider {...methods}>
-      <form
-        className="flex h-full flex-col"
-        onSubmit={handleSubmit(createOrUpdatePost, handleSubmitError)}
-      >
+      <form className="flex h-full flex-col" onSubmit={handleSubmit(createOrUpdatePost, handleSubmitError)}>
         <article className="mb-20 flex h-full flex-col gap-4">
           <PostFormBookSearchBar />
           <PrivacySelector />
@@ -101,5 +85,5 @@ export default function PostForm({
         <PostFormFooter />
       </form>
     </FormProvider>
-  );
+  )
 }

@@ -1,12 +1,12 @@
-import { defineConfig, devices } from "@playwright/test";
-import dotenv from "dotenv";
+import { defineConfig, devices } from '@playwright/test'
+import dotenv from 'dotenv'
 
-dotenv.config({ path: ".env.test" });
+dotenv.config({ path: '.env.test' })
 // .env.local의 SUPABASE 키들이 setup의 admin client에 필요 (override 안 함 — .env.test 우선)
-dotenv.config({ path: ".env.local" });
+dotenv.config({ path: '.env.local' })
 
 export default defineConfig({
-  testDir: "./tests/e2e",
+  testDir: './tests/e2e',
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -16,38 +16,35 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: "html",
+  reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-  globalSetup: "./tests/e2e/fixture/db-reset.setup.ts",
+  globalSetup: './tests/e2e/fixture/db-reset.setup.ts',
 
   use: {
     baseURL: process.env.TEST_BASE_URL,
     ignoreHTTPSErrors: true,
-    locale: "ko-KR",
-    timezoneId: "Asia/Seoul",
+    locale: 'ko-KR',
+    timezoneId: 'Asia/Seoul',
     actionTimeout: 3000,
 
-    trace: "on-first-retry",
+    trace: 'on-first-retry',
   },
 
   projects: [
-    { name: "setup", testMatch: ["tests/e2e/**/*.setup.spec.ts"] },
+    { name: 'setup', testMatch: ['tests/e2e/**/*.setup.spec.ts'] },
     {
-      name: "guest",
-      use: { ...devices["Desktop Chrome"] },
-      testMatch: ["tests/e2e/**/*.guest.spec.ts"],
+      name: 'guest',
+      use: { ...devices['Desktop Chrome'] },
+      testMatch: ['tests/e2e/**/*.guest.spec.ts'],
     },
     {
-      name: "authenticated",
+      name: 'authenticated',
       use: {
-        ...devices["Desktop Chrome"],
-        storageState: "tests/e2e/.auth.json",
+        ...devices['Desktop Chrome'],
+        storageState: 'tests/e2e/.auth.json',
       },
-      testIgnore: [
-        "tests/e2e/**/*.setup.spec.ts",
-        "tests/e2e/**/*.guest.spec.ts",
-      ],
-      dependencies: ["setup"],
+      testIgnore: ['tests/e2e/**/*.setup.spec.ts', 'tests/e2e/**/*.guest.spec.ts'],
+      dependencies: ['setup'],
     },
   ],
 
@@ -57,4 +54,4 @@ export default defineConfig({
   //   url: "http://localhost:3001",
   //   reuseExistingServer: !process.env.CI,
   // },
-});
+})

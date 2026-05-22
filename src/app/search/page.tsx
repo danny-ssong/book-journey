@@ -1,7 +1,7 @@
-import SearchClient from "./_components/SearchClient";
+import SearchClient from './_components/SearchClient'
 
 export default function SearchPage() {
-  return <SearchClient />;
+  return <SearchClient />
 }
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic'

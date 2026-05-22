@@ -1,11 +1,11 @@
-"use client";
+'use client'
 
-import UserPostDashboard from "@/app/_components/statistics/UserPostDashboard";
+import { useAuthContext } from '@/providers/AuthProvider'
 
-import { useAuthContext } from "@/providers/AuthProvider";
+import UserPostDashboard from '@/app/_components/statistics/UserPostDashboard'
 
 export default function StaticsticsPage() {
-  const user = useAuthContext();
+  const user = useAuthContext()
 
-  return <UserPostDashboard user={user} />;
+  return <UserPostDashboard user={user} />
 }

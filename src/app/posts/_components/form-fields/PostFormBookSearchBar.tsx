@@ -1,9 +1,9 @@
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from 'react-hook-form'
 
-import BookSearchBar from "@/components/book/BookSearchBar";
+import BookSearchBar from '@/components/book/BookSearchBar'
 
 export default function PostFormBookSearchBar() {
-  const { control } = useFormContext();
+  const { control } = useFormContext()
 
   return (
     <Controller
@@ -27,5 +27,5 @@ export default function PostFormBookSearchBar() {
         />
       )}
     />
-  );
+  )
 }
