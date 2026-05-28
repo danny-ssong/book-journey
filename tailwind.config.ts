@@ -1,6 +1,11 @@
 import type { Config } from 'tailwindcss'
 import tailwindcssAnimate from 'tailwindcss-animate'
 
+// 레이아웃 폭 단일 소스 — 헤더와 본문이 동일한 콘텐츠 폭/정렬 기준을 공유한다.
+// 값이 바뀔 때 한 곳만 고치면 헤더·사이드바·본문 정렬이 함께 유지된다.
+const LAYOUT_SIDEBAR_WIDTH = '200px' // 데스크톱 사이드바 폭
+const LAYOUT_CONTENT_WIDTH = '48rem' // 본문(main) 최대 폭 (기존 max-w-3xl과 동일한 768px)
+
 const config: Config = {
   darkMode: ['class'],
   content: ['./src/pages/**/*.{js,ts,jsx,tsx,mdx}', './src/components/**/*.{js,ts,jsx,tsx,mdx}', './src/app/**/*.{js,ts,jsx,tsx,mdx}'],
@@ -56,6 +61,14 @@ const config: Config = {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
+      },
+      width: {
+        'layout-sidebar': LAYOUT_SIDEBAR_WIDTH,
+      },
+      maxWidth: {
+        'layout-content': LAYOUT_CONTENT_WIDTH,
+        // 헤더 콘텐츠와 본문(사이드바 + 본문)이 공유하는 전체 폭
+        layout: `calc(${LAYOUT_SIDEBAR_WIDTH} + ${LAYOUT_CONTENT_WIDTH})`,
       },
     },
   },

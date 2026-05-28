@@ -21,7 +21,7 @@ export default function RootLayout({
             <Header />
             <div className="flex flex-1 justify-center">
               <Sidebar />
-              <main className="w-full max-w-3xl p-4">{children}</main>
+              <main className="w-full max-w-layout-content p-4">{children}</main>
             </div>
             <Toaster position="top-center" richColors />
           </ReactQueryProvider>
