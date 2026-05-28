@@ -1,19 +1,34 @@
 'use client'
 
-import { notFound, useParams } from 'next/navigation'
+import { notFound, useParams, useRouter } from 'next/navigation'
+
+import { toast } from 'sonner'
 
 import Loading from '@/components/common/Loading'
 
-import { useGetPost } from '@/api/client/post.queries'
+import { useGetPost, useUpdatePost } from '@/api/client/post.queries'
+import { CreatePost } from '@/schemas/post'
 
-import PostForm from '../../_components/PostForm'
+import PostForm, { postFormDefaults } from '../../_components/PostForm'
 
 export default function PostEditPage() {
+  const router = useRouter()
   const params = useParams()
-  const { data, isLoading } = useGetPost(params.postId as string)
+  const { data: post, isLoading } = useGetPost(params.postId as string)
+  const { mutateAsync: updatePost } = useUpdatePost()
 
   if (isLoading) return <Loading text="게시글을 불러오는 중..." />
-  if (!data) return notFound()
+  if (!post) return notFound()
 
-  return <PostForm initBook={data.book} initPost={data} />
+  const handleSubmit = async (values: CreatePost) => {
+    try {
+      await updatePost({ id: post.id, updatePostData: values })
+      router.push('/manage/posts')
+    } catch (error) {
+      const description = error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.'
+      toast.error('포스트 저장 실패', { description })
+    }
+  }
+
+  return <PostForm defaultValues={postFormDefaults(post, post.book)} onSubmit={handleSubmit} />
 }

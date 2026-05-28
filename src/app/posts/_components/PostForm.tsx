@@ -1,13 +1,11 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
 import React from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FieldErrors, FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
-import { useCreatePost, useUpdatePost } from '@/api/client/post.queries'
 import { CreatePost, createPostSchema } from '@/schemas/post'
 import { Book } from '@/types/book'
 import { Post } from '@/types/post'
@@ -22,27 +20,34 @@ import RatingSelector from './form-fields/RatingSelector'
 import ReadDatePicker from './form-fields/ReadDatePicker'
 import TitleInput from './form-fields/TitleInput'
 
-export default function PostForm({ initPost, initBook }: { initPost?: Post; initBook?: Book }) {
-  const router = useRouter()
-  const { mutateAsync: createPostMutation } = useCreatePost()
-  const { mutateAsync: updatePostMutation } = useUpdatePost()
+// 서버 도메인 타입(Post/Book)을 폼 입력 타입(CreatePost)으로 변환하는 유일한 지점
+export function postFormDefaults(initPost?: Post, initBook?: Book): CreatePost {
+  return {
+    title: initPost?.title ?? '',
+    content: initPost?.content ?? '',
+    rating: initPost?.rating ?? 5,
+    startDate: initPost?.startDate ? new Date(initPost.startDate) : new Date(),
+    isPrivate: initPost?.isPrivate ?? false,
+    book: initBook
+      ? {
+          ...initBook,
+          author: initBook.author.name,
+          publishedAt: new Date(initBook.publishedAt),
+        }
+      : null,
+  }
+}
 
+type PostFormProps = {
+  defaultValues: CreatePost
+  onSubmit: (values: CreatePost) => Promise<void> | void
+  warnOnUnload?: boolean
+}
+
+export default function PostForm({ defaultValues, onSubmit, warnOnUnload = true }: PostFormProps) {
   const methods = useForm<CreatePost>({
     resolver: zodResolver(createPostSchema),
-    defaultValues: {
-      title: initPost?.title ?? '',
-      content: initPost?.content ?? '',
-      rating: initPost?.rating ?? 5,
-      startDate: initPost?.startDate ? new Date(initPost.startDate) : new Date(),
-      isPrivate: initPost?.isPrivate ?? false,
-      book: initBook
-        ? {
-            ...initBook,
-            author: initBook.author.name,
-            publishedAt: new Date(initBook.publishedAt),
-          }
-        : null,
-    },
+    defaultValues,
   })
 
   const {
@@ -50,28 +55,16 @@ export default function PostForm({ initPost, initBook }: { initPost?: Post; init
     formState: { isDirty },
   } = methods
 
-  useBeforeunload(isDirty)
+  useBeforeunload(warnOnUnload && isDirty)
 
-  const createOrUpdatePost = async (post: CreatePost) => {
-    try {
-      await (initPost ? updatePostMutation({ id: initPost.id, updatePostData: post }) : createPostMutation(post))
-
-      router.push('/manage/posts')
-    } catch (error) {
-      console.error(error)
-      const description = error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.'
-      toast.error('포스트 저장 실패', { description })
-    }
-  }
-
-  const handleSubmitError = (error: FieldErrors<CreatePost>) => {
-    const errorMessage = getFirstZodErrorMessage(error)
-    if (errorMessage) toast.error(errorMessage)
+  const handleValidationError = (errors: FieldErrors<CreatePost>) => {
+    const message = getFirstZodErrorMessage(errors)
+    if (message) toast.error(message)
   }
 
   return (
     <FormProvider {...methods}>
-      <form className="flex h-full flex-col" onSubmit={handleSubmit(createOrUpdatePost, handleSubmitError)}>
+      <form className="flex h-full flex-col" onSubmit={handleSubmit(onSubmit, handleValidationError)}>
         <article className="mb-20 flex h-full flex-col gap-4">
           <PostFormBookSearchBar />
           <PrivacySelector />
