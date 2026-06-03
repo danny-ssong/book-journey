@@ -12,7 +12,7 @@
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,
   "singleQuote": true,
-  "printWidth": 140,
+  "printWidth": 120,
   "semi": false,
   "trailingComma": "all"
 }
