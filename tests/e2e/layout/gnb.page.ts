@@ -12,7 +12,7 @@ export class GNBPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.gnb = page.getByRole("banner", { name: "데스크톱 헤더" });
+    this.gnb = page.getByRole("banner", { name: "헤더" });
     this.homeLink = this.gnb.getByRole("link", { name: "Book-Journey" });
     this.logoutButton = this.gnb.getByRole("button", { name: "로그아웃 버튼" });
     this.loginButton = this.gnb.getByRole("link", { name: "로그인" });

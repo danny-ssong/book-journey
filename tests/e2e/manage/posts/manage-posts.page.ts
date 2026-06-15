@@ -26,7 +26,7 @@ export class ManagePostsPage {
   }
 
   getPostCardRate(postTitle: string) {
-    return this.getPostCard(postTitle).getByLabel("평점");
+    return this.getPostCard(postTitle).getByLabel("평점").first();
   }
 
   async goto() {
