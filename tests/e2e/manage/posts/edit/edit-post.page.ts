@@ -27,6 +27,10 @@ export class EditPostPage {
     await this.page.goto(`/posts/edit/${postId}`);
   }
 
+  async dirtyForm() {
+    await this.titleInput.fill("변경된 임시 제목");
+  }
+
   async editPost({
     bookTitle,
     privacy,

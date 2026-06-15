@@ -1,14 +1,75 @@
 import { test as base, expect } from "@playwright/test";
 import { EditPostPage } from "./edit-post.page";
+import { GNBPage } from "../../../layout/gnb.page";
 import { ManagePostsPage } from "../manage-posts.page";
 import { HomePage } from "../../../home/home.page";
 
-const test = base.extend<{ editPostPage: EditPostPage }>({
+const FIXTURE_POST_ID = "61";
+
+const test = base.extend<{ editPostPage: EditPostPage; gnbPage: GNBPage }>({
   editPostPage: async ({ page }, use) => {
+    await page.goto("/manage/posts");
     const editPostPage = new EditPostPage(page);
-    await editPostPage.goto("61");
+    await editPostPage.goto(FIXTURE_POST_ID);
     await use(editPostPage);
   },
+  gnbPage: async ({ page }, use) => {
+    await use(new GNBPage(page));
+  },
+});
+
+test.describe("내비게이션 가드", () => {
+  test.describe("소프트 내비게이션", () => {
+    test("변경이 없으면 동작하지 않는다.", async ({ editPostPage, page, gnbPage }) => {
+      await gnbPage.clickHomeLink();
+
+      await expect(page).toHaveURL("/");
+    });
+
+    test("dirty 상태에서 가드가 동작하며, 취소 클릭 시 페이지를 이탈하지 않는다.", async ({ page, editPostPage, gnbPage }) => {
+      await editPostPage.dirtyForm();
+
+      page.once("dialog", (dialog) => dialog.dismiss());
+      await gnbPage.clickHomeLink();
+
+      await expect(page).toHaveURL(`/posts/edit/${FIXTURE_POST_ID}`);
+    });
+
+    test("dirty 상태에서 가드가 동작하며, 확인 클릭 시 페이지를 이탈한다.", async ({ page, editPostPage, gnbPage }) => {
+      await editPostPage.dirtyForm();
+
+      page.once("dialog", (dialog) => dialog.accept());
+      await gnbPage.clickHomeLink();
+
+      await expect(page).toHaveURL("/");
+    });
+  });
+
+  test.describe("하드 내비게이션", () => {
+    test("변경이 없으면 동작하지 않는다.", async ({ editPostPage, page }) => {
+      await page.reload();
+
+      await expect(page).toHaveURL(`/posts/edit/${FIXTURE_POST_ID}`);
+    });
+
+    test("dirty 상태에서 가드가 동작하며, 취소 클릭 시 페이지를 이탈하지 않는다.", async ({ page, editPostPage }) => {
+      await editPostPage.dirtyForm();
+
+      page.once("dialog", (dialog) => dialog.dismiss());
+      await page.goBack();
+
+      await expect(page).toHaveURL(`/posts/edit/${FIXTURE_POST_ID}`);
+    });
+
+    test("dirty 상태에서 가드가 동작하며, 확인 클릭 시 페이지를 이탈한다.", async ({ page, editPostPage }) => {
+      await editPostPage.dirtyForm();
+
+      page.once("dialog", (dialog) => dialog.accept());
+      await page.goBack();
+
+      await expect(page).toHaveURL("/manage/posts");
+    });
+  });
 });
 
 test("포스트 공개 수정", async ({ page, editPostPage }) => {

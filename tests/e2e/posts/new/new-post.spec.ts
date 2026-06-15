@@ -1,14 +1,19 @@
 import { expect, test as base } from "@playwright/test";
 import { NewPostPage } from "./new-post.page";
+import { GNBPage } from "../../layout/gnb.page";
 import dayjs from "dayjs";
 import { ManagePostsPage } from "../../manage/posts/manage-posts.page";
 import { HomePage } from "../../home/home.page";
 
-const test = base.extend<{ newPostPage: NewPostPage }>({
+const test = base.extend<{ newPostPage: NewPostPage; gnbPage: GNBPage }>({
   newPostPage: async ({ page }, use) => {
+    await page.goto("/");
     const newPostPage = new NewPostPage(page);
     await newPostPage.goto();
     await use(newPostPage);
+  },
+  gnbPage: async ({ page }, use) => {
+    await use(new GNBPage(page));
   },
 });
 
@@ -79,5 +84,59 @@ test("포스트 비공개로 작성", async ({ page, newPostPage }) => {
     const homePage = new HomePage(page);
     const postCard = homePage.getPostCardByPostTitle("비공개로 작성된 포스트 제목");
     await expect(postCard).not.toBeVisible();
+  });
+});
+
+test.describe("내비게이션 가드", () => {
+  test.describe("소프트 내비게이션", () => {
+    test("변경이 없으면 동작하지 않는다.", async ({ newPostPage, page, gnbPage }) => {
+      await gnbPage.clickHomeLink();
+
+      await expect(page).toHaveURL("/");
+    });
+
+    test("dirty 상태에서 가드가 동작하며, 취소 클릭 시 페이지를 이탈하지 않는다.", async ({ page, newPostPage, gnbPage }) => {
+      await newPostPage.dirtyForm();
+
+      page.once("dialog", (dialog) => dialog.dismiss());
+      await gnbPage.clickHomeLink();
+
+      await expect(page).toHaveURL("/posts/new");
+    });
+
+    test("dirty 상태에서 가드가 동작하며, 확인 클릭 시 페이지를 이탈한다.", async ({ page, newPostPage, gnbPage }) => {
+      await newPostPage.dirtyForm();
+
+      page.once("dialog", (dialog) => dialog.accept());
+      await gnbPage.clickHomeLink();
+
+      await expect(page).toHaveURL("/");
+    });
+  });
+
+  test.describe("하드 내비게이션", () => {
+    test("변경이 없으면 동작하지 않는다.", async ({ newPostPage, page }) => {
+      await page.reload();
+
+      await expect(page).toHaveURL("/posts/new");
+    });
+
+    test("dirty 상태에서 가드가 동작하며, 취소 시 페이지를 이탈하지 않는다.", async ({ page, newPostPage }) => {
+      await newPostPage.dirtyForm();
+
+      page.once("dialog", (dialog) => dialog.dismiss());
+      await page.reload();
+
+      await expect(page).toHaveURL("/posts/new");
+    });
+
+    test("dirty 상태에서 가드가 동작하며, 확인 클릭 시 페이지를 이탈한다.", async ({ page, newPostPage }) => {
+      await newPostPage.dirtyForm();
+
+      page.once("dialog", (dialog) => dialog.accept());
+      await page.reload();
+
+      await expect(page).toHaveURL("/");
+    });
   });
 });

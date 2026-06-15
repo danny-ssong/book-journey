@@ -27,6 +27,10 @@ export class NewPostPage {
     await this.page.goto("/posts/new");
   }
 
+  async dirtyForm() {
+    await this.titleInput.fill("임시 제목");
+  }
+
   async createPost({
     bookTitle,
     privacy,
