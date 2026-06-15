@@ -5,15 +5,18 @@ import { getBook, searchBooks } from '@/api/client/book'
 export const bookKeys = {
   all: ['book'] as const,
   details: () => [...bookKeys.all, 'detail'] as const,
-  detail: (isbn: string) => [...bookKeys.details(), isbn] as const,
+  detail: (isbn: string | null) => [...bookKeys.details(), isbn] as const,
   searches: () => [...bookKeys.all, 'search'] as const,
   search: (query: string, take: number, page: number) => [...bookKeys.searches(), { query, take, page }] as const,
 }
 
-export function useGetBook(isbn: string) {
+export function useGetBook(isbn: string | null) {
   return useQuery({
     queryKey: bookKeys.detail(isbn),
-    queryFn: () => getBook(isbn),
+    queryFn: () => {
+      if (!isbn) throw new Error('isbn is required')
+      return getBook(isbn)
+    },
     enabled: !!isbn,
   })
 }

@@ -1,21 +1,43 @@
 'use client'
 
-import { notFound, useParams } from 'next/navigation'
+import { notFound, useParams, useRouter } from 'next/navigation'
+
+import { toast } from 'sonner'
 
 import Loading from '@/components/common/Loading'
 
-import { useGetPost } from '@/api/client/post.queries'
+import { useGetPost, useUpdatePost } from '@/api/client/post.queries'
+import { CreatePost } from '@/schemas/post'
 
-import PostForm, { postFormDefaults } from '../../_components/PostForm'
-import { useUpdatePostSubmit } from '../../_hooks/usePostFormSubmit'
+import PostForm from '../../_components/PostForm'
+import { toPostFormValues } from '../../_utils/toPostFormValues'
 
 export default function PostEditPage() {
   const params = useParams()
-  const { data: post, isLoading } = useGetPost(params.postId as string)
-  const submit = useUpdatePostSubmit()
+  const rawPostId = params.postId
+  if (!rawPostId || Array.isArray(rawPostId)) return notFound()
 
-  if (isLoading) return <Loading text="게시글을 불러오는 중..." />
-  if (!post) return notFound()
+  return <PostEditForm postId={rawPostId} />
+}
 
-  return <PostForm defaultValues={postFormDefaults(post, post.book)} onSubmit={(values) => submit(post.id, values)} />
+function PostEditForm({ postId }: { postId: string }) {
+  const router = useRouter()
+  const { data: post, isPending, isError } = useGetPost(postId)
+  const { mutateAsync } = useUpdatePost()
+
+  if (isPending) return <Loading text="게시글 불러오는 중..." />
+
+  if (isError) return notFound()
+
+  const handleSubmit = async (values: CreatePost) => {
+    try {
+      await mutateAsync({ id: post.id, updatePostData: values })
+      router.push('/manage/posts')
+    } catch (error) {
+      const description = error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.'
+      toast.error('포스트 저장 실패', { description })
+    }
+  }
+
+  return <PostForm defaultValues={toPostFormValues(post, post.book)} onSubmit={handleSubmit} />
 }
