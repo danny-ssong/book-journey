@@ -46,9 +46,10 @@ CASCADE;
 // 옛 camelCase 제약명도 함께 드롭 — 이미 정리되었으면 NO-OP.
 const PRE_PUSH_SQL = `
 ALTER TABLE IF EXISTS public.post DROP CONSTRAINT IF EXISTS post_user_id_auth_fkey;
-ALTER TABLE IF EXISTS public.profile DROP CONSTRAINT IF EXISTS profile_user_id_auth_fkey;
 ALTER TABLE IF EXISTS public.post DROP CONSTRAINT IF EXISTS "post_userId_auth_fkey";
+ALTER TABLE IF EXISTS public.profile DROP CONSTRAINT IF EXISTS profile_user_id_auth_fkey;
 ALTER TABLE IF EXISTS public.profile DROP CONSTRAINT IF EXISTS "profile_userId_auth_fkey";
+ALTER TABLE IF EXISTS public.profile DROP CONSTRAINT IF EXISTS profile_id_auth_fkey;
 `
 
 function runSql(sql: string, label: string): void {
