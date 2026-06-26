@@ -34,8 +34,8 @@ model Book {
   @@map("book")
 }
 
-// Post.userId는 auth.users.id를 직접 참조한다 (cross-schema FK는 supabase/schema-extras.sql).
-// Prisma는 auth schema를 모르므로 user 관계 대신 Profile.userId를 통해 join한다.
+// Post.userId는 profile.id를 참조한다 (FK는 migration SQL로 관리).
+// Prisma는 cross-schema FK를 모르므로 schema-extras.sql에서 auth FK를 별도 관리한다.
 model Post {
   createdAt DateTime  @default(now()) @db.Timestamp(6) @map("created_at")
   updatedAt DateTime  @default(now()) @updatedAt @db.Timestamp(6) @map("updated_at")
@@ -49,21 +49,20 @@ model Post {
   deletedAt DateTime? @db.Timestamp(6) @map("deleted_at")
   userId    String?   @db.Uuid @map("user_id")
   bookIsbn  String?   @db.VarChar @map("book_isbn")
-  profile   Profile?  @relation(fields: [userId], references: [userId], onDelete: NoAction, onUpdate: NoAction)
+  profile   Profile?  @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   book      Book?     @relation(fields: [bookIsbn], references: [isbn], onDelete: NoAction, onUpdate: NoAction)
 
   @@map("post")
 }
 
-// Profile은 auth.users와 1:1 매핑되는 도메인 영역.
+// Profile은 auth.users와 1:1 매핑되는 도메인 영역. id = auth.users.id (UUID).
 // 인증/세션은 Supabase Auth가 관리하고 도메인 정보(닉네임, role, 이름 등)는 여기 둔다.
-// userId가 auth.users.id를 참조하는 cross-schema FK는 supabase/schema-extras.sql로 관리.
+// profile.id → auth.users.id cross-schema FK는 supabase/schema-extras.sql로 관리.
 model Profile {
   createdAt              DateTime                @default(now()) @db.Timestamp(6) @map("created_at")
   updatedAt              DateTime                @default(now()) @updatedAt @db.Timestamp(6) @map("updated_at")
   version                Int
-  id                     Int                     @id @default(autoincrement())
-  userId                 String                  @unique @db.Uuid @map("user_id")
+  id                     String                  @id @db.Uuid
   nickname               String                  @unique @db.VarChar
   name                   String                  @db.VarChar
   role                   String                  @default("user") @db.VarChar
@@ -76,7 +75,7 @@ model Profile {
 }
 
 model ProfileMostReadAuthor {
-  profileId Int     @map("profile_id")
+  profileId String  @db.Uuid @map("profile_id")
   authorId  Int     @map("author_id")
   author    Author  @relation(fields: [authorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
