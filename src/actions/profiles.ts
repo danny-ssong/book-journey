@@ -21,10 +21,9 @@ function toUser(profile: ProfileWithIncludes): User {
     nickname: profile.nickname,
     avatarUrl: profile.avatarUrl ?? '',
     bio: profile.bio ?? '',
-    userId: profile.userId,
     mostReadAuthors: profile.profileMostReadAuthors.map((m) => m.author),
   }
-  return { id: profile.userId, profile: profileResponse }
+  return { id: profile.id, profile: profileResponse }
 }
 
 /**
@@ -41,7 +40,7 @@ export async function getMe(): Promise<User | null> {
   const userId = data.claims.sub
 
   const profile = await prisma.profile.findUnique({
-    where: { userId },
+    where: { id: userId },
     include: PROFILE_INCLUDE,
   })
   if (!profile) return null
@@ -64,7 +63,7 @@ export async function getUsers(): Promise<User[]> {
  */
 export async function getUserById(userId: string): Promise<User> {
   const profile = await prisma.profile.findUnique({
-    where: { userId },
+    where: { id: userId },
     include: PROFILE_INCLUDE,
   })
   if (!profile) throw new Error('user not found')
@@ -88,7 +87,7 @@ export async function updateMyProfile(input: UpdateProfile): Promise<User> {
   if (input.bio !== undefined) data_.bio = input.bio
 
   const profile = await prisma.profile.update({
-    where: { userId },
+    where: { id: userId },
     data: data_,
     include: PROFILE_INCLUDE,
   })

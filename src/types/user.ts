@@ -6,11 +6,10 @@ export interface User {
 }
 
 export interface Profile {
-  id: number
+  id: string
   nickname: string
   avatarUrl: string
   bio: string
-  userId: string
   mostReadAuthors: Author[]
 }
 

@@ -26,7 +26,7 @@ export async function requireUserId(): Promise<string> {
  */
 export async function requireProfile() {
   const userId = await requireUserId()
-  const profile = await prisma.profile.findUnique({ where: { userId } })
+  const profile = await prisma.profile.findUnique({ where: { id: userId } })
   if (!profile) {
     redirect('/login')
   }

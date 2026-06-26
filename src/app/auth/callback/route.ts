@@ -32,10 +32,10 @@ export async function GET(request: NextRequest) {
     const fallbackName = meta.name ?? meta.full_name ?? user.email?.split('@')[0] ?? 'User'
 
     await prisma.profile.upsert({
-      where: { userId: user.id },
+      where: { id: user.id },
       update: {},
       create: {
-        userId: user.id,
+        id: user.id,
         nickname: `user-${user.id.slice(0, 8)}`,
         name: fallbackName,
         avatarUrl: meta.avatar_url ?? null,

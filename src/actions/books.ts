@@ -99,29 +99,19 @@ export async function getBookWithPosts(isbn: string): Promise<BookWithPosts> {
           name: p.book?.author?.name ?? '',
         },
       },
-      user: p.profile
-        ? {
-            id: p.profile.userId,
-            profile: {
-              id: p.profile.id,
-              nickname: p.profile.nickname,
-              avatarUrl: p.profile.avatarUrl ?? '',
-              bio: p.profile.bio ?? '',
-              userId: p.profile.userId,
-              mostReadAuthors: [],
-            },
-          }
-        : {
-            id: '',
-            profile: {
-              id: 0,
-              nickname: '',
-              avatarUrl: '',
-              bio: '',
-              userId: '',
-              mostReadAuthors: [],
-            },
+      user: (() => {
+        if (!p.profile) throw new Error(`post ${p.id}에 연결된 profile이 없습니다`)
+        return {
+          id: p.profile.id,
+          profile: {
+            id: p.profile.id,
+            nickname: p.profile.nickname,
+            avatarUrl: p.profile.avatarUrl ?? '',
+            bio: p.profile.bio ?? '',
+            mostReadAuthors: [],
           },
+        }
+      })(),
     })),
   }
 }
